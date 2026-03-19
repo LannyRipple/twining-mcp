@@ -637,9 +637,8 @@ Export full Twining state as a single markdown document. Includes blackboard ent
 | Step | Tool | Purpose |
 |------|------|---------|
 | 1 | twining_assemble | Gather existing context for the decision scope |
-| 2 | twining_decide | Record the decision with rationale, alternatives, and affected files |
-| 3 | twining_post | Post related findings or warnings discovered during decision-making |
-| 4 | twining_link_commit | Link the implementing commit to the decision for traceability |
+| 2 | twining_decide | Record the decision with rationale, alternatives, affected files, and commit_hash (replaces separate twining_link_commit call) |
+| 3 | twining_post | Post related findings or warnings if any were discovered (skip if nothing additional to share) |
 
 ### workflow: verify
 | Step | Tool | Purpose |

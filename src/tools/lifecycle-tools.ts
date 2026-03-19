@@ -32,7 +32,7 @@ export function registerLifecycleTools(
     "twining_status",
     {
       description:
-        "Overall health check of the Twining state. Shows blackboard entry count, decision counts, graph entity/relation counts, actionable warnings, and a human-readable summary.",
+        "Overall health check of the Twining state. Shows blackboard entry count, decision counts, graph entity/relation counts, actionable warnings, and a human-readable summary. Note: twining_assemble now includes a status summary — use this only when you need the full detailed health check.",
     },
     async () => {
       try {
