@@ -56,7 +56,6 @@ describe("Scenario: decide then assemble with scope filtering", () => {
     const parsed = parseToolResponse(res) as {
       active_decisions: Array<{ summary: string }>;
     };
-
     const summaries = parsed.active_decisions.map((d) => d.summary);
     // Should include auth decisions (scope-matched)
     expect(summaries).toContain("Auth uses JWT");

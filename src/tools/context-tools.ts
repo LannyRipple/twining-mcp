@@ -4,7 +4,7 @@
  */
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import type { ContextAssembler } from "../engine/context-assembler.js";
+import { ContextAssembler } from "../engine/context-assembler.js";
 import { toolResult, toolError, TwiningError } from "../utils/errors.js";
 
 export function registerContextTools(
@@ -17,7 +17,7 @@ export function registerContextTools(
     "twining_assemble",
     {
       description:
-        "Build tailored context for a specific task. Returns relevant decisions, warnings, needs, findings, and questions within a token budget. Call this before starting any task to get shared context from other agents.",
+        "Build tailored context for a specific task. Returns structured briefing with decisions to respect, warnings, handoff context, and status summary. Call this BEFORE starting any task. Replaces the need for a separate twining_status call.",
       inputSchema: {
         task: z.string().describe("Description of what the agent is about to do"),
         scope: z
@@ -35,13 +35,14 @@ export function registerContextTools(
     },
     async (args) => {
       try {
-        const result = await contextAssembler.assemble(
+        const { context, status_summary } = await contextAssembler.assembleWithStatus(
           args.task,
           args.scope,
           args.max_tokens,
           args.agent_id,
         );
-        return toolResult(result);
+        const formatted = ContextAssembler.formatForLLM(context, status_summary);
+        return toolResult({ ...context, status_summary, formatted_briefing: formatted });
       } catch (e) {
         if (e instanceof TwiningError) {
           return toolError(e.message, e.code);

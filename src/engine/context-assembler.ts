@@ -451,6 +451,123 @@ export class ContextAssembler {
   }
 
   /**
+   * Assemble context and include a status summary inline.
+   * Combines assemble + summarize into one call (P5.1).
+   */
+  async assembleWithStatus(
+    task: string,
+    scope: string,
+    maxTokens?: number,
+    agentId?: string,
+  ): Promise<{ context: AssembledContext; status_summary: string }> {
+    const context = await this.assemble(task, scope, maxTokens, agentId);
+    // Status summary is best-effort — don't let it break assembly
+    let statusSummary = "";
+    try {
+      const summary = await this.summarize(scope);
+      statusSummary = summary.recent_activity_summary;
+    } catch {
+      // Non-fatal: skip status summary if summarize fails
+    }
+    return { context, status_summary: statusSummary };
+  }
+
+  /**
+   * Format assembled context as structured markdown for LLM consumption.
+   * Produces imperative sentences and numbered lists instead of raw JSON.
+   */
+  static formatForLLM(ctx: AssembledContext, statusSummary?: string): string {
+    const sections: string[] = [];
+
+    // Header
+    sections.push(`## Before You Start (scope: ${ctx.scope})`);
+
+    // 1. Decisions to respect
+    if (ctx.active_decisions.length > 0) {
+      sections.push("\n### DECISIONS TO RESPECT");
+      for (let i = 0; i < ctx.active_decisions.length; i++) {
+        const d = ctx.active_decisions[i]!;
+        const files = d.affected_files?.length > 0 ? ` [${d.affected_files.join(", ")}]` : "";
+        sections.push(`${i + 1}. **${d.summary}** (${d.confidence})${files}`);
+        sections.push(`   Rationale: ${d.rationale}`);
+      }
+    } else {
+      sections.push("\nNo active decisions for this scope.");
+    }
+
+    // 2. Warnings
+    if (ctx.active_warnings.length > 0) {
+      sections.push("\n### WARNINGS — DO NOT IGNORE");
+      for (const w of ctx.active_warnings) {
+        sections.push(`- **${w.summary}**${w.detail ? `: ${w.detail}` : ""}`);
+      }
+    }
+
+    // 3. Continue from (handoffs)
+    if (ctx.recent_handoffs && ctx.recent_handoffs.length > 0) {
+      sections.push("\n### CONTINUE FROM");
+      for (const h of ctx.recent_handoffs) {
+        const status = h.acknowledged ? "acknowledged" : "pending";
+        sections.push(`- ${h.source_agent} → ${h.target_agent || "any"}: ${h.summary} (${status})`);
+      }
+    }
+
+    // Quick reference section
+    const quickRef: string[] = ["\n## Quick Reference"];
+
+    // Status summary (P5.1)
+    if (statusSummary) {
+      quickRef.push(`- Status: ${statusSummary}`);
+    }
+
+    // Affected files from decisions
+    const allFiles = new Set<string>();
+    for (const d of ctx.active_decisions) {
+      for (const f of d.affected_files ?? []) allFiles.add(f);
+    }
+    if (allFiles.size > 0) {
+      quickRef.push(`- Files referenced in decisions: ${[...allFiles].join(", ")}`);
+    }
+
+    // Open needs
+    if (ctx.open_needs.length > 0) {
+      quickRef.push(`- Open needs: ${ctx.open_needs.map((n) => n.summary).join("; ")}`);
+    }
+
+    // Questions
+    if (ctx.recent_questions.length > 0) {
+      quickRef.push(`- Open questions: ${ctx.recent_questions.map((q) => q.summary).join("; ")}`);
+    }
+
+    // Planning state
+    if (ctx.planning_state) {
+      quickRef.push(`- Planning: Phase ${ctx.planning_state.current_phase}, ${ctx.planning_state.progress}`);
+      if (ctx.planning_state.blockers.length > 0) {
+        quickRef.push(`- Blockers: ${ctx.planning_state.blockers.join("; ")}`);
+      }
+    }
+
+    // Suggested agents
+    if (ctx.suggested_agents && ctx.suggested_agents.length > 0) {
+      quickRef.push(`- Suggested agents: ${ctx.suggested_agents.map((a) => `${a.agent_id} (${a.capabilities.join(", ")})`).join("; ")}`);
+    }
+
+    if (quickRef.length > 1) {
+      sections.push(quickRef.join("\n"));
+    }
+
+    // Recent findings (brief)
+    if (ctx.recent_findings.length > 0) {
+      sections.push("\n### Recent Findings");
+      for (const f of ctx.recent_findings) {
+        sections.push(`- ${f.summary}`);
+      }
+    }
+
+    return sections.join("\n");
+  }
+
+  /**
    * High-level summary of project or scope state.
    * Implements spec section 4.3 (twining_summarize).
    */
