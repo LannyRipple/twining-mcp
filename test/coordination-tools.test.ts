@@ -10,7 +10,13 @@ import { DecisionStore } from "../src/storage/decision-store.js";
 import { BlackboardEngine } from "../src/engine/blackboard.js";
 import { CoordinationEngine } from "../src/engine/coordination.js";
 import { DEFAULT_CONFIG } from "../src/config.js";
+import type { TwiningConfig } from "../src/utils/types.js";
 import { registerCoordinationTools } from "../src/tools/coordination-tools.js";
+
+const TEST_CONFIG: TwiningConfig = {
+  ...DEFAULT_CONFIG,
+  tools: { ...DEFAULT_CONFIG.tools, full_surface: true },
+};
 
 let tmpDir: string;
 let server: McpServer;
@@ -82,7 +88,7 @@ beforeEach(() => {
   );
 
   server = new McpServer({ name: "test-server", version: "1.0.0" });
-  registerCoordinationTools(server, agentStore, coordinationEngine, DEFAULT_CONFIG);
+  registerCoordinationTools(server, agentStore, coordinationEngine, TEST_CONFIG);
 });
 
 afterEach(() => {
@@ -264,7 +270,7 @@ describe("twining_agents tool", () => {
       brokenServer,
       brokenStore,
       brokenEngine,
-      DEFAULT_CONFIG,
+      TEST_CONFIG,
     );
 
     const registeredTools = (
@@ -400,7 +406,7 @@ describe("twining_register tool", () => {
       brokenServer,
       brokenStore,
       brokenEngine,
-      DEFAULT_CONFIG,
+      TEST_CONFIG,
     );
 
     const registeredTools = (

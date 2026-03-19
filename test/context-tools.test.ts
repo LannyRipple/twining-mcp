@@ -72,7 +72,7 @@ beforeEach(() => {
   );
 
   server = new McpServer({ name: "test", version: "1.0.0" });
-  registerContextTools(server, contextAssembler);
+  registerContextTools(server, contextAssembler, true);
 });
 
 describe("twining_assemble", () => {

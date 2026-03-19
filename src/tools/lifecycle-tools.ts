@@ -175,8 +175,9 @@ export function registerLifecycleTools(
     },
   );
 
-  // twining_archive — Archive old blackboard entries
-  server.registerTool(
+  // twining_archive — Archive old blackboard entries (hidden by default)
+  const fullSurface = config.tools?.full_surface ?? false;
+  if (fullSurface) server.registerTool(
     "twining_archive",
     {
       description:

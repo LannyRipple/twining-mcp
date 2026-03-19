@@ -54,6 +54,10 @@ export const DEFAULT_CONFIG: TwiningConfig = {
   },
   tools: {
     mode: "full",            // "full" or "lite" — lite registers only core tools
+    full_surface: false,     // when false, hide 16 rarely-used tools to reduce context noise
+  },
+  graph: {
+    auto_populate: false,    // when false, skip auto-graph-population from tool calls
   },
 };
 

@@ -22,8 +22,10 @@ export function registerCoordinationTools(
   config: TwiningConfig,
   graphPopulator?: GraphAutoPopulator | null,
 ): void {
-  // twining_agents — List all registered agents with liveness status
-  server.registerTool(
+  const fullSurface = config.tools?.full_surface ?? false;
+
+  // twining_agents — List all registered agents with liveness status (hidden by default)
+  if (fullSurface) server.registerTool(
     "twining_agents",
     {
       description:
@@ -130,8 +132,8 @@ export function registerCoordinationTools(
     },
   );
 
-  // twining_discover — Find agents matching required capabilities
-  server.registerTool(
+  // twining_discover — Find agents matching required capabilities (hidden by default)
+  if (fullSurface) server.registerTool(
     "twining_discover",
     {
       description:
@@ -167,8 +169,8 @@ export function registerCoordinationTools(
     },
   );
 
-  // twining_delegate — Post a delegation request to the blackboard
-  server.registerTool(
+  // twining_delegate — Post a delegation request to the blackboard (hidden by default)
+  if (fullSurface) server.registerTool(
     "twining_delegate",
     {
       description:
@@ -310,8 +312,8 @@ export function registerCoordinationTools(
     },
   );
 
-  // twining_acknowledge — Acknowledge receipt of a handoff
-  server.registerTool(
+  // twining_acknowledge — Acknowledge receipt of a handoff (hidden by default)
+  if (fullSurface) server.registerTool(
     "twining_acknowledge",
     {
       description:

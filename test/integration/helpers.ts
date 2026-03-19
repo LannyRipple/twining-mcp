@@ -13,6 +13,22 @@ export function createTmpProjectDir(): string {
   const dir = fs.mkdtempSync(
     path.join(os.tmpdir(), "twining-integration-test-"),
   );
+  // Pre-create full .twining/ directory structure, data files, AND config enabling all tools.
+  // This mirrors initTwiningDir() but with full_surface and auto_populate enabled.
+  const twiningDir = path.join(dir, ".twining");
+  for (const sub of ["decisions", "graph", "embeddings", "archive", "agents", "handoffs"]) {
+    fs.mkdirSync(path.join(twiningDir, sub), { recursive: true });
+  }
+  fs.writeFileSync(
+    path.join(twiningDir, "config.yml"),
+    "tools:\n  mode: full\n  full_surface: true\ngraph:\n  auto_populate: true\n",
+  );
+  // Empty data files (same as initTwiningDir)
+  fs.writeFileSync(path.join(twiningDir, "blackboard.jsonl"), "");
+  fs.writeFileSync(path.join(twiningDir, "decisions", "index.json"), "[]");
+  fs.writeFileSync(path.join(twiningDir, "graph", "entities.json"), "[]");
+  fs.writeFileSync(path.join(twiningDir, "graph", "relations.json"), "[]");
+  fs.writeFileSync(path.join(twiningDir, "agents", "registry.json"), "[]");
   return dir;
 }
 

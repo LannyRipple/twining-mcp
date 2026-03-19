@@ -10,6 +10,7 @@ import { toolResult, toolError, TwiningError } from "../utils/errors.js";
 export function registerGraphTools(
   server: McpServer,
   engine: GraphEngine,
+  fullSurface = false,
 ): void {
   // twining_add_entity — Add or update a knowledge graph entity
   server.registerTool(
@@ -103,8 +104,8 @@ export function registerGraphTools(
     },
   );
 
-  // twining_neighbors — Traverse neighbors from an entity
-  server.registerTool(
+  // twining_neighbors — Traverse neighbors from an entity (hidden by default)
+  if (fullSurface) server.registerTool(
     "twining_neighbors",
     {
       description:
@@ -181,8 +182,8 @@ export function registerGraphTools(
     },
   );
 
-  // twining_prune_graph — Remove orphaned graph entities
-  server.registerTool(
+  // twining_prune_graph — Remove orphaned graph entities (hidden by default)
+  if (fullSurface) server.registerTool(
     "twining_prune_graph",
     {
       description:

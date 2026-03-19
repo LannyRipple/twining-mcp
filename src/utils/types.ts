@@ -206,6 +206,12 @@ export interface TwiningConfig {
   };
   tools?: {
     mode: "full" | "lite";
+    /** When true, register all 32 tools including rarely-used ones (default: false) */
+    full_surface: boolean;
+  };
+  graph?: {
+    /** When true, auto-populate knowledge graph from tool calls (default: false) */
+    auto_populate: boolean;
   };
 }
 
