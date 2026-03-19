@@ -21,6 +21,7 @@ src/analytics/_generated-posthog-key.ts
 # Internal tooling
 .planning/
 .serena/
+.worktrees/
 
 demo
 examples/demo-automation/demo-project/.twining/
