@@ -93,11 +93,14 @@ export function createServer(projectRoot: string): ServerContext {
     indexManager,
   );
 
-  // Create graph auto-populator for relation extraction from tool calls
-  const graphPopulator = new GraphAutoPopulator(graphEngine);
+  // Create graph auto-populator for relation extraction from tool calls (opt-in)
+  const autoPopulate = config.graph?.auto_populate ?? false;
+  const graphPopulator = autoPopulate ? new GraphAutoPopulator(graphEngine) : null;
 
   // Wire graph auto-populator into blackboard engine for post extraction
-  blackboardEngine.setGraphPopulator(graphPopulator);
+  if (graphPopulator) {
+    blackboardEngine.setGraphPopulator(graphPopulator);
+  }
 
   // Wire auto-archive threshold into blackboard engine (spec §6.1.3)
   blackboardEngine.setArchiver(archiver, config);

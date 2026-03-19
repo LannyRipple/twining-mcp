@@ -4,19 +4,21 @@ description: Build and query the knowledge graph — record entities, relations,
 auto-invocable: true
 ---
 
-# Twining Map — Knowledge Graph Building
+# Twining Map — Knowledge Graph Building (Optional)
 
-You've made changes that affect code structure, or you're onboarding to understand a new area of the codebase. Build the knowledge graph to capture architectural relationships.
+> **This is an advanced, opt-in workflow.** Benchmark data shows graph building has no measurable correlation with coordination quality (r=-0.01). Use only when you specifically need structural analysis. Requires `graph.auto_populate: true` in config for auto-population, or manual entity/relation creation.
+
+Build the knowledge graph to capture architectural relationships when you need to reason about code structure across multiple modules.
 
 ## When to Invoke
 
-- After decisions that add, remove, or restructure code modules
-- When onboarding to understand a new area of the codebase
-- After significant refactoring that changes dependency relationships
-- When you need to understand how components relate to each other
+- When you need to understand cross-module dependencies for impact analysis
+- When onboarding to a complex area where structural relationships aren't obvious from code alone
+- When explicitly asked to map code structure
 
 ## When NOT to Invoke
 
+- For most day-to-day coordination work (use decisions and blackboard instead)
 - Trivial decisions (naming, formatting, config values)
 - Changes that don't alter code structure
 - When the graph already has the information (check first with `twining_neighbors`)

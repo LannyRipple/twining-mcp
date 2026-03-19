@@ -555,7 +555,7 @@ Overall health check of the Twining state. Shows blackboard entry count, decisio
 #### Rules
 | ID | Level | Rule |
 |----|-------|------|
-| STATUS-01 | SHOULD | Call twining_status at session start to get a quick overview before diving into twining_assemble |
+| STATUS-01 | SHOULD | twining_assemble now includes status summary — use twining_status only if you need the full health check with graph counts and warnings detail |
 | STATUS-02 | SHOULD | Review the warnings array in the response and address actionable items (stale provisionals, archiving needs, orphan entities) |
 
 #### Correct Usage
@@ -630,9 +630,8 @@ Export full Twining state as a single markdown document. Includes blackboard ent
 ### workflow: orient
 | Step | Tool | Purpose |
 |------|------|---------|
-| 1 | twining_status | Check project health, warnings, and agent activity |
-| 2 | twining_assemble | Build task-specific context with relevant decisions, warnings, and needs |
-| 3 | twining_why | Understand existing decisions for target files before modifying them |
+| 1 | twining_assemble | Build task-specific context with decisions, warnings, needs, and status summary (includes twining_status output) |
+| 2 | twining_why | Understand existing decisions for target files before modifying them |
 
 ### workflow: decide
 | Step | Tool | Purpose |
@@ -645,10 +644,8 @@ Export full Twining state as a single markdown document. Includes blackboard ent
 ### workflow: verify
 | Step | Tool | Purpose |
 |------|------|---------|
-| 1 | twining_verify | Run all verification checks on the work scope |
-| 2 | twining_what_changed | Review all changes made during the session |
-| 3 | twining_link_commit | Link any unlinked commits to their decisions |
-| 4 | twining_post | Post a status entry summarizing completed work |
+| 1 | twining_verify | Run verification checks on the work scope (requires full_surface: true) |
+| 2 | twining_post | Post a status entry summarizing completed work |
 
 ### workflow: handoff
 | Step | Tool | Purpose |
@@ -685,12 +682,10 @@ Export full Twining state as a single markdown document. Includes blackboard ent
 ### workflow: new-session-lifecycle
 | Step | Tool | Purpose |
 |------|------|---------|
-| 1 | twining_status | Health check and orientation at session start |
-| 2 | twining_assemble | Build context for the planned task |
-| 3 | twining_why | Review decisions for files to be modified |
-| 4 | twining_decide | Record any architectural or implementation decisions |
-| 5 | twining_verify | Pre-completion verification of all work |
-| 6 | twining_post | Post status summary of session accomplishments |
+| 1 | twining_assemble | Build context with status summary for the planned task |
+| 2 | twining_why | Review decisions for files to be modified |
+| 3 | twining_decide | Record any architectural or implementation decisions |
+| 4 | twining_post | Post status summary of session accomplishments |
 
 ### workflow: conflict-resolution
 | Step | Tool | Purpose |
@@ -703,9 +698,9 @@ Export full Twining state as a single markdown document. Includes blackboard ent
 
 ---
 
-## Power User Workflows
+## Power User Workflows (Opt-In)
 
-These workflows are optional — the knowledge graph is auto-populated from tool calls (`twining_decide`, `twining_post`, `twining_handoff`, `twining_link_commit`). Manual graph building is only needed for advanced structural mapping.
+These workflows are optional. Knowledge graph auto-population is disabled by default (enable with `graph.auto_populate: true` in config). Manual graph building is only useful for advanced structural mapping and has no measured impact on coordination quality.
 
 ### workflow: map
 | Step | Tool | Purpose |

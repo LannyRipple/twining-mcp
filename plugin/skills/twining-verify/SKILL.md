@@ -6,7 +6,9 @@ auto-invocable: true
 
 # Twining Verify — Pre-Completion Verification
 
-Before telling the user a task is done, handing off to another agent, or ending a session, you MUST verify your work against Twining's coordination state.
+Before telling the user a task is done, handing off to another agent, or ending a session, verify your work against Twining's coordination state.
+
+> **Note:** `twining_verify` requires `tools.full_surface: true` in config. If not available, post a `status` entry via `twining_post` summarizing what you did.
 
 ## When to Invoke
 
@@ -48,7 +50,7 @@ Each check returns a status:
 
 For each issue found:
 
-**Uncovered decisions** — If you wrote tests that cover a decision, link them:
+**Uncovered decisions** — If you wrote tests that cover a decision and the knowledge graph is enabled (`graph.auto_populate: true`), link them:
 ```
 twining_add_relation(
   source="<affected_file>",
@@ -57,6 +59,7 @@ twining_add_relation(
   properties={ covers: "<what it tests>" }
 )
 ```
+If the graph is not enabled, this check can be safely ignored.
 
 **Blind decisions** — If you skipped `twining_assemble` before deciding, acknowledge it. The decision may still be valid, but note that shared context wasn't consulted.
 
