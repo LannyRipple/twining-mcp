@@ -402,7 +402,11 @@ export class ContextAssembler {
     if (this.handoffStore) {
       const handoffEntries = await this.handoffStore.list({ scope, limit: 5 });
       if (handoffEntries.length > 0) {
-        result.recent_handoffs = handoffEntries.map((h) => ({
+        // Load full records to get individual results for detailed checklist
+        const fullHandoffs = await Promise.all(
+          handoffEntries.map((h) => this.handoffStore!.get(h.id)),
+        );
+        result.recent_handoffs = handoffEntries.map((h, i) => ({
           id: h.id,
           source_agent: h.source_agent,
           target_agent: h.target_agent ?? "",
@@ -411,6 +415,7 @@ export class ContextAssembler {
           result_status: h.result_status,
           acknowledged: h.acknowledged,
           created_at: h.created_at,
+          results: fullHandoffs[i]?.results,
         }));
       }
     }
@@ -477,91 +482,115 @@ export class ContextAssembler {
    * Produces imperative sentences and numbered lists instead of raw JSON.
    */
   static formatForLLM(ctx: AssembledContext, statusSummary?: string): string {
+    // Short-circuit: if there's nothing useful to say, return minimal output
+    const hasContent =
+      ctx.active_warnings.length > 0 ||
+      ctx.active_decisions.length > 0 ||
+      ctx.recent_findings.length > 0 ||
+      ctx.open_needs.length > 0 ||
+      ctx.recent_questions.length > 0 ||
+      (ctx.recent_handoffs && ctx.recent_handoffs.length > 0) ||
+      ctx.planning_state != null;
+    if (!hasContent) {
+      return `No prior context for scope: ${ctx.scope}`;
+    }
+
     const sections: string[] = [];
 
     // Header
     sections.push(`## Before You Start (scope: ${ctx.scope})`);
 
-    // 1. Decisions to respect
+    // 1. Warnings FIRST — "what not to do" is the most actionable signal
+    if (ctx.active_warnings.length > 0) {
+      sections.push("\n### STOP — READ THESE WARNINGS");
+      for (const w of ctx.active_warnings) {
+        sections.push(`- **${w.summary}**${w.detail ? `\n  ${w.detail}` : ""}`);
+      }
+    }
+
+    // 2. Continue from (handoffs) — second priority, provides continuation context
+    if (ctx.recent_handoffs && ctx.recent_handoffs.length > 0) {
+      sections.push("\n### CONTINUE FROM PREVIOUS WORK");
+      for (const h of ctx.recent_handoffs) {
+        const status = h.acknowledged ? "acknowledged" : "pending";
+        sections.push(`**${h.source_agent} → ${h.target_agent || "any"}** (${status}): ${h.summary}`);
+        // Detailed checklist of individual results
+        if (h.results && h.results.length > 0) {
+          for (const r of h.results) {
+            const icon = r.status === "completed" ? "[x]" : r.status === "blocked" ? "[BLOCKED]" : "[ ]";
+            sections.push(`  - ${icon} ${r.description}${r.notes ? ` — ${r.notes}` : ""}`);
+          }
+        }
+      }
+    }
+
+    // 3. Decisions — imperative framing with files prominent
     if (ctx.active_decisions.length > 0) {
       sections.push("\n### DECISIONS TO RESPECT");
       for (let i = 0; i < ctx.active_decisions.length; i++) {
         const d = ctx.active_decisions[i]!;
-        const files = d.affected_files?.length > 0 ? ` [${d.affected_files.join(", ")}]` : "";
+        const files = d.affected_files?.length > 0 ? `\n   Files: ${d.affected_files.join(", ")}` : "";
         sections.push(`${i + 1}. **${d.summary}** (${d.confidence})${files}`);
-        sections.push(`   Rationale: ${d.rationale}`);
+        sections.push(`   Why: ${d.rationale}`);
       }
     } else {
       sections.push("\nNo active decisions for this scope.");
     }
 
-    // 2. Warnings
-    if (ctx.active_warnings.length > 0) {
-      sections.push("\n### WARNINGS — DO NOT IGNORE");
-      for (const w of ctx.active_warnings) {
-        sections.push(`- **${w.summary}**${w.detail ? `: ${w.detail}` : ""}`);
+    // 4. Open needs — what still needs to be done
+    if (ctx.open_needs.length > 0) {
+      sections.push("\n### REMAINING WORK");
+      for (const n of ctx.open_needs) {
+        sections.push(`- [ ] ${n.summary}`);
       }
     }
 
-    // 3. Continue from (handoffs)
-    if (ctx.recent_handoffs && ctx.recent_handoffs.length > 0) {
-      sections.push("\n### CONTINUE FROM");
-      for (const h of ctx.recent_handoffs) {
-        const status = h.acknowledged ? "acknowledged" : "pending";
-        sections.push(`- ${h.source_agent} → ${h.target_agent || "any"}: ${h.summary} (${status})`);
+    // 5. Recent findings (brief, only if not redundant with decisions)
+    if (ctx.recent_findings.length > 0) {
+      // Filter out findings whose summary is substantially duplicated by a decision
+      const decisionSummaries = ctx.active_decisions.map((d) => d.summary.toLowerCase());
+      const uniqueFindings = ctx.recent_findings.filter((f) => {
+        const fLower = f.summary.toLowerCase();
+        return !decisionSummaries.some((ds) =>
+          ds.includes(fLower.slice(0, 30)) || fLower.includes(ds.slice(0, 30)),
+        );
+      });
+      if (uniqueFindings.length > 0) {
+        sections.push("\n### FINDINGS");
+        for (const f of uniqueFindings) {
+          sections.push(`- ${f.summary}`);
+        }
       }
     }
 
-    // Quick reference section
-    const quickRef: string[] = ["\n## Quick Reference"];
+    // 6. Quick reference section — compact metadata
+    const quickRef: string[] = ["\n---"];
 
     // Status summary (P5.1)
     if (statusSummary) {
-      quickRef.push(`- Status: ${statusSummary}`);
-    }
-
-    // Affected files from decisions
-    const allFiles = new Set<string>();
-    for (const d of ctx.active_decisions) {
-      for (const f of d.affected_files ?? []) allFiles.add(f);
-    }
-    if (allFiles.size > 0) {
-      quickRef.push(`- Files referenced in decisions: ${[...allFiles].join(", ")}`);
-    }
-
-    // Open needs
-    if (ctx.open_needs.length > 0) {
-      quickRef.push(`- Open needs: ${ctx.open_needs.map((n) => n.summary).join("; ")}`);
+      quickRef.push(`Status: ${statusSummary}`);
     }
 
     // Questions
     if (ctx.recent_questions.length > 0) {
-      quickRef.push(`- Open questions: ${ctx.recent_questions.map((q) => q.summary).join("; ")}`);
+      quickRef.push(`Open questions: ${ctx.recent_questions.map((q) => q.summary).join("; ")}`);
     }
 
     // Planning state
     if (ctx.planning_state) {
-      quickRef.push(`- Planning: Phase ${ctx.planning_state.current_phase}, ${ctx.planning_state.progress}`);
+      quickRef.push(`Planning: Phase ${ctx.planning_state.current_phase}, ${ctx.planning_state.progress}`);
       if (ctx.planning_state.blockers.length > 0) {
-        quickRef.push(`- Blockers: ${ctx.planning_state.blockers.join("; ")}`);
+        quickRef.push(`Blockers: ${ctx.planning_state.blockers.join("; ")}`);
       }
     }
 
     // Suggested agents
     if (ctx.suggested_agents && ctx.suggested_agents.length > 0) {
-      quickRef.push(`- Suggested agents: ${ctx.suggested_agents.map((a) => `${a.agent_id} (${a.capabilities.join(", ")})`).join("; ")}`);
+      quickRef.push(`Suggested agents: ${ctx.suggested_agents.map((a) => `${a.agent_id} (${a.capabilities.join(", ")})`).join("; ")}`);
     }
 
     if (quickRef.length > 1) {
       sections.push(quickRef.join("\n"));
-    }
-
-    // Recent findings (brief)
-    if (ctx.recent_findings.length > 0) {
-      sections.push("\n### Recent Findings");
-      for (const f of ctx.recent_findings) {
-        sections.push(`- ${f.summary}`);
-      }
     }
 
     return sections.join("\n");

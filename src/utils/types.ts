@@ -156,6 +156,7 @@ export interface AssembledContext {
     result_status: string;
     acknowledged: boolean;
     created_at: string;
+    results?: HandoffResult[];
   }[];
   suggested_agents?: {
     agent_id: string;

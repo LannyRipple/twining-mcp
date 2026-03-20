@@ -1088,5 +1088,173 @@
     ],
     "affected_symbols": [],
     "commit_hashes": []
+  },
+  {
+    "id": "01KM2B5GACRK2B5X6P2S4JQ6D5",
+    "timestamp": "2026-03-19T06:05:17.006Z",
+    "domain": "architecture",
+    "scope": "src/tools/",
+    "summary": "Reduce default tool surface from 32 to 16 via full_surface config flag",
+    "confidence": "high",
+    "status": "provisional",
+    "affected_files": [
+      "src/config.ts",
+      "src/server.ts",
+      "src/utils/types.ts",
+      "src/tools/blackboard-tools.ts",
+      "src/tools/decision-tools.ts",
+      "src/tools/coordination-tools.ts",
+      "src/tools/graph-tools.ts",
+      "src/tools/lifecycle-tools.ts",
+      "src/tools/export-tools.ts",
+      "src/tools/verify-tools.ts",
+      "src/tools/context-tools.ts"
+    ],
+    "affected_symbols": [],
+    "commit_hashes": [
+      "c608240"
+    ]
+  },
+  {
+    "id": "01KM2B5R2YW8G820RC35Z8TX20",
+    "timestamp": "2026-03-19T06:05:24.959Z",
+    "domain": "architecture",
+    "scope": "src/engine/context-assembler.ts",
+    "summary": "Assemble output includes structured markdown briefing and inline status summary",
+    "confidence": "high",
+    "status": "provisional",
+    "affected_files": [
+      "src/engine/context-assembler.ts",
+      "src/tools/context-tools.ts"
+    ],
+    "affected_symbols": [],
+    "commit_hashes": [
+      "6b4f143"
+    ]
+  },
+  {
+    "id": "01KM2B5Y6D1YQVHER5F1SARJHD",
+    "timestamp": "2026-03-19T06:05:31.213Z",
+    "domain": "architecture",
+    "scope": "src/engine/graph-auto-populator.ts",
+    "summary": "Graph auto-population disabled by default (opt-in via graph.auto_populate config)",
+    "confidence": "high",
+    "status": "active",
+    "affected_files": [
+      "src/server.ts",
+      "src/config.ts",
+      "plugin/BEHAVIORS.md",
+      "plugin/skills/twining-map/SKILL.md"
+    ],
+    "affected_symbols": [],
+    "commit_hashes": [
+      "17321b3"
+    ]
+  },
+  {
+    "id": "01KM6AYNPW2HNY7B4RAY67V3NX",
+    "timestamp": "2026-03-20T19:18:30.898Z",
+    "domain": "testing",
+    "scope": "test/coordination/",
+    "summary": "Coordination effectiveness test suite using real stores with temp dirs, no mocking",
+    "confidence": "high",
+    "status": "active",
+    "affected_files": [
+      "vitest.config.coordination.ts",
+      "test/coordination/helpers.ts",
+      "test/coordination/fixtures/bug-investigation.ts",
+      "test/coordination/fixtures/architecture-cascade.ts",
+      "test/coordination/fixtures/context-recovery.ts",
+      "test/coordination/fixtures/conflict-resolution.ts",
+      "test/coordination/fixtures/refactoring-handoff.ts",
+      "test/coordination/coordination-quality.test.ts",
+      "test/coordination/decision-propagation.test.ts",
+      "test/coordination/graph-reachability.test.ts",
+      "test/coordination/decision-why.test.ts",
+      "test/coordination/overhead-measurement.test.ts",
+      "test/coordination/benchmark-scenarios.test.ts"
+    ],
+    "affected_symbols": [],
+    "commit_hashes": []
+  },
+  {
+    "id": "01KM6CEQMN44C52G93V99JQ1H0",
+    "timestamp": "2026-03-20T19:44:45.728Z",
+    "domain": "implementation",
+    "scope": "src/engine/context-assembler.ts",
+    "summary": "Reorder formatForLLM: warnings first, then handoffs, then decisions, then needs, then findings",
+    "confidence": "high",
+    "status": "provisional",
+    "affected_files": [
+      "src/engine/context-assembler.ts"
+    ],
+    "affected_symbols": [
+      "formatForLLM"
+    ],
+    "commit_hashes": []
+  },
+  {
+    "id": "01KM6CF41DRF6ZNMBZRBEQXB9R",
+    "timestamp": "2026-03-20T19:44:58.413Z",
+    "domain": "implementation",
+    "scope": "src/engine/context-assembler.ts",
+    "summary": "Enrich handoff data in AssembledContext to include individual results for detailed checklists",
+    "confidence": "high",
+    "status": "provisional",
+    "affected_files": [
+      "src/engine/context-assembler.ts",
+      "src/utils/types.ts"
+    ],
+    "affected_symbols": [
+      "formatForLLM",
+      "AssembledContext"
+    ],
+    "commit_hashes": []
+  },
+  {
+    "id": "01KM6CFBQ7WWV6FAGY73N5E9D3",
+    "timestamp": "2026-03-20T19:45:06.279Z",
+    "domain": "implementation",
+    "scope": "src/engine/context-assembler.ts",
+    "summary": "Filter redundant findings that substantially overlap with decision summaries in formatForLLM",
+    "confidence": "medium",
+    "status": "provisional",
+    "affected_files": [
+      "src/engine/context-assembler.ts"
+    ],
+    "affected_symbols": [
+      "formatForLLM"
+    ],
+    "commit_hashes": []
+  },
+  {
+    "id": "01KM6FNY5GTKCW02RFFG26W9RR",
+    "timestamp": "2026-03-20T20:41:07.511Z",
+    "domain": "implementation",
+    "scope": "src/engine/context-assembler.ts",
+    "summary": "Empty-state short-circuit in formatForLLM returns terse one-liner when no content exists",
+    "confidence": "high",
+    "status": "provisional",
+    "affected_files": [
+      "src/engine/context-assembler.ts"
+    ],
+    "affected_symbols": [
+      "formatForLLM"
+    ],
+    "commit_hashes": []
+  },
+  {
+    "id": "01KM6GJ1JP55JNMJF95GZWX5TA",
+    "timestamp": "2026-03-20T20:56:28.532Z",
+    "domain": "testing",
+    "scope": "test/coordination/",
+    "summary": "Bug-investigation resolution scorer penalizes redundant re-fixes when Agent A already completed the work",
+    "confidence": "high",
+    "status": "provisional",
+    "affected_files": [
+      "test/coordination/benchmark-scenarios.test.ts"
+    ],
+    "affected_symbols": [],
+    "commit_hashes": []
   }
 ]

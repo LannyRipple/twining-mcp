@@ -2116,5 +2116,415 @@
       "decision_summary": "Replace computeGraphConnectivity with computeGraphReachability using typed BFS and adaptive weight fallback"
     },
     "created_at": "2026-03-14T05:48:39.728Z"
+  },
+  {
+    "id": "01KM2B5GR6DCF4XW9PY25MQTPC",
+    "source": "01KJD595ND5YACA06PBGYTRRXA",
+    "target": "01KM2B5GR35WW0739SKS7WHAZB",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Reduce default tool surface from 32 to 16 via full_surface config flag"
+    },
+    "created_at": "2026-03-19T06:05:17.446Z"
+  },
+  {
+    "id": "01KM2B5GR9DMT7FN950YVETNDN",
+    "source": "01KHMSDEJH7CQCE97XA0ZAP52A",
+    "target": "01KM2B5GR35WW0739SKS7WHAZB",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Reduce default tool surface from 32 to 16 via full_surface config flag"
+    },
+    "created_at": "2026-03-19T06:05:17.449Z"
+  },
+  {
+    "id": "01KM2B5GRDR9WMMTAWY06H5FXR",
+    "source": "01KHMSDQY0T6VGYV2VXV2E6MRB",
+    "target": "01KM2B5GR35WW0739SKS7WHAZB",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Reduce default tool surface from 32 to 16 via full_surface config flag"
+    },
+    "created_at": "2026-03-19T06:05:17.453Z"
+  },
+  {
+    "id": "01KM2B5GRMN8T0QS3Q4D3VAYJV",
+    "source": "01KHMSDJZEQM1FXSMNYBYTST24",
+    "target": "01KM2B5GR35WW0739SKS7WHAZB",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Reduce default tool surface from 32 to 16 via full_surface config flag"
+    },
+    "created_at": "2026-03-19T06:05:17.460Z"
+  },
+  {
+    "id": "01KM2B5GRQ7XW1N36KTR9N9M04",
+    "source": "01KHMSDM44AFAD0VVEK8T9N3TK",
+    "target": "01KM2B5GR35WW0739SKS7WHAZB",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Reduce default tool surface from 32 to 16 via full_surface config flag"
+    },
+    "created_at": "2026-03-19T06:05:17.463Z"
+  },
+  {
+    "id": "01KM2B5GRTY2XWR00RSC35DY53",
+    "source": "01KJJSJTQYDBTD49DYMQ2XN7Y6",
+    "target": "01KM2B5GR35WW0739SKS7WHAZB",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Reduce default tool surface from 32 to 16 via full_surface config flag"
+    },
+    "created_at": "2026-03-19T06:05:17.466Z"
+  },
+  {
+    "id": "01KM2B5GRW4W7XVZCPJKBQ0479",
+    "source": "01KHMSDNP6W0G4PM1EF27453CS",
+    "target": "01KM2B5GR35WW0739SKS7WHAZB",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Reduce default tool surface from 32 to 16 via full_surface config flag"
+    },
+    "created_at": "2026-03-19T06:05:17.468Z"
+  },
+  {
+    "id": "01KM2B5GRYR678TB0718RKT27D",
+    "source": "01KHMSDPPSS0QE5B5RT17WGBN1",
+    "target": "01KM2B5GR35WW0739SKS7WHAZB",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Reduce default tool surface from 32 to 16 via full_surface config flag"
+    },
+    "created_at": "2026-03-19T06:05:17.470Z"
+  },
+  {
+    "id": "01KM2B5GS1K2F2QRGD4PHN9154",
+    "source": "01KM2B5GRZ2ZRK58VDE348WBJC",
+    "target": "01KM2B5GR35WW0739SKS7WHAZB",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Reduce default tool surface from 32 to 16 via full_surface config flag"
+    },
+    "created_at": "2026-03-19T06:05:17.473Z"
+  },
+  {
+    "id": "01KM2B5GS4T4PT8N05HQMCKAK1",
+    "source": "01KM2B5GS2QDF3P8VW1RGXNVW1",
+    "target": "01KM2B5GR35WW0739SKS7WHAZB",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Reduce default tool surface from 32 to 16 via full_surface config flag"
+    },
+    "created_at": "2026-03-19T06:05:17.476Z"
+  },
+  {
+    "id": "01KM2B5GSBVTT929MXAVT3ZEFW",
+    "source": "01KHMSDMRQ5HSX2W6SBDT3RND2",
+    "target": "01KM2B5GR35WW0739SKS7WHAZB",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Reduce default tool surface from 32 to 16 via full_surface config flag"
+    },
+    "created_at": "2026-03-19T06:05:17.483Z"
+  },
+  {
+    "id": "01KM2B5R6VKF3WCA01PVRR8Y9W",
+    "source": "01KHXTXPP31RWYHVGNGXN9REW8",
+    "target": "01KM2B5R6RWNYSWHAM97TF0R3N",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Assemble output includes structured markdown briefing and inline status summary"
+    },
+    "created_at": "2026-03-19T06:05:25.083Z"
+  },
+  {
+    "id": "01KM2B5R6X5422T5CFE6D1BWDF",
+    "source": "01KHMSDMRQ5HSX2W6SBDT3RND2",
+    "target": "01KM2B5R6RWNYSWHAM97TF0R3N",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Assemble output includes structured markdown briefing and inline status summary"
+    },
+    "created_at": "2026-03-19T06:05:25.085Z"
+  },
+  {
+    "id": "01KM2B5Y8AFA8N50YD436TDB2M",
+    "source": "01KHMSDEJH7CQCE97XA0ZAP52A",
+    "target": "01KM2B5Y87B2A1HRT7JHC7TTB7",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Graph auto-population disabled by default (opt-in via graph.auto_populate config)"
+    },
+    "created_at": "2026-03-19T06:05:31.274Z"
+  },
+  {
+    "id": "01KM2B5Y8C6WHNGQ5CR2NW0PNP",
+    "source": "01KJD595ND5YACA06PBGYTRRXA",
+    "target": "01KM2B5Y87B2A1HRT7JHC7TTB7",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Graph auto-population disabled by default (opt-in via graph.auto_populate config)"
+    },
+    "created_at": "2026-03-19T06:05:31.276Z"
+  },
+  {
+    "id": "01KM2B5Y8F1NCNGV17W3KGP0Y8",
+    "source": "01KJQ647P1MGGRERHA1JH2BE8T",
+    "target": "01KM2B5Y87B2A1HRT7JHC7TTB7",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Graph auto-population disabled by default (opt-in via graph.auto_populate config)"
+    },
+    "created_at": "2026-03-19T06:05:31.279Z"
+  },
+  {
+    "id": "01KM2B5Y8MMH16100XMR1Q16VC",
+    "source": "01KM2B5Y8GZ53K75D8ZMX2AXGN",
+    "target": "01KM2B5Y87B2A1HRT7JHC7TTB7",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Graph auto-population disabled by default (opt-in via graph.auto_populate config)"
+    },
+    "created_at": "2026-03-19T06:05:31.284Z"
+  },
+  {
+    "id": "01KM6AYPJ3G3085MJ31DCMHDPZ",
+    "source": "01KM6AYPJ1H8HSEPGRFB1FNVG4",
+    "target": "01KM6AYPHWZAJWCS92C52DXBAM",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Coordination effectiveness test suite using real stores with temp dirs, no mocking"
+    },
+    "created_at": "2026-03-20T19:18:31.747Z"
+  },
+  {
+    "id": "01KM6AYPJ9GZ90TP6RY726JSJ4",
+    "source": "01KM6AYPJ6S4V5JGT1Y3X14ZZE",
+    "target": "01KM6AYPHWZAJWCS92C52DXBAM",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Coordination effectiveness test suite using real stores with temp dirs, no mocking"
+    },
+    "created_at": "2026-03-20T19:18:31.753Z"
+  },
+  {
+    "id": "01KM6AYPJF2AWKV55YM4ER0AM7",
+    "source": "01KM6AYPJA2DVPQF9J26JP6D5D",
+    "target": "01KM6AYPHWZAJWCS92C52DXBAM",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Coordination effectiveness test suite using real stores with temp dirs, no mocking"
+    },
+    "created_at": "2026-03-20T19:18:31.759Z"
+  },
+  {
+    "id": "01KM6AYPJM5WMFDDMWNS9P6BBM",
+    "source": "01KM6AYPJHM0010V5X0NM92YN5",
+    "target": "01KM6AYPHWZAJWCS92C52DXBAM",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Coordination effectiveness test suite using real stores with temp dirs, no mocking"
+    },
+    "created_at": "2026-03-20T19:18:31.764Z"
+  },
+  {
+    "id": "01KM6AYPJT28K2HA6XN80DY8DZ",
+    "source": "01KM6AYPJP63RVV0MADZGHVQ8S",
+    "target": "01KM6AYPHWZAJWCS92C52DXBAM",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Coordination effectiveness test suite using real stores with temp dirs, no mocking"
+    },
+    "created_at": "2026-03-20T19:18:31.770Z"
+  },
+  {
+    "id": "01KM6AYPK4QDC5RTGVX2XQ4KYW",
+    "source": "01KM6AYPJXST6NJAQKXXEAJNV5",
+    "target": "01KM6AYPHWZAJWCS92C52DXBAM",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Coordination effectiveness test suite using real stores with temp dirs, no mocking"
+    },
+    "created_at": "2026-03-20T19:18:31.780Z"
+  },
+  {
+    "id": "01KM6AYPK8N1SE5GZXJXEE6RB4",
+    "source": "01KM6AYPK6DR698KZK6RRB1466",
+    "target": "01KM6AYPHWZAJWCS92C52DXBAM",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Coordination effectiveness test suite using real stores with temp dirs, no mocking"
+    },
+    "created_at": "2026-03-20T19:18:31.784Z"
+  },
+  {
+    "id": "01KM6AYPKB1GW6C5B94V7ZT3E6",
+    "source": "01KM6AYPK9KCRRDEVBNSJTWCR6",
+    "target": "01KM6AYPHWZAJWCS92C52DXBAM",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Coordination effectiveness test suite using real stores with temp dirs, no mocking"
+    },
+    "created_at": "2026-03-20T19:18:31.787Z"
+  },
+  {
+    "id": "01KM6AYPKE4Y18XQAVKZ9ZPQ5X",
+    "source": "01KM6AYPKD29MTFFS1ZV49ER29",
+    "target": "01KM6AYPHWZAJWCS92C52DXBAM",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Coordination effectiveness test suite using real stores with temp dirs, no mocking"
+    },
+    "created_at": "2026-03-20T19:18:31.790Z"
+  },
+  {
+    "id": "01KM6AYPKJ6WPNJ0W10TXFEAQP",
+    "source": "01KM6AYPKGY8021A53TH5YC3PW",
+    "target": "01KM6AYPHWZAJWCS92C52DXBAM",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Coordination effectiveness test suite using real stores with temp dirs, no mocking"
+    },
+    "created_at": "2026-03-20T19:18:31.794Z"
+  },
+  {
+    "id": "01KM6AYPKNP6D7GPEF8QXVXEMC",
+    "source": "01KM6AYPKMWMRTVZT7RFAP9FNN",
+    "target": "01KM6AYPHWZAJWCS92C52DXBAM",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Coordination effectiveness test suite using real stores with temp dirs, no mocking"
+    },
+    "created_at": "2026-03-20T19:18:31.798Z"
+  },
+  {
+    "id": "01KM6AYPKRD15FTKD6X0QY84X7",
+    "source": "01KM6AYPKQMA0JQ9QQABNJBXRW",
+    "target": "01KM6AYPHWZAJWCS92C52DXBAM",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Coordination effectiveness test suite using real stores with temp dirs, no mocking"
+    },
+    "created_at": "2026-03-20T19:18:31.800Z"
+  },
+  {
+    "id": "01KM6AYPKVHWVYRJF5NW9YTMQA",
+    "source": "01KM6AYPKS6FQK95YZNXZ85MR7",
+    "target": "01KM6AYPHWZAJWCS92C52DXBAM",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Coordination effectiveness test suite using real stores with temp dirs, no mocking"
+    },
+    "created_at": "2026-03-20T19:18:31.803Z"
+  },
+  {
+    "id": "01KM6CER8W1Q5F41QH8CN3XHK6",
+    "source": "01KHXTXPP31RWYHVGNGXN9REW8",
+    "target": "01KM6CER8K0H7DW3NTKT2AW73Q",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Reorder formatForLLM: warnings first, then handoffs, then decisions, then needs, then findings"
+    },
+    "created_at": "2026-03-20T19:44:46.364Z"
+  },
+  {
+    "id": "01KM6CER99Y5JXD7BYX105EJN6",
+    "source": "01KM6CER90NABPVYNEB4DB8DQQ",
+    "target": "01KM6CER8K0H7DW3NTKT2AW73Q",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Reorder formatForLLM: warnings first, then handoffs, then decisions, then needs, then findings"
+    },
+    "created_at": "2026-03-20T19:44:46.378Z"
+  },
+  {
+    "id": "01KM6CF4CFE5H8NB566QQJV0BV",
+    "source": "01KHXTXPP31RWYHVGNGXN9REW8",
+    "target": "01KM6CF4CDGMX5TTTRNJK4EG72",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Enrich handoff data in AssembledContext to include individual results for detailed checklists"
+    },
+    "created_at": "2026-03-20T19:44:58.767Z"
+  },
+  {
+    "id": "01KM6CF4CJ12Y885T8CSAZ39YC",
+    "source": "01KHMSDQY0T6VGYV2VXV2E6MRB",
+    "target": "01KM6CF4CDGMX5TTTRNJK4EG72",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Enrich handoff data in AssembledContext to include individual results for detailed checklists"
+    },
+    "created_at": "2026-03-20T19:44:58.770Z"
+  },
+  {
+    "id": "01KM6CF4CNT0FNCD0E7P4VSFZX",
+    "source": "01KM6CER90NABPVYNEB4DB8DQQ",
+    "target": "01KM6CF4CDGMX5TTTRNJK4EG72",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Enrich handoff data in AssembledContext to include individual results for detailed checklists"
+    },
+    "created_at": "2026-03-20T19:44:58.773Z"
+  },
+  {
+    "id": "01KM6CF4CW5CPZJYQRYTKXX8FH",
+    "source": "01KM6CF4CT684HF4BZANYNC18G",
+    "target": "01KM6CF4CDGMX5TTTRNJK4EG72",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Enrich handoff data in AssembledContext to include individual results for detailed checklists"
+    },
+    "created_at": "2026-03-20T19:44:58.780Z"
+  },
+  {
+    "id": "01KM6CFBYF91X5Z0ZR05N719B9",
+    "source": "01KHXTXPP31RWYHVGNGXN9REW8",
+    "target": "01KM6CFBY9316P8DSE67045G6A",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Filter redundant findings that substantially overlap with decision summaries in formatForLLM"
+    },
+    "created_at": "2026-03-20T19:45:06.511Z"
+  },
+  {
+    "id": "01KM6CFBYJFN23S4QMVPGJ87PM",
+    "source": "01KM6CER90NABPVYNEB4DB8DQQ",
+    "target": "01KM6CFBY9316P8DSE67045G6A",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Filter redundant findings that substantially overlap with decision summaries in formatForLLM"
+    },
+    "created_at": "2026-03-20T19:45:06.514Z"
+  },
+  {
+    "id": "01KM6FNYXVFFFFW4BMCRMM4B3F",
+    "source": "01KHXTXPP31RWYHVGNGXN9REW8",
+    "target": "01KM6FNYXQSJ8RJ9YZZ1K4D722",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Empty-state short-circuit in formatForLLM returns terse one-liner when no content exists"
+    },
+    "created_at": "2026-03-20T20:41:08.283Z"
+  },
+  {
+    "id": "01KM6FNYXX1JBVZYY0D8G47Q1Z",
+    "source": "01KM6CER90NABPVYNEB4DB8DQQ",
+    "target": "01KM6FNYXQSJ8RJ9YZZ1K4D722",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Empty-state short-circuit in formatForLLM returns terse one-liner when no content exists"
+    },
+    "created_at": "2026-03-20T20:41:08.285Z"
+  },
+  {
+    "id": "01KM6GJ33Y0BS3KRAB23EFT51S",
+    "source": "01KM6AYPKS6FQK95YZNXZ85MR7",
+    "target": "01KM6GJ33DEJAW62KW1KYDHDWD",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Bug-investigation resolution scorer penalizes redundant re-fixes when Agent A already completed the work"
+    },
+    "created_at": "2026-03-20T20:56:30.078Z"
   }
 ]

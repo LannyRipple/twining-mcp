@@ -112,10 +112,10 @@
     "properties": {
       "description": "MCP server setup — createServer() wires all engines and registers tool handlers",
       "layer": "server",
-      "scope": "src/engine/"
+      "scope": "src/engine/graph-auto-populator.ts"
     },
     "created_at": "2026-02-17T03:13:31.729Z",
-    "updated_at": "2026-03-14T05:48:32.117Z"
+    "updated_at": "2026-03-19T06:05:31.272Z"
   },
   {
     "id": "01KHMSDJZEQM1FXSMNYBYTST24",
@@ -124,10 +124,10 @@
     "properties": {
       "description": "MCP tool handlers: twining_post, twining_read, twining_query, twining_recent",
       "layer": "tools",
-      "scope": "src/tools/blackboard-tools.ts"
+      "scope": "src/tools/"
     },
     "created_at": "2026-02-17T03:13:36.238Z",
-    "updated_at": "2026-02-26T15:20:45.416Z"
+    "updated_at": "2026-03-19T06:05:17.455Z"
   },
   {
     "id": "01KHMSDM44AFAD0VVEK8T9N3TK",
@@ -135,10 +135,11 @@
     "type": "file",
     "properties": {
       "description": "MCP tool handlers: twining_decide, twining_why, twining_trace, twining_commits",
-      "layer": "tools"
+      "layer": "tools",
+      "scope": "src/tools/"
     },
     "created_at": "2026-02-17T03:13:37.412Z",
-    "updated_at": "2026-02-17T03:13:37.412Z"
+    "updated_at": "2026-03-19T06:05:17.462Z"
   },
   {
     "id": "01KHMSDMRQ5HSX2W6SBDT3RND2",
@@ -146,10 +147,11 @@
     "type": "file",
     "properties": {
       "description": "MCP tool handlers: twining_assemble, twining_summarize, twining_what_changed",
-      "layer": "tools"
+      "layer": "tools",
+      "scope": "src/engine/context-assembler.ts"
     },
     "created_at": "2026-02-17T03:13:38.071Z",
-    "updated_at": "2026-02-17T03:13:38.071Z"
+    "updated_at": "2026-03-19T06:05:25.084Z"
   },
   {
     "id": "01KHMSDNP6W0G4PM1EF27453CS",
@@ -157,10 +159,11 @@
     "type": "file",
     "properties": {
       "description": "MCP tool handlers: twining_add_entity, twining_add_relation, twining_neighbors, twining_graph_query",
-      "layer": "tools"
+      "layer": "tools",
+      "scope": "src/tools/"
     },
     "created_at": "2026-02-17T03:13:39.014Z",
-    "updated_at": "2026-02-17T03:13:39.014Z"
+    "updated_at": "2026-03-19T06:05:17.467Z"
   },
   {
     "id": "01KHMSDPPSS0QE5B5RT17WGBN1",
@@ -168,10 +171,11 @@
     "type": "file",
     "properties": {
       "description": "MCP tool handlers: twining_reconsider, twining_override, twining_archive, twining_status",
-      "layer": "tools"
+      "layer": "tools",
+      "scope": "src/tools/"
     },
     "created_at": "2026-02-17T03:13:40.057Z",
-    "updated_at": "2026-02-17T03:13:40.057Z"
+    "updated_at": "2026-03-19T06:05:17.469Z"
   },
   {
     "id": "01KHMSDQY0T6VGYV2VXV2E6MRB",
@@ -183,7 +187,7 @@
       "scope": "src/engine/context-assembler.ts"
     },
     "created_at": "2026-02-17T03:13:41.312Z",
-    "updated_at": "2026-03-14T05:48:39.726Z"
+    "updated_at": "2026-03-20T19:44:58.769Z"
   },
   {
     "id": "01KHMSDV08WTQDVVSF4159DVB1",
@@ -415,7 +419,7 @@
       "scope": "src/engine/context-assembler.ts"
     },
     "created_at": "2026-02-20T15:33:02.787Z",
-    "updated_at": "2026-03-14T05:48:39.722Z"
+    "updated_at": "2026-03-20T20:41:08.280Z"
   },
   {
     "id": "01KJC68M4JW78VXAARQMW60KA8",
@@ -554,10 +558,10 @@
     "name": "src/config.ts",
     "type": "file",
     "properties": {
-      "scope": "src/engine/context-assembler.ts"
+      "scope": "src/engine/graph-auto-populator.ts"
     },
     "created_at": "2026-02-26T14:22:40.813Z",
-    "updated_at": "2026-03-14T05:48:39.724Z"
+    "updated_at": "2026-03-19T06:05:31.275Z"
   },
   {
     "id": "01KJD595NE5JW9DEJ3VGCB4MMD",
@@ -1089,10 +1093,10 @@
     "name": "src/tools/coordination-tools.ts",
     "type": "file",
     "properties": {
-      "scope": "src/engine/"
+      "scope": "src/tools/"
     },
     "created_at": "2026-02-28T18:53:40.990Z",
-    "updated_at": "2026-03-14T05:48:32.114Z"
+    "updated_at": "2026-03-19T06:05:17.464Z"
   },
   {
     "id": "01KJJSJTRA0DB2AJR3E6E76332",
@@ -1415,10 +1419,10 @@
     "name": "plugin/BEHAVIORS.md",
     "type": "file",
     "properties": {
-      "scope": "plugin/"
+      "scope": "src/engine/graph-auto-populator.ts"
     },
     "created_at": "2026-03-02T11:49:51.937Z",
-    "updated_at": "2026-03-10T13:03:56.459Z"
+    "updated_at": "2026-03-19T06:05:31.277Z"
   },
   {
     "id": "01KJQ647P90Q4H2Y3QZRTBKCQZ",
@@ -1956,5 +1960,284 @@
     },
     "created_at": "2026-03-14T05:48:39.721Z",
     "updated_at": "2026-03-14T05:48:39.721Z"
+  },
+  {
+    "id": "01KM2B5GR35WW0739SKS7WHAZB",
+    "name": "01KM2B5GACRK2B5X6P2S4JQ6D5",
+    "type": "concept",
+    "properties": {
+      "summary": "Reduce default tool surface from 32 to 16 via full_surface config flag",
+      "scope": "src/tools/"
+    },
+    "created_at": "2026-03-19T06:05:17.443Z",
+    "updated_at": "2026-03-19T06:05:17.443Z"
+  },
+  {
+    "id": "01KM2B5GRZ2ZRK58VDE348WBJC",
+    "name": "src/tools/export-tools.ts",
+    "type": "file",
+    "properties": {
+      "scope": "src/tools/"
+    },
+    "created_at": "2026-03-19T06:05:17.471Z",
+    "updated_at": "2026-03-19T06:05:17.471Z"
+  },
+  {
+    "id": "01KM2B5GS2QDF3P8VW1RGXNVW1",
+    "name": "src/tools/verify-tools.ts",
+    "type": "file",
+    "properties": {
+      "scope": "src/tools/"
+    },
+    "created_at": "2026-03-19T06:05:17.474Z",
+    "updated_at": "2026-03-19T06:05:17.474Z"
+  },
+  {
+    "id": "01KM2B5R6RWNYSWHAM97TF0R3N",
+    "name": "01KM2B5R2YW8G820RC35Z8TX20",
+    "type": "concept",
+    "properties": {
+      "summary": "Assemble output includes structured markdown briefing and inline status summary",
+      "scope": "src/engine/context-assembler.ts"
+    },
+    "created_at": "2026-03-19T06:05:25.080Z",
+    "updated_at": "2026-03-19T06:05:25.080Z"
+  },
+  {
+    "id": "01KM2B5Y87B2A1HRT7JHC7TTB7",
+    "name": "01KM2B5Y6D1YQVHER5F1SARJHD",
+    "type": "concept",
+    "properties": {
+      "summary": "Graph auto-population disabled by default (opt-in via graph.auto_populate config)",
+      "scope": "src/engine/graph-auto-populator.ts"
+    },
+    "created_at": "2026-03-19T06:05:31.271Z",
+    "updated_at": "2026-03-19T06:05:31.271Z"
+  },
+  {
+    "id": "01KM2B5Y8GZ53K75D8ZMX2AXGN",
+    "name": "plugin/skills/twining-map/SKILL.md",
+    "type": "file",
+    "properties": {
+      "scope": "src/engine/graph-auto-populator.ts"
+    },
+    "created_at": "2026-03-19T06:05:31.280Z",
+    "updated_at": "2026-03-19T06:05:31.280Z"
+  },
+  {
+    "id": "01KM6AYPHWZAJWCS92C52DXBAM",
+    "name": "01KM6AYNPW2HNY7B4RAY67V3NX",
+    "type": "concept",
+    "properties": {
+      "summary": "Coordination effectiveness test suite using real stores with temp dirs, no mocking",
+      "scope": "test/coordination/"
+    },
+    "created_at": "2026-03-20T19:18:31.740Z",
+    "updated_at": "2026-03-20T19:18:31.740Z"
+  },
+  {
+    "id": "01KM6AYPJ1H8HSEPGRFB1FNVG4",
+    "name": "vitest.config.coordination.ts",
+    "type": "file",
+    "properties": {
+      "scope": "test/coordination/"
+    },
+    "created_at": "2026-03-20T19:18:31.745Z",
+    "updated_at": "2026-03-20T19:18:31.745Z"
+  },
+  {
+    "id": "01KM6AYPJ6S4V5JGT1Y3X14ZZE",
+    "name": "test/coordination/helpers.ts",
+    "type": "file",
+    "properties": {
+      "scope": "test/coordination/"
+    },
+    "created_at": "2026-03-20T19:18:31.750Z",
+    "updated_at": "2026-03-20T19:18:31.750Z"
+  },
+  {
+    "id": "01KM6AYPJA2DVPQF9J26JP6D5D",
+    "name": "test/coordination/fixtures/bug-investigation.ts",
+    "type": "file",
+    "properties": {
+      "scope": "test/coordination/"
+    },
+    "created_at": "2026-03-20T19:18:31.754Z",
+    "updated_at": "2026-03-20T19:18:31.754Z"
+  },
+  {
+    "id": "01KM6AYPJHM0010V5X0NM92YN5",
+    "name": "test/coordination/fixtures/architecture-cascade.ts",
+    "type": "file",
+    "properties": {
+      "scope": "test/coordination/"
+    },
+    "created_at": "2026-03-20T19:18:31.761Z",
+    "updated_at": "2026-03-20T19:18:31.761Z"
+  },
+  {
+    "id": "01KM6AYPJP63RVV0MADZGHVQ8S",
+    "name": "test/coordination/fixtures/context-recovery.ts",
+    "type": "file",
+    "properties": {
+      "scope": "test/coordination/"
+    },
+    "created_at": "2026-03-20T19:18:31.766Z",
+    "updated_at": "2026-03-20T19:18:31.766Z"
+  },
+  {
+    "id": "01KM6AYPJXST6NJAQKXXEAJNV5",
+    "name": "test/coordination/fixtures/conflict-resolution.ts",
+    "type": "file",
+    "properties": {
+      "scope": "test/coordination/"
+    },
+    "created_at": "2026-03-20T19:18:31.773Z",
+    "updated_at": "2026-03-20T19:18:31.773Z"
+  },
+  {
+    "id": "01KM6AYPK6DR698KZK6RRB1466",
+    "name": "test/coordination/fixtures/refactoring-handoff.ts",
+    "type": "file",
+    "properties": {
+      "scope": "test/coordination/"
+    },
+    "created_at": "2026-03-20T19:18:31.782Z",
+    "updated_at": "2026-03-20T19:18:31.782Z"
+  },
+  {
+    "id": "01KM6AYPK9KCRRDEVBNSJTWCR6",
+    "name": "test/coordination/coordination-quality.test.ts",
+    "type": "file",
+    "properties": {
+      "scope": "test/coordination/"
+    },
+    "created_at": "2026-03-20T19:18:31.785Z",
+    "updated_at": "2026-03-20T19:18:31.785Z"
+  },
+  {
+    "id": "01KM6AYPKD29MTFFS1ZV49ER29",
+    "name": "test/coordination/decision-propagation.test.ts",
+    "type": "file",
+    "properties": {
+      "scope": "test/coordination/"
+    },
+    "created_at": "2026-03-20T19:18:31.789Z",
+    "updated_at": "2026-03-20T19:18:31.789Z"
+  },
+  {
+    "id": "01KM6AYPKGY8021A53TH5YC3PW",
+    "name": "test/coordination/graph-reachability.test.ts",
+    "type": "file",
+    "properties": {
+      "scope": "test/coordination/"
+    },
+    "created_at": "2026-03-20T19:18:31.792Z",
+    "updated_at": "2026-03-20T19:18:31.792Z"
+  },
+  {
+    "id": "01KM6AYPKMWMRTVZT7RFAP9FNN",
+    "name": "test/coordination/decision-why.test.ts",
+    "type": "file",
+    "properties": {
+      "scope": "test/coordination/"
+    },
+    "created_at": "2026-03-20T19:18:31.796Z",
+    "updated_at": "2026-03-20T19:18:31.796Z"
+  },
+  {
+    "id": "01KM6AYPKQMA0JQ9QQABNJBXRW",
+    "name": "test/coordination/overhead-measurement.test.ts",
+    "type": "file",
+    "properties": {
+      "scope": "test/coordination/"
+    },
+    "created_at": "2026-03-20T19:18:31.799Z",
+    "updated_at": "2026-03-20T19:18:31.799Z"
+  },
+  {
+    "id": "01KM6AYPKS6FQK95YZNXZ85MR7",
+    "name": "test/coordination/benchmark-scenarios.test.ts",
+    "type": "file",
+    "properties": {
+      "scope": "test/coordination/"
+    },
+    "created_at": "2026-03-20T19:18:31.801Z",
+    "updated_at": "2026-03-20T20:56:30.067Z"
+  },
+  {
+    "id": "01KM6CER8K0H7DW3NTKT2AW73Q",
+    "name": "01KM6CEQMN44C52G93V99JQ1H0",
+    "type": "concept",
+    "properties": {
+      "summary": "Reorder formatForLLM: warnings first, then handoffs, then decisions, then needs, then findings",
+      "scope": "src/engine/context-assembler.ts"
+    },
+    "created_at": "2026-03-20T19:44:46.355Z",
+    "updated_at": "2026-03-20T19:44:46.355Z"
+  },
+  {
+    "id": "01KM6CER90NABPVYNEB4DB8DQQ",
+    "name": "formatForLLM",
+    "type": "function",
+    "properties": {
+      "scope": "src/engine/context-assembler.ts"
+    },
+    "created_at": "2026-03-20T19:44:46.368Z",
+    "updated_at": "2026-03-20T20:41:08.284Z"
+  },
+  {
+    "id": "01KM6CF4CDGMX5TTTRNJK4EG72",
+    "name": "01KM6CF41DRF6ZNMBZRBEQXB9R",
+    "type": "concept",
+    "properties": {
+      "summary": "Enrich handoff data in AssembledContext to include individual results for detailed checklists",
+      "scope": "src/engine/context-assembler.ts"
+    },
+    "created_at": "2026-03-20T19:44:58.765Z",
+    "updated_at": "2026-03-20T19:44:58.765Z"
+  },
+  {
+    "id": "01KM6CF4CT684HF4BZANYNC18G",
+    "name": "AssembledContext",
+    "type": "function",
+    "properties": {
+      "scope": "src/engine/context-assembler.ts"
+    },
+    "created_at": "2026-03-20T19:44:58.778Z",
+    "updated_at": "2026-03-20T19:44:58.778Z"
+  },
+  {
+    "id": "01KM6CFBY9316P8DSE67045G6A",
+    "name": "01KM6CFBQ7WWV6FAGY73N5E9D3",
+    "type": "concept",
+    "properties": {
+      "summary": "Filter redundant findings that substantially overlap with decision summaries in formatForLLM",
+      "scope": "src/engine/context-assembler.ts"
+    },
+    "created_at": "2026-03-20T19:45:06.505Z",
+    "updated_at": "2026-03-20T19:45:06.505Z"
+  },
+  {
+    "id": "01KM6FNYXQSJ8RJ9YZZ1K4D722",
+    "name": "01KM6FNY5GTKCW02RFFG26W9RR",
+    "type": "concept",
+    "properties": {
+      "summary": "Empty-state short-circuit in formatForLLM returns terse one-liner when no content exists",
+      "scope": "src/engine/context-assembler.ts"
+    },
+    "created_at": "2026-03-20T20:41:08.279Z",
+    "updated_at": "2026-03-20T20:41:08.279Z"
+  },
+  {
+    "id": "01KM6GJ33DEJAW62KW1KYDHDWD",
+    "name": "01KM6GJ1JP55JNMJF95GZWX5TA",
+    "type": "concept",
+    "properties": {
+      "summary": "Bug-investigation resolution scorer penalizes redundant re-fixes when Agent A already completed the work",
+      "scope": "test/coordination/"
+    },
+    "created_at": "2026-03-20T20:56:30.061Z",
+    "updated_at": "2026-03-20T20:56:30.061Z"
   }
 ]
