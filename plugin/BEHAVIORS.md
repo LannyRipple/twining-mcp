@@ -136,6 +136,8 @@ Record a decision with full rationale, alternatives considered, and traceability
 | DECIDE-04 | SHOULD | Use the narrowest scope that covers affected code rather than "project" |
 | DECIDE-05 | SHOULD | Set confidence to "low" or "medium" for decisions that need validation through implementation |
 | DECIDE-06 | SHOULD | Include affected_files to enable scope-based decision queries via twining_why |
+| DECIDE-07 | MUST | Commit to a single clear choice in the summary. Do not hedge with "use X and Y" or "mix of A and B" -- pick one approach. If you genuinely need both, record two separate decisions. |
+| DECIDE-08 | SHOULD | Include assumptions that the decision depends on. If these assumptions change, the decision should be reconsidered. Example: assumptions: ["CRUD-heavy workload", "No real-time subscriptions needed"] |
 
 #### Correct Usage
 ```json
@@ -159,7 +161,8 @@ Record a decision with full rationale, alternatives considered, and traceability
   ],
   "confidence": "high",
   "affected_files": ["src/auth/jwt.ts", "src/auth/middleware.ts"],
-  "constraints": ["Must work behind load balancer", "No shared state between instances"]
+  "constraints": ["Must work behind load balancer", "No shared state between instances"],
+  "assumptions": ["Service runs behind load balancer with multiple instances", "No need for immediate token revocation"]
 }
 ```
 
