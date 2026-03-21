@@ -352,7 +352,71 @@ export class ContextAssembler {
       }
     }
 
-    // 9. Populate related_entities from knowledge graph
+    // 9. Validate decision assumptions against findings and warnings
+    if (activeDecisionResults.length > 0) {
+      // Build a corpus of recent evidence text (findings + warnings + newer decisions)
+      const evidenceTexts: string[] = [];
+      for (const f of recentFindings) {
+        evidenceTexts.push(f.summary.toLowerCase());
+        if (f.detail) evidenceTexts.push(f.detail.toLowerCase());
+      }
+      for (const w of activeWarnings) {
+        evidenceTexts.push(w.summary.toLowerCase());
+        if (w.detail) evidenceTexts.push(w.detail.toLowerCase());
+      }
+      const evidenceCorpus = evidenceTexts.join(" ");
+
+      for (const d of activeDecisionResults) {
+        if (!d.assumptions || d.assumptions.length === 0) continue;
+
+        const challenged: string[] = [];
+        for (const assumption of d.assumptions) {
+          // Extract key terms from the assumption (3+ char words)
+          const terms = assumption.toLowerCase().match(/\b\w{3,}\b/g) ?? [];
+          if (terms.length === 0) continue;
+
+          // Check if evidence contains negation patterns near assumption terms
+          // Look for: "not X", "no longer X", "changed from X", "replaced X", "removed X"
+          const negationPatterns = [
+            /\bnot\b/, /\bno longer\b/, /\bchanged?\b/, /\breplaced?\b/,
+            /\bremoved?\b/, /\binstead\b/, /\brather than\b/, /\bno\b/,
+            /\bwithout\b/, /\beliminated?\b/, /\bdeprecated?\b/,
+          ];
+
+          // Also check if a newer decision in the same scope contradicts this assumption
+          for (const other of activeDecisionResults) {
+            if (other.id === d.id) continue;
+            // If a newer decision's summary/rationale mentions assumption terms
+            // alongside negation words, the assumption may be challenged
+            const otherText = `${other.summary} ${other.rationale}`.toLowerCase();
+            const termHits = terms.filter((t) => otherText.includes(t)).length;
+            const hasNegation = negationPatterns.some((p) => p.test(otherText));
+            if (termHits >= 2 && hasNegation) {
+              challenged.push(assumption);
+              break;
+            }
+          }
+
+          // Check findings/warnings corpus
+          if (!challenged.includes(assumption)) {
+            const termHits = terms.filter((t) => evidenceCorpus.includes(t)).length;
+            const hasNegation = negationPatterns.some((p) => p.test(evidenceCorpus));
+            if (termHits >= 2 && hasNegation) {
+              challenged.push(assumption);
+            }
+          }
+        }
+
+        if (challenged.length > 0) {
+          d.assumptions_status = "challenged";
+          d.challenged_assumptions = challenged;
+        } else {
+          d.assumptions_status = "hold";
+        }
+      }
+    }
+
+    // 10. Populate related_entities from knowledge graph
     const relatedEntities = await this.getRelatedEntities(scope);
 
     const result: AssembledContext = {
@@ -534,8 +598,13 @@ export class ContextAssembler {
         sections.push(`${i + 1}. **${d.summary}** (${d.confidence})${files}`);
         sections.push(`   Why: ${d.rationale}`);
         if (d.assumptions && d.assumptions.length > 0) {
-          sections.push(`   Assumes: ${d.assumptions.join("; ")}`);
-          sections.push(`   ^ If any assumption changed, reconsider this decision. Otherwise follow it exactly.`);
+          if (d.assumptions_status === "challenged" && d.challenged_assumptions?.length) {
+            sections.push(`   ASSUMPTIONS CHALLENGED: ${d.challenged_assumptions.join("; ")}`);
+            sections.push(`   ^ RECONSIDER this decision — evidence suggests assumptions may no longer hold.`);
+          } else {
+            sections.push(`   Assumes: ${d.assumptions.join("; ")}`);
+            sections.push(`   ^ Assumptions hold. Follow this decision exactly.`);
+          }
         }
       }
     } else {

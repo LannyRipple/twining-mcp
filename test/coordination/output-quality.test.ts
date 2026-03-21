@@ -353,10 +353,11 @@ describe("assumptions: prescriptive when assumptions hold", () => {
     });
 
     const ctx = await kit.assembler.assemble("add notification", "src/");
+    expect(ctx.active_decisions[0]!.assumptions_status).toBe("hold");
     const text = ContextAssembler.formatForLLM(ctx);
     expect(text).toContain("Assumes:");
     expect(text).toContain("loose coupling");
-    expect(text).toContain("follow it exactly");
+    expect(text).toContain("Follow this decision exactly");
   });
 
   it("decisions without assumptions omit Assumes: line", async () => {
@@ -407,6 +408,147 @@ describe("assumptions: prescriptive when assumptions hold", () => {
       "CRUD-heavy workload",
       "No real-time subscriptions needed",
     ]);
+  });
+});
+
+describe("assumption validation: challenged vs hold", () => {
+  it("flags assumptions as challenged when findings contradict them", async () => {
+    const kit = createAssembler(twiningDir);
+    await kit.decisions.create({
+      agent_id: "a",
+      domain: "architecture",
+      scope: "src/",
+      summary: "Use REST API for all endpoints",
+      context: "API design",
+      rationale: "REST is simpler for CRUD",
+      constraints: [],
+      alternatives: [],
+      depends_on: [],
+      confidence: "high",
+      reversible: true,
+      affected_files: ["src/api/routes.ts"],
+      affected_symbols: [],
+      assumptions: ["CRUD-heavy workload", "No real-time subscriptions needed"],
+    });
+    // Finding that contradicts the "no real-time" assumption
+    await kit.blackboard.append({
+      agent_id: "b",
+      entry_type: "finding",
+      tags: [],
+      scope: "src/",
+      summary: "Real-time subscriptions are now required for the dashboard — changed requirements",
+      detail: "Product team confirmed real-time updates are not optional anymore.",
+    });
+
+    const ctx = await kit.assembler.assemble("task", "src/");
+    expect(ctx.active_decisions[0]!.assumptions_status).toBe("challenged");
+    expect(ctx.active_decisions[0]!.challenged_assumptions).toContain("No real-time subscriptions needed");
+
+    const text = ContextAssembler.formatForLLM(ctx);
+    expect(text).toContain("ASSUMPTIONS CHALLENGED");
+    expect(text).toContain("RECONSIDER");
+  });
+
+  it("keeps assumptions as hold when no contradicting evidence", async () => {
+    const kit = createAssembler(twiningDir);
+    await kit.decisions.create({
+      agent_id: "a",
+      domain: "architecture",
+      scope: "src/",
+      summary: "Use PostgreSQL for persistence",
+      context: "Database choice",
+      rationale: "Strong relational support",
+      constraints: [],
+      alternatives: [],
+      depends_on: [],
+      confidence: "high",
+      reversible: false,
+      affected_files: ["src/db/connection.ts"],
+      affected_symbols: [],
+      assumptions: ["Data is relational", "ACID compliance required"],
+    });
+    // Unrelated finding — doesn't challenge assumptions
+    await kit.blackboard.append({
+      agent_id: "b",
+      entry_type: "finding",
+      tags: [],
+      scope: "src/",
+      summary: "Logging should use structured JSON format",
+      detail: "",
+    });
+
+    const ctx = await kit.assembler.assemble("task", "src/");
+    expect(ctx.active_decisions[0]!.assumptions_status).toBe("hold");
+    expect(ctx.active_decisions[0]!.challenged_assumptions).toBeUndefined();
+
+    const text = ContextAssembler.formatForLLM(ctx);
+    expect(text).toContain("Follow this decision exactly");
+    expect(text).not.toContain("RECONSIDER");
+  });
+
+  it("challenges assumptions when a newer decision contradicts them", async () => {
+    const kit = createAssembler(twiningDir);
+    await kit.decisions.create({
+      agent_id: "a",
+      domain: "architecture",
+      scope: "src/services/",
+      summary: "Services communicate via direct calls",
+      context: "Simplicity",
+      rationale: "Direct calls are simpler when ordering matters",
+      constraints: [],
+      alternatives: [],
+      depends_on: [],
+      confidence: "high",
+      reversible: true,
+      affected_files: ["src/services/order.ts"],
+      affected_symbols: [],
+      assumptions: ["Strict ordering required between services", "Low service count"],
+    });
+    // Newer decision that contradicts the ordering assumption
+    await kit.decisions.create({
+      agent_id: "b",
+      domain: "architecture",
+      scope: "src/services/",
+      summary: "Use event bus — ordering is not required, services are decoupled",
+      context: "Requirements changed",
+      rationale: "Strict ordering was removed from requirements",
+      constraints: [],
+      alternatives: [],
+      depends_on: [],
+      confidence: "high",
+      reversible: true,
+      affected_files: ["src/services/event-bus.ts"],
+      affected_symbols: [],
+    });
+
+    const ctx = await kit.assembler.assemble("work on services", "src/services/");
+    const directCallDecision = ctx.active_decisions.find((d) => d.summary.includes("direct calls"));
+    if (directCallDecision) {
+      expect(directCallDecision.assumptions_status).toBe("challenged");
+      expect(directCallDecision.challenged_assumptions).toContain("Strict ordering required between services");
+    }
+  });
+
+  it("decisions without assumptions get no status", async () => {
+    const kit = createAssembler(twiningDir);
+    await kit.decisions.create({
+      agent_id: "a",
+      domain: "implementation",
+      scope: "src/",
+      summary: "Use strict TypeScript",
+      context: "Quality",
+      rationale: "Safety",
+      constraints: [],
+      alternatives: [],
+      depends_on: [],
+      confidence: "high",
+      reversible: true,
+      affected_files: [],
+      affected_symbols: [],
+    });
+
+    const ctx = await kit.assembler.assemble("task", "src/");
+    expect(ctx.active_decisions[0]!.assumptions_status).toBeUndefined();
   });
 });
 

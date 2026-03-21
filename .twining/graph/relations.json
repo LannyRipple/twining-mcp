@@ -2626,5 +2626,55 @@
       "decision_summary": "Add FILES TO CHECK BEFORE WRITING section to formatForLLM output"
     },
     "created_at": "2026-03-21T12:14:10.604Z"
+  },
+  {
+    "id": "01KM85N0ACF5YNV8DH6XWSZP18",
+    "source": "01KHXTXPP31RWYHVGNGXN9REW8",
+    "target": "01KM85N0AA6XK23HCD09Q2JG90",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Assumption validation in assembler: check findings/warnings/decisions against decision assumptions"
+    },
+    "created_at": "2026-03-21T12:24:20.044Z"
+  },
+  {
+    "id": "01KM85N0AF5NK0GJDZKPY3QNSX",
+    "source": "01KHMSDQY0T6VGYV2VXV2E6MRB",
+    "target": "01KM85N0AA6XK23HCD09Q2JG90",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Assumption validation in assembler: check findings/warnings/decisions against decision assumptions"
+    },
+    "created_at": "2026-03-21T12:24:20.047Z"
+  },
+  {
+    "id": "01KM85N0AJ843QHWYPPES2W7K9",
+    "source": "01KM6CER90NABPVYNEB4DB8DQQ",
+    "target": "01KM85N0AA6XK23HCD09Q2JG90",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Assumption validation in assembler: check findings/warnings/decisions against decision assumptions"
+    },
+    "created_at": "2026-03-21T12:24:20.050Z"
+  },
+  {
+    "id": "01KM85N0APMTC4B1AZN17QFH4J",
+    "source": "01KM85N0AMX69HPETXVRC8DW89",
+    "target": "01KM85N0AA6XK23HCD09Q2JG90",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Assumption validation in assembler: check findings/warnings/decisions against decision assumptions"
+    },
+    "created_at": "2026-03-21T12:24:20.054Z"
+  },
+  {
+    "id": "01KM85N0ASE7WYMYTJNF7G4T25",
+    "source": "01KM6CF4CT684HF4BZANYNC18G",
+    "target": "01KM85N0AA6XK23HCD09Q2JG90",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Assumption validation in assembler: check findings/warnings/decisions against decision assumptions"
+    },
+    "created_at": "2026-03-21T12:24:20.057Z"
   }
 ]

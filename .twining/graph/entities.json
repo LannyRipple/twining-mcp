@@ -184,10 +184,10 @@
     "properties": {
       "description": "Core type definitions: BlackboardEntry, Decision, Entity, Relation, AssembledContext, etc.",
       "layer": "utils",
-      "scope": "src/utils/types.ts"
+      "scope": "src/engine/context-assembler.ts"
     },
     "created_at": "2026-02-17T03:13:41.312Z",
-    "updated_at": "2026-03-21T12:14:01.730Z"
+    "updated_at": "2026-03-21T12:24:20.045Z"
   },
   {
     "id": "01KHMSDV08WTQDVVSF4159DVB1",
@@ -419,7 +419,7 @@
       "scope": "src/engine/context-assembler.ts"
     },
     "created_at": "2026-02-20T15:33:02.787Z",
-    "updated_at": "2026-03-21T12:14:10.599Z"
+    "updated_at": "2026-03-21T12:24:20.043Z"
   },
   {
     "id": "01KJC68M4JW78VXAARQMW60KA8",
@@ -2184,7 +2184,7 @@
       "scope": "src/engine/context-assembler.ts"
     },
     "created_at": "2026-03-20T19:44:46.368Z",
-    "updated_at": "2026-03-21T12:14:10.602Z"
+    "updated_at": "2026-03-21T12:24:20.049Z"
   },
   {
     "id": "01KM6CF4CDGMX5TTTRNJK4EG72",
@@ -2202,10 +2202,10 @@
     "name": "AssembledContext",
     "type": "function",
     "properties": {
-      "scope": "src/utils/types.ts"
+      "scope": "src/engine/context-assembler.ts"
     },
     "created_at": "2026-03-20T19:44:58.778Z",
-    "updated_at": "2026-03-21T12:14:01.753Z"
+    "updated_at": "2026-03-21T12:24:20.055Z"
   },
   {
     "id": "01KM6CFBY9316P8DSE67045G6A",
@@ -2281,5 +2281,26 @@
     },
     "created_at": "2026-03-21T12:14:10.598Z",
     "updated_at": "2026-03-21T12:14:10.598Z"
+  },
+  {
+    "id": "01KM85N0AA6XK23HCD09Q2JG90",
+    "name": "01KM85N01B2T9DA4GWVP5JE9DY",
+    "type": "concept",
+    "properties": {
+      "summary": "Assumption validation in assembler: check findings/warnings/decisions against decision assumptions",
+      "scope": "src/engine/context-assembler.ts"
+    },
+    "created_at": "2026-03-21T12:24:20.042Z",
+    "updated_at": "2026-03-21T12:24:20.042Z"
+  },
+  {
+    "id": "01KM85N0AMX69HPETXVRC8DW89",
+    "name": "assemble",
+    "type": "function",
+    "properties": {
+      "scope": "src/engine/context-assembler.ts"
+    },
+    "created_at": "2026-03-21T12:24:20.052Z",
+    "updated_at": "2026-03-21T12:24:20.052Z"
   }
 ]

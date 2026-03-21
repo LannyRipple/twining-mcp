@@ -128,6 +128,8 @@ export interface AssembledContext {
     confidence: string;
     affected_files: string[];
     assumptions?: string[];
+    assumptions_status?: "hold" | "challenged";
+    challenged_assumptions?: string[];
     relevance_path?: string;
   }[];
   open_needs: Pick<BlackboardEntry, "id" | "summary" | "scope" | "timestamp">[];
