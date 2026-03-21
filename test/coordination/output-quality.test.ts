@@ -274,6 +274,84 @@ describe("imperative framing: output uses directive language", () => {
   });
 });
 
+describe("constraints and rejected alternatives in decisions", () => {
+  it("decisions with constraints show MUST: line", async () => {
+    const kit = createAssembler(twiningDir);
+    await kit.decisions.create({
+      agent_id: "a",
+      domain: "architecture",
+      scope: "src/",
+      summary: "Use EventBus for all service communication",
+      context: "Decoupling",
+      rationale: "Event-driven decouples producers from consumers",
+      constraints: ["All notifications must use EventBus.emit()", "No direct service-to-service calls"],
+      alternatives: [
+        { option: "Direct service calls", pros: [], cons: [], reason_rejected: "Tight coupling between services" },
+        { option: "Message queue", pros: [], cons: [], reason_rejected: "Too complex for current scale" },
+      ],
+      depends_on: [],
+      confidence: "high",
+      reversible: true,
+      affected_files: ["src/events/bus.ts"],
+      affected_symbols: [],
+    });
+
+    const ctx = await kit.assembler.assemble("add notification", "src/");
+    const text = ContextAssembler.formatForLLM(ctx);
+    expect(text).toContain("MUST:");
+    expect(text).toContain("EventBus.emit()");
+    expect(text).toContain("DO NOT:");
+    expect(text).toContain("Direct service calls");
+    expect(text).toContain("Tight coupling");
+  });
+
+  it("constraints survive through AssembledContext", async () => {
+    const kit = createAssembler(twiningDir);
+    await kit.decisions.create({
+      agent_id: "a",
+      domain: "implementation",
+      scope: "src/",
+      summary: "Use repository pattern",
+      context: "Data access",
+      rationale: "Clean separation",
+      constraints: ["All DB access through repositories"],
+      alternatives: [],
+      depends_on: [],
+      confidence: "high",
+      reversible: true,
+      affected_files: [],
+      affected_symbols: [],
+    });
+
+    const ctx = await kit.assembler.assemble("task", "src/");
+    expect(ctx.active_decisions[0]!.constraints).toEqual(["All DB access through repositories"]);
+  });
+
+  it("decisions without constraints omit MUST/DO NOT lines", async () => {
+    const kit = createAssembler(twiningDir);
+    await kit.decisions.create({
+      agent_id: "a",
+      domain: "implementation",
+      scope: "src/",
+      summary: "Use strict mode",
+      context: "Quality",
+      rationale: "Safety",
+      constraints: [],
+      alternatives: [],
+      depends_on: [],
+      confidence: "high",
+      reversible: true,
+      affected_files: [],
+      affected_symbols: [],
+    });
+
+    const ctx = await kit.assembler.assemble("task", "src/");
+    const text = ContextAssembler.formatForLLM(ctx);
+    expect(text).not.toContain("MUST:");
+    expect(text).not.toContain("DO NOT:");
+  });
+});
+
 describe("handoff checklists: structured continuation items", () => {
   it("handoff results appear as checklist with status icons", async () => {
     await contextRecovery.populate(twiningDir);

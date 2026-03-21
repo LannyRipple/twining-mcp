@@ -2676,5 +2676,55 @@
       "decision_summary": "Assumption validation in assembler: check findings/warnings/decisions against decision assumptions"
     },
     "created_at": "2026-03-21T12:24:20.057Z"
+  },
+  {
+    "id": "01KM8XXGBW21GSATHWMMZZZRRF",
+    "source": "01KHXTXPP31RWYHVGNGXN9REW8",
+    "target": "01KM8XXGBP5RVMBCSR56BCQTTH",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Include constraints and rejected alternatives in assembled decision output for pattern propagation"
+    },
+    "created_at": "2026-03-21T19:28:24.445Z"
+  },
+  {
+    "id": "01KM8XXGBZ7VK4YDP83EWB69DE",
+    "source": "01KHMSDQY0T6VGYV2VXV2E6MRB",
+    "target": "01KM8XXGBP5RVMBCSR56BCQTTH",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Include constraints and rejected alternatives in assembled decision output for pattern propagation"
+    },
+    "created_at": "2026-03-21T19:28:24.447Z"
+  },
+  {
+    "id": "01KM8XXGC6X2J1TMC69F95CSRT",
+    "source": "01KM6CER90NABPVYNEB4DB8DQQ",
+    "target": "01KM8XXGBP5RVMBCSR56BCQTTH",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Include constraints and rejected alternatives in assembled decision output for pattern propagation"
+    },
+    "created_at": "2026-03-21T19:28:24.454Z"
+  },
+  {
+    "id": "01KM8XXGC9QZRV58BW5RJ7T0FE",
+    "source": "01KM85N0AMX69HPETXVRC8DW89",
+    "target": "01KM8XXGBP5RVMBCSR56BCQTTH",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Include constraints and rejected alternatives in assembled decision output for pattern propagation"
+    },
+    "created_at": "2026-03-21T19:28:24.457Z"
+  },
+  {
+    "id": "01KM8XXGCC50FM0QTG6T4ZEEQ9",
+    "source": "01KM6CF4CT684HF4BZANYNC18G",
+    "target": "01KM8XXGBP5RVMBCSR56BCQTTH",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Include constraints and rejected alternatives in assembled decision output for pattern propagation"
+    },
+    "created_at": "2026-03-21T19:28:24.460Z"
   }
 ]

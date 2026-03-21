@@ -127,6 +127,8 @@ export interface AssembledContext {
     rationale: string;
     confidence: string;
     affected_files: string[];
+    constraints?: string[];
+    rejected_alternatives?: string[];
     assumptions?: string[];
     assumptions_status?: "hold" | "challenged";
     challenged_assumptions?: string[];

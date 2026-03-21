@@ -294,6 +294,10 @@ export class ContextAssembler {
           rationale: d.rationale,
           confidence: d.confidence,
           affected_files: d.affected_files,
+          constraints: d.constraints?.length > 0 ? d.constraints : undefined,
+          rejected_alternatives: d.alternatives?.length > 0
+            ? d.alternatives.map((a) => `${a.option}: ${a.reason_rejected}`)
+            : undefined,
           assumptions: d.assumptions,
         };
         const path = reachabilityPaths.get(d.id);
@@ -589,7 +593,7 @@ export class ContextAssembler {
       }
     }
 
-    // 3. Decisions — prescriptive when assumptions hold
+    // 3. Decisions — prescriptive with constraints and rejected alternatives
     if (ctx.active_decisions.length > 0) {
       sections.push("\n### DECISIONS TO RESPECT");
       for (let i = 0; i < ctx.active_decisions.length; i++) {
@@ -597,6 +601,15 @@ export class ContextAssembler {
         const files = d.affected_files?.length > 0 ? `\n   Files: ${d.affected_files.join(", ")}` : "";
         sections.push(`${i + 1}. **${d.summary}** (${d.confidence})${files}`);
         sections.push(`   Why: ${d.rationale}`);
+        // Constraints — concrete rules the agent MUST follow
+        if (d.constraints && d.constraints.length > 0) {
+          sections.push(`   MUST: ${d.constraints.join("; ")}`);
+        }
+        // Rejected alternatives — what NOT to do and why
+        if (d.rejected_alternatives && d.rejected_alternatives.length > 0) {
+          sections.push(`   DO NOT: ${d.rejected_alternatives.join("; ")}`);
+        }
+        // Assumptions with validation status
         if (d.assumptions && d.assumptions.length > 0) {
           if (d.assumptions_status === "challenged" && d.challenged_assumptions?.length) {
             sections.push(`   ASSUMPTIONS CHALLENGED: ${d.challenged_assumptions.join("; ")}`);
