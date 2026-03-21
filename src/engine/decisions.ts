@@ -140,6 +140,7 @@ export class DecisionEngine {
     reversible?: boolean;
     affected_files?: string[];
     affected_symbols?: string[];
+    assumptions?: string[];
     agent_id?: string;
     commit_hash?: string;
   }): Promise<{
@@ -210,6 +211,7 @@ export class DecisionEngine {
       reversible: input.reversible ?? true,
       affected_files: input.affected_files ?? [],
       affected_symbols: input.affected_symbols ?? [],
+      assumptions: input.assumptions,
       commit_hashes: input.commit_hash ? [input.commit_hash] : [],
       ...(assembledBefore !== undefined ? { assembled_before: assembledBefore } : {}),
     });

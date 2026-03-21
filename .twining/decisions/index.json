@@ -1256,5 +1256,43 @@
     ],
     "affected_symbols": [],
     "commit_hashes": []
+  },
+  {
+    "id": "01KM85240NSH8HHVG66VMK36EC",
+    "timestamp": "2026-03-21T12:14:01.248Z",
+    "domain": "architecture",
+    "scope": "src/utils/types.ts",
+    "summary": "Add assumptions field to Decision type for assumption-based validation in assemble output",
+    "confidence": "high",
+    "status": "active",
+    "affected_files": [
+      "src/utils/types.ts",
+      "src/engine/decisions.ts",
+      "src/engine/context-assembler.ts",
+      "src/tools/decision-tools.ts"
+    ],
+    "affected_symbols": [
+      "Decision",
+      "AssembledContext",
+      "formatForLLM",
+      "decide"
+    ],
+    "commit_hashes": []
+  },
+  {
+    "id": "01KM852D143D6GKWFPNGY01W30",
+    "timestamp": "2026-03-21T12:14:10.472Z",
+    "domain": "implementation",
+    "scope": "src/engine/context-assembler.ts",
+    "summary": "Add FILES TO CHECK BEFORE WRITING section to formatForLLM output",
+    "confidence": "high",
+    "status": "provisional",
+    "affected_files": [
+      "src/engine/context-assembler.ts"
+    ],
+    "affected_symbols": [
+      "formatForLLM"
+    ],
+    "commit_hashes": []
   }
 ]

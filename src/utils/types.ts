@@ -67,6 +67,7 @@ export interface Decision {
   reversible: boolean;
   affected_files: string[];
   affected_symbols: string[];
+  assumptions?: string[];
   commit_hashes: string[];
   overridden_by?: string;
   override_reason?: string;
@@ -126,6 +127,7 @@ export interface AssembledContext {
     rationale: string;
     confidence: string;
     affected_files: string[];
+    assumptions?: string[];
     relevance_path?: string;
   }[];
   open_needs: Pick<BlackboardEntry, "id" | "summary" | "scope" | "timestamp">[];

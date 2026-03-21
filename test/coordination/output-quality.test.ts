@@ -331,3 +331,140 @@ describe("handoff checklists: structured continuation items", () => {
     expect(text).toContain("General project handoff");
   });
 });
+
+describe("assumptions: prescriptive when assumptions hold", () => {
+  it("decisions with assumptions show Assumes: line", async () => {
+    const kit = createAssembler(twiningDir);
+    await kit.decisions.create({
+      agent_id: "a",
+      domain: "architecture",
+      scope: "src/",
+      summary: "Use eventEmitter pattern for notifications",
+      context: "Decoupling services",
+      rationale: "Event-driven decouples producers from consumers",
+      constraints: [],
+      alternatives: [],
+      depends_on: [],
+      confidence: "high",
+      reversible: true,
+      affected_files: ["src/events/bus.ts"],
+      affected_symbols: [],
+      assumptions: ["Services need loose coupling", "No strict ordering required"],
+    });
+
+    const ctx = await kit.assembler.assemble("add notification", "src/");
+    const text = ContextAssembler.formatForLLM(ctx);
+    expect(text).toContain("Assumes:");
+    expect(text).toContain("loose coupling");
+    expect(text).toContain("follow it exactly");
+  });
+
+  it("decisions without assumptions omit Assumes: line", async () => {
+    const kit = createAssembler(twiningDir);
+    await kit.decisions.create({
+      agent_id: "a",
+      domain: "implementation",
+      scope: "src/",
+      summary: "Use strict TypeScript",
+      context: "Quality",
+      rationale: "Prevents runtime errors",
+      constraints: [],
+      alternatives: [],
+      depends_on: [],
+      confidence: "high",
+      reversible: true,
+      affected_files: [],
+      affected_symbols: [],
+    });
+
+    const ctx = await kit.assembler.assemble("task", "src/");
+    const text = ContextAssembler.formatForLLM(ctx);
+    expect(text).not.toContain("Assumes:");
+    expect(text).not.toContain("follow it exactly");
+  });
+
+  it("assumptions survive through AssembledContext", async () => {
+    const kit = createAssembler(twiningDir);
+    await kit.decisions.create({
+      agent_id: "a",
+      domain: "architecture",
+      scope: "src/",
+      summary: "Use REST API",
+      context: "API design",
+      rationale: "Simpler for CRUD",
+      constraints: [],
+      alternatives: [],
+      depends_on: [],
+      confidence: "high",
+      reversible: true,
+      affected_files: ["src/api/routes.ts"],
+      affected_symbols: [],
+      assumptions: ["CRUD-heavy workload", "No real-time subscriptions needed"],
+    });
+
+    const ctx = await kit.assembler.assemble("task", "src/");
+    expect(ctx.active_decisions[0]!.assumptions).toEqual([
+      "CRUD-heavy workload",
+      "No real-time subscriptions needed",
+    ]);
+  });
+});
+
+describe("FILES TO CHECK section", () => {
+  it("lists affected_files from decisions as read directives", async () => {
+    const kit = createAssembler(twiningDir);
+    await kit.decisions.create({
+      agent_id: "a",
+      domain: "implementation",
+      scope: "src/",
+      summary: "Use eventEmitter pattern",
+      context: "Architecture",
+      rationale: "Decoupling",
+      constraints: [],
+      alternatives: [],
+      depends_on: [],
+      confidence: "high",
+      reversible: true,
+      affected_files: ["src/events/bus.ts", "src/services/order.ts"],
+      affected_symbols: [],
+    });
+
+    const ctx = await kit.assembler.assemble("task", "src/");
+    const text = ContextAssembler.formatForLLM(ctx);
+    expect(text).toContain("FILES TO CHECK BEFORE WRITING");
+    expect(text).toContain("Read `src/events/bus.ts`");
+    expect(text).toContain("Read `src/services/order.ts`");
+  });
+
+  it("includes handoff artifacts in files to check", async () => {
+    await contextRecovery.populate(twiningDir);
+    const { assembler } = createAssembler(twiningDir);
+    const ctx = await assembler.assemble("continue auth", "src/auth/");
+    const text = ContextAssembler.formatForLLM(ctx);
+    expect(text).toContain("FILES TO CHECK");
+    expect(text).toContain("src/auth/jwt.ts");
+  });
+
+  it("no FILES TO CHECK section when no affected files", async () => {
+    const kit = createAssembler(twiningDir);
+    await kit.decisions.create({
+      agent_id: "a",
+      domain: "implementation",
+      scope: "src/",
+      summary: "Use strict mode",
+      context: "Quality",
+      rationale: "Safety",
+      constraints: [],
+      alternatives: [],
+      depends_on: [],
+      confidence: "high",
+      reversible: true,
+      affected_files: [],
+      affected_symbols: [],
+    });
+
+    const ctx = await kit.assembler.assemble("task", "src/");
+    const text = ContextAssembler.formatForLLM(ctx);
+    expect(text).not.toContain("FILES TO CHECK");
+  });
+});

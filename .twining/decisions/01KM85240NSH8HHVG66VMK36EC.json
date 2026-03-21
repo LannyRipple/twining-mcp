@@ -1,0 +1,43 @@
+{
+  "agent_id": "main",
+  "domain": "architecture",
+  "scope": "src/utils/types.ts",
+  "summary": "Add assumptions field to Decision type for assumption-based validation in assemble output",
+  "context": "Benchmark showed agents get decisions via assemble but interpret them independently, leading to inconsistent implementations. shared-markdown agents copy concrete patterns while Twining agents get abstract summaries.",
+  "rationale": "Explicit assumptions let formatForLLM be prescriptive when assumptions hold ('follow exactly') and advisory when they don't ('reconsider'). This bridges the gap between structured decision records and actionable implementation guidance.",
+  "constraints": [],
+  "alternatives": [
+    {
+      "option": "Add implementation_hints field with concrete code patterns",
+      "pros": [],
+      "cons": [],
+      "reason_rejected": "Couples decisions to specific implementations; assumptions are more durable and let agents validate whether the decision still applies"
+    },
+    {
+      "option": "No change — rely on rationale text for context",
+      "pros": [],
+      "cons": [],
+      "reason_rejected": "Rationale explains why but doesn't tell agents when to deviate. Agents currently follow decisions even when underlying assumptions have changed."
+    }
+  ],
+  "depends_on": [],
+  "confidence": "high",
+  "reversible": true,
+  "affected_files": [
+    "src/utils/types.ts",
+    "src/engine/decisions.ts",
+    "src/engine/context-assembler.ts",
+    "src/tools/decision-tools.ts"
+  ],
+  "affected_symbols": [
+    "Decision",
+    "AssembledContext",
+    "formatForLLM",
+    "decide"
+  ],
+  "commit_hashes": [],
+  "assembled_before": false,
+  "id": "01KM85240NSH8HHVG66VMK36EC",
+  "timestamp": "2026-03-21T12:14:01.248Z",
+  "status": "active"
+}

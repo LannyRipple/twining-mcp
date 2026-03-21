@@ -1,0 +1,24 @@
+{
+  "agent_id": "main",
+  "domain": "implementation",
+  "scope": "src/engine/context-assembler.ts",
+  "summary": "Add FILES TO CHECK BEFORE WRITING section to formatForLLM output",
+  "context": "Benchmark showed full-twining agents call assemble but don't read the affected files before writing. shared-markdown agents read 3-5 files because COORDINATION.md tells them which to check. Full-twining agents read 0-2.",
+  "rationale": "Explicit read directives as a checklist (Read src/events/bus.ts) push agents to open files before writing, improving pattern consistency and context recovery scores.",
+  "constraints": [],
+  "alternatives": [],
+  "depends_on": [],
+  "confidence": "high",
+  "reversible": true,
+  "affected_files": [
+    "src/engine/context-assembler.ts"
+  ],
+  "affected_symbols": [
+    "formatForLLM"
+  ],
+  "commit_hashes": [],
+  "assembled_before": false,
+  "id": "01KM852D143D6GKWFPNGY01W30",
+  "timestamp": "2026-03-21T12:14:10.472Z",
+  "status": "provisional"
+}

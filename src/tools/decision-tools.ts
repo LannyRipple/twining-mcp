@@ -77,6 +77,10 @@ export function registerDecisionTools(
           .array(z.string())
           .optional()
           .describe("Function/class names affected"),
+        assumptions: z
+          .array(z.string())
+          .optional()
+          .describe("Assumptions this decision depends on — if any change, decision should be reconsidered"),
         agent_id: z
           .string()
           .optional()

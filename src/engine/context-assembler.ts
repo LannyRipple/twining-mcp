@@ -294,6 +294,7 @@ export class ContextAssembler {
           rationale: d.rationale,
           confidence: d.confidence,
           affected_files: d.affected_files,
+          assumptions: d.assumptions,
         };
         const path = reachabilityPaths.get(d.id);
         if (path) {
@@ -524,7 +525,7 @@ export class ContextAssembler {
       }
     }
 
-    // 3. Decisions — imperative framing with files prominent
+    // 3. Decisions — prescriptive when assumptions hold
     if (ctx.active_decisions.length > 0) {
       sections.push("\n### DECISIONS TO RESPECT");
       for (let i = 0; i < ctx.active_decisions.length; i++) {
@@ -532,9 +533,36 @@ export class ContextAssembler {
         const files = d.affected_files?.length > 0 ? `\n   Files: ${d.affected_files.join(", ")}` : "";
         sections.push(`${i + 1}. **${d.summary}** (${d.confidence})${files}`);
         sections.push(`   Why: ${d.rationale}`);
+        if (d.assumptions && d.assumptions.length > 0) {
+          sections.push(`   Assumes: ${d.assumptions.join("; ")}`);
+          sections.push(`   ^ If any assumption changed, reconsider this decision. Otherwise follow it exactly.`);
+        }
       }
     } else {
       sections.push("\nNo active decisions for this scope.");
+    }
+
+    // 3b. Files to check — explicit read directives from decisions + handoffs
+    const filesToCheck = new Set<string>();
+    for (const d of ctx.active_decisions) {
+      for (const f of d.affected_files ?? []) filesToCheck.add(f);
+    }
+    if (ctx.recent_handoffs) {
+      for (const h of ctx.recent_handoffs) {
+        if (h.results) {
+          for (const r of h.results) {
+            if (r.artifacts) {
+              for (const a of r.artifacts) filesToCheck.add(a);
+            }
+          }
+        }
+      }
+    }
+    if (filesToCheck.size > 0) {
+      sections.push("\n### FILES TO CHECK BEFORE WRITING");
+      for (const f of filesToCheck) {
+        sections.push(`- [ ] Read \`${f}\``);
+      }
     }
 
     // 4. Open needs — what still needs to be done

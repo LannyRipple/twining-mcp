@@ -136,10 +136,10 @@
     "properties": {
       "description": "MCP tool handlers: twining_decide, twining_why, twining_trace, twining_commits",
       "layer": "tools",
-      "scope": "src/tools/"
+      "scope": "src/utils/types.ts"
     },
     "created_at": "2026-02-17T03:13:37.412Z",
-    "updated_at": "2026-03-19T06:05:17.462Z"
+    "updated_at": "2026-03-21T12:14:01.741Z"
   },
   {
     "id": "01KHMSDMRQ5HSX2W6SBDT3RND2",
@@ -184,10 +184,10 @@
     "properties": {
       "description": "Core type definitions: BlackboardEntry, Decision, Entity, Relation, AssembledContext, etc.",
       "layer": "utils",
-      "scope": "src/engine/context-assembler.ts"
+      "scope": "src/utils/types.ts"
     },
     "created_at": "2026-02-17T03:13:41.312Z",
-    "updated_at": "2026-03-20T19:44:58.769Z"
+    "updated_at": "2026-03-21T12:14:01.730Z"
   },
   {
     "id": "01KHMSDV08WTQDVVSF4159DVB1",
@@ -419,7 +419,7 @@
       "scope": "src/engine/context-assembler.ts"
     },
     "created_at": "2026-02-20T15:33:02.787Z",
-    "updated_at": "2026-03-20T20:41:08.280Z"
+    "updated_at": "2026-03-21T12:14:10.599Z"
   },
   {
     "id": "01KJC68M4JW78VXAARQMW60KA8",
@@ -1925,10 +1925,10 @@
     "name": "src/engine/decisions.ts",
     "type": "file",
     "properties": {
-      "scope": "src/engine/"
+      "scope": "src/utils/types.ts"
     },
     "created_at": "2026-03-14T05:48:32.106Z",
-    "updated_at": "2026-03-14T05:48:32.106Z"
+    "updated_at": "2026-03-21T12:14:01.735Z"
   },
   {
     "id": "01KKNE77ZVVMYK85M8D45XSR9D",
@@ -2184,7 +2184,7 @@
       "scope": "src/engine/context-assembler.ts"
     },
     "created_at": "2026-03-20T19:44:46.368Z",
-    "updated_at": "2026-03-20T20:41:08.284Z"
+    "updated_at": "2026-03-21T12:14:10.602Z"
   },
   {
     "id": "01KM6CF4CDGMX5TTTRNJK4EG72",
@@ -2202,10 +2202,10 @@
     "name": "AssembledContext",
     "type": "function",
     "properties": {
-      "scope": "src/engine/context-assembler.ts"
+      "scope": "src/utils/types.ts"
     },
     "created_at": "2026-03-20T19:44:58.778Z",
-    "updated_at": "2026-03-20T19:44:58.778Z"
+    "updated_at": "2026-03-21T12:14:01.753Z"
   },
   {
     "id": "01KM6CFBY9316P8DSE67045G6A",
@@ -2239,5 +2239,47 @@
     },
     "created_at": "2026-03-20T20:56:30.061Z",
     "updated_at": "2026-03-20T20:56:30.061Z"
+  },
+  {
+    "id": "01KM8524G1ECE7JS9K5HXCVZNX",
+    "name": "01KM85240NSH8HHVG66VMK36EC",
+    "type": "concept",
+    "properties": {
+      "summary": "Add assumptions field to Decision type for assumption-based validation in assemble output",
+      "scope": "src/utils/types.ts"
+    },
+    "created_at": "2026-03-21T12:14:01.729Z",
+    "updated_at": "2026-03-21T12:14:01.729Z"
+  },
+  {
+    "id": "01KM8524GHDS32ZYANGNYFHFXS",
+    "name": "Decision",
+    "type": "function",
+    "properties": {
+      "scope": "src/utils/types.ts"
+    },
+    "created_at": "2026-03-21T12:14:01.745Z",
+    "updated_at": "2026-03-21T12:14:01.745Z"
+  },
+  {
+    "id": "01KM8524H1ZBBRZ3A890WAXNMJ",
+    "name": "decide",
+    "type": "function",
+    "properties": {
+      "scope": "src/utils/types.ts"
+    },
+    "created_at": "2026-03-21T12:14:01.761Z",
+    "updated_at": "2026-03-21T12:14:01.761Z"
+  },
+  {
+    "id": "01KM852D56SY18R47N67ZRA0KW",
+    "name": "01KM852D143D6GKWFPNGY01W30",
+    "type": "concept",
+    "properties": {
+      "summary": "Add FILES TO CHECK BEFORE WRITING section to formatForLLM output",
+      "scope": "src/engine/context-assembler.ts"
+    },
+    "created_at": "2026-03-21T12:14:10.598Z",
+    "updated_at": "2026-03-21T12:14:10.598Z"
   }
 ]
