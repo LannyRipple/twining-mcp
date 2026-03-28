@@ -183,14 +183,13 @@ export function createServer(projectRoot: string): ServerContext {
 
   // Register tools — lite mode only registers core tools
   const toolMode = config.tools?.mode ?? "full";
-  const fullSurface = config.tools?.full_surface ?? false;
 
   // Core tools (always registered in both full and lite modes)
-  registerBlackboardTools(server, blackboardEngine, fullSurface);
-  registerDecisionTools(server, decisionEngine, fullSurface);
-  registerContextTools(server, contextAssembler, fullSurface);
-  registerVerifyTools(server, verifyEngine, fullSurface);
-  registerExportTools(server, exporter, fullSurface);
+  registerBlackboardTools(server, blackboardEngine);
+  registerDecisionTools(server, decisionEngine);
+  registerContextTools(server, contextAssembler);
+  registerVerifyTools(server, verifyEngine);
+  registerExportTools(server, exporter);
   registerCoordinationTools(server, agentStore, coordinationEngine, config, graphPopulator);
 
   // Extended tools (full mode only)
@@ -205,7 +204,7 @@ export function createServer(projectRoot: string): ServerContext {
       config,
       agentStore,
     );
-    registerGraphTools(server, graphEngine, fullSurface);
+    registerGraphTools(server, graphEngine);
   }
 
   return { server, metricsCollector, twiningDir, config };

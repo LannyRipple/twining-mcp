@@ -2726,5 +2726,45 @@
       "decision_summary": "Include constraints and rejected alternatives in assembled decision output for pattern propagation"
     },
     "created_at": "2026-03-21T19:28:24.460Z"
+  },
+  {
+    "id": "01KMT24SSR4XPZJ53GDTB84VGK",
+    "source": "01KHXTXPP31RWYHVGNGXN9REW8",
+    "target": "01KMT24SSP6H18CX49WWPM0XXG",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Filter out entry_type \"decision\" blackboard entries in assembler to prevent type confusion"
+    },
+    "created_at": "2026-03-28T11:09:23.128Z"
+  },
+  {
+    "id": "01KMT24SST48F8E6CN1D8H3GXA",
+    "source": "01KMT24SSS08PZ8KGQ0VDJKQX2",
+    "target": "01KMT24SSP6H18CX49WWPM0XXG",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Filter out entry_type \"decision\" blackboard entries in assembler to prevent type confusion"
+    },
+    "created_at": "2026-03-28T11:09:23.130Z"
+  },
+  {
+    "id": "01KMT252XKNP0SJGCW2FJ18F3W",
+    "source": "01KMT252XJ0BQPNM732439HQZB",
+    "target": "01KMT252XHPBBPMA6CA27Z9JE8",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Add SessionStart command hook to inject Twining Lifecycle Gates into project CLAUDE.md"
+    },
+    "created_at": "2026-03-28T11:09:32.467Z"
+  },
+  {
+    "id": "01KMT252XNNY9PHTCPC16339QN",
+    "source": "01KJGX8KNG4BA8P7PFEXMTW51R",
+    "target": "01KMT252XHPBBPMA6CA27Z9JE8",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Add SessionStart command hook to inject Twining Lifecycle Gates into project CLAUDE.md"
+    },
+    "created_at": "2026-03-28T11:09:32.469Z"
   }
 ]

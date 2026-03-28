@@ -10,10 +10,7 @@ import { toolResult, toolError, TwiningError } from "../utils/errors.js";
 export function registerExportTools(
   server: McpServer,
   exporter: Exporter,
-  fullSurface = false,
 ): void {
-  // twining_export — Export full Twining state as markdown (hidden by default)
-  if (!fullSurface) return;
   server.registerTool(
     "twining_export",
     {

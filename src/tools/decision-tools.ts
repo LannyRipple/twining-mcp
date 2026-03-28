@@ -10,7 +10,6 @@ import { toolResult, toolError, TwiningError } from "../utils/errors.js";
 export function registerDecisionTools(
   server: McpServer,
   engine: DecisionEngine,
-  fullSurface = false,
 ): void {
   // twining_decide — Record a decision with full rationale
   server.registerTool(
@@ -132,8 +131,8 @@ export function registerDecisionTools(
     },
   );
 
-  // twining_trace — Trace a decision's dependency chain (hidden by default)
-  if (fullSurface) server.registerTool(
+  // twining_trace — Trace a decision's dependency chain
+  server.registerTool(
     "twining_trace",
     {
       description:
@@ -199,8 +198,8 @@ export function registerDecisionTools(
     },
   );
 
-  // twining_override — Override a decision with a reason (hidden by default)
-  if (fullSurface) server.registerTool(
+  // twining_override — Override a decision with a reason
+  server.registerTool(
     "twining_override",
     {
       description:
@@ -239,8 +238,8 @@ export function registerDecisionTools(
     },
   );
 
-  // twining_promote — Promote provisional decisions to active (hidden by default)
-  if (fullSurface) server.registerTool(
+  // twining_promote — Promote provisional decisions to active
+  server.registerTool(
     "twining_promote",
     {
       description:
@@ -275,8 +274,8 @@ export function registerDecisionTools(
     },
   );
 
-  // twining_commits — Query decisions by commit hash (hidden by default)
-  if (fullSurface) server.registerTool(
+  // twining_commits — Query decisions by commit hash
+  server.registerTool(
     "twining_commits",
     {
       description:
@@ -364,8 +363,8 @@ export function registerDecisionTools(
     },
   );
 
-  // twining_link_commit — Link a git commit hash to an existing decision (hidden by default)
-  if (fullSurface) server.registerTool(
+  // twining_link_commit — Link a git commit hash to an existing decision
+  server.registerTool(
     "twining_link_commit",
     {
       description:

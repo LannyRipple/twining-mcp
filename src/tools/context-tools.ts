@@ -10,7 +10,6 @@ import { toolResult, toolError, TwiningError } from "../utils/errors.js";
 export function registerContextTools(
   server: McpServer,
   contextAssembler: ContextAssembler,
-  fullSurface = false,
 ): void {
   // twining_assemble — Build tailored context for a specific task
   server.registerTool(
@@ -84,8 +83,8 @@ export function registerContextTools(
     },
   );
 
-  // twining_what_changed — Report changes since a given point in time (hidden by default)
-  if (fullSurface) server.registerTool(
+  // twining_what_changed — Report changes since a given point in time
+  server.registerTool(
     "twining_what_changed",
     {
       description:

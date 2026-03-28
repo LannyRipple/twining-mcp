@@ -11,7 +11,6 @@ import { toolResult, toolError, TwiningError } from "../utils/errors.js";
 export function registerBlackboardTools(
   server: McpServer,
   engine: BlackboardEngine,
-  fullSurface = false,
 ): void {
   // twining_post — Post an entry to the shared blackboard
   server.registerTool(
@@ -60,8 +59,8 @@ export function registerBlackboardTools(
     },
   );
 
-  // twining_read — Read blackboard entries with optional filters (hidden by default)
-  if (fullSurface) server.registerTool(
+  // twining_read — Read blackboard entries with optional filters
+  server.registerTool(
     "twining_read",
     {
       description:

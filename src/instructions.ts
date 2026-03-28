@@ -27,10 +27,10 @@ Call \`twining_verify\` on your scope before finishing. Post a \`status\` entry 
 - Never skip \`twining_assemble\` before work or \`twining_verify\` before handoff
 
 ## Tool Groups
-- **Blackboard**: twining_post, twining_read, twining_query, twining_recent
-- **Decisions**: twining_decide, twining_why, twining_trace, twining_reconsider, twining_override, twining_search_decisions, twining_link_commit, twining_commits
+- **Blackboard**: twining_post, twining_read, twining_query, twining_recent, twining_dismiss
+- **Decisions**: twining_decide, twining_why, twining_trace, twining_reconsider, twining_override, twining_promote, twining_search_decisions, twining_link_commit, twining_commits
 - **Context**: twining_assemble, twining_summarize, twining_what_changed
-- **Graph**: twining_add_entity, twining_add_relation, twining_neighbors, twining_graph_query
+- **Graph**: twining_add_entity, twining_add_relation, twining_neighbors, twining_graph_query, twining_prune_graph
 - **Verification**: twining_verify
 - **Lifecycle**: twining_status, twining_archive, twining_export
 - **Coordination**: twining_agents, twining_register, twining_discover, twining_delegate, twining_handoff, twining_acknowledge

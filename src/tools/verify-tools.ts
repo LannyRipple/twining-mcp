@@ -9,10 +9,7 @@ import { toolResult, toolError, TwiningError } from "../utils/errors.js";
 export function registerVerifyTools(
   server: McpServer,
   verifyEngine: VerifyEngine,
-  fullSurface = false,
 ): void {
-  // twining_verify (hidden by default)
-  if (!fullSurface) return;
   server.registerTool(
     "twining_verify",
     {

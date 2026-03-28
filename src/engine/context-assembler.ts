@@ -138,8 +138,13 @@ export class ContextAssembler {
     }
 
     // 3. Retrieve scope-matched blackboard entries (filter from cached allEntries)
+    // Exclude entry_type "decision" — these are misclassified blackboard entries
+    // that would be cast as Decision objects, causing undefined field errors.
+    // Real decisions live in the decision store, not the blackboard.
     const scopeEntries = allEntries.filter(
-      (e) => e.scope.startsWith(scope) || scope.startsWith(e.scope),
+      (e) =>
+        e.entry_type !== "decision" &&
+        (e.scope.startsWith(scope) || scope.startsWith(e.scope)),
     );
 
     // 4. Retrieve semantically relevant findings
@@ -162,7 +167,7 @@ export class ContextAssembler {
     }
     if (this.searchEngine) {
       for (const e of allEntries) {
-        if (entryRelevance.has(e.id) && !mergedEntryMap.has(e.id)) {
+        if (e.entry_type !== "decision" && entryRelevance.has(e.id) && !mergedEntryMap.has(e.id)) {
           mergedEntryMap.set(e.id, e);
         }
       }

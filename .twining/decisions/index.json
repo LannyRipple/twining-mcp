@@ -1332,5 +1332,48 @@
       "AssembledContext"
     ],
     "commit_hashes": []
+  },
+  {
+    "id": "01KM8Z11K436VRH2AK4KHB5GVX",
+    "timestamp": "2026-03-21T19:47:48.973Z",
+    "domain": "testing",
+    "scope": "project",
+    "summary": "Sprint-simulation scenario: 12-session sprint with requirement change for long-horizon coordination testing",
+    "confidence": "high",
+    "status": "active",
+    "affected_files": [],
+    "affected_symbols": [],
+    "commit_hashes": []
+  },
+  {
+    "id": "01KMT24SQ0EGJSH8Z9A6DDEXB4",
+    "timestamp": "2026-03-28T11:09:23.041Z",
+    "domain": "implementation",
+    "scope": "src/engine/context-assembler.ts",
+    "summary": "Filter out entry_type \"decision\" blackboard entries in assembler to prevent type confusion",
+    "confidence": "high",
+    "status": "provisional",
+    "affected_files": [
+      "src/engine/context-assembler.ts"
+    ],
+    "affected_symbols": [
+      "ContextAssembler/assemble"
+    ],
+    "commit_hashes": []
+  },
+  {
+    "id": "01KMT252V9HT9PQZRENV368S0Q",
+    "timestamp": "2026-03-28T11:09:32.393Z",
+    "domain": "implementation",
+    "scope": "plugin/hooks/",
+    "summary": "Add SessionStart command hook to inject Twining Lifecycle Gates into project CLAUDE.md",
+    "confidence": "high",
+    "status": "provisional",
+    "affected_files": [
+      "plugin/hooks/ensure-claude-md-gates.sh",
+      "plugin/hooks/hooks.json"
+    ],
+    "affected_symbols": [],
+    "commit_hashes": []
   }
 ]
