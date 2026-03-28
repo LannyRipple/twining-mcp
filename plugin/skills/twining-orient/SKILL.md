@@ -1,6 +1,6 @@
 ---
 name: twining-orient
-description: Assemble Twining context at session start — gather decisions, warnings, and project state before working
+description: Assembles Twining context by gathering prior decisions, warnings, and project state. Use at session start or when beginning work in a new scope area.
 auto-invocable: true
 ---
 

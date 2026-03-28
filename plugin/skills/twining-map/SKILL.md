@@ -1,6 +1,6 @@
 ---
 name: twining-map
-description: Build and query the knowledge graph — record entities, relations, and code structure for architectural understanding
+description: Builds and queries the Twining knowledge graph — records entities, relations, and code structure. Use when documenting architecture or tracing dependencies between components.
 auto-invocable: true
 ---
 

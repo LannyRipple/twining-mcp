@@ -1,6 +1,6 @@
 ---
 name: twining-handoff
-description: Hand off work between agents or sessions with structured results and context snapshots
+description: Hands off work between agents or sessions with structured results and context snapshots. Use when ending a session with incomplete work, switching agents, or approaching context limits.
 auto-invocable: true
 ---
 

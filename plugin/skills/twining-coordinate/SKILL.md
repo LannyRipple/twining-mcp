@@ -1,6 +1,6 @@
 ---
 name: twining-coordinate
-description: Discover agents, delegate tasks, and coordinate multi-agent work through capability matching
+description: Discovers agents, delegates tasks, and coordinates multi-agent work through capability matching. Use when orchestrating parallel work across multiple agents.
 auto-invocable: true
 ---
 

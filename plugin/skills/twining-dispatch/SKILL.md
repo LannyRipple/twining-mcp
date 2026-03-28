@@ -1,6 +1,6 @@
 ---
 name: twining-dispatch
-description: Coordinate subagent dispatches through Twining — register agents, post delegations, create handoffs so all work is visible in the dashboard
+description: Coordinates subagent dispatches through Twining — registers agents, posts delegations, and creates handoffs. Use when spawning subagents to keep all work visible in the coordination dashboard.
 auto-invocable: true
 ---
 

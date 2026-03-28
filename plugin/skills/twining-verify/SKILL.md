@@ -1,6 +1,6 @@
 ---
 name: twining-verify
-description: Pre-completion verification — check test coverage, unresolved warnings, and decision hygiene before finishing
+description: Runs pre-completion verification — checks test coverage, unresolved warnings, and decision hygiene. Use before declaring a task complete or handing off work.
 auto-invocable: true
 ---
 

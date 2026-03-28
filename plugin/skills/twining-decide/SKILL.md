@@ -1,6 +1,6 @@
 ---
 name: twining-decide
-description: Record architectural and implementation decisions with rationale, alternatives, and traceability
+description: Records architectural and implementation decisions with rationale, rejected alternatives, and traceability. Use after making any non-trivial choice where alternatives exist.
 auto-invocable: true
 ---
 

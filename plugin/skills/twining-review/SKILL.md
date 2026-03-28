@@ -1,6 +1,6 @@
 ---
 name: twining-review
-description: Pre-commit review — verify all significant decisions are recorded and trace decision coverage
+description: Reviews pre-commit state — verifies all significant decisions are recorded and traces decision coverage. Use before creating git commits to ensure Twining completeness.
 disable-model-invocation: true
 ---
 
