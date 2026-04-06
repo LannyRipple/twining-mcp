@@ -47,6 +47,24 @@ All v1.4 decisions archived in PROJECT.md Key Decisions table with outcomes.
 - Enforce mandatory agent registration and handoff in plugin v1.1.5
 - Auto-populate knowledge graph from tool calls via GraphAutoPopulator
 - Replace computeGraphConnectivity with computeGraphReachability using typed BFS and adaptive weight fallback
+- Reduce default tool surface from 32 to 16 via full_surface config flag
+- Assemble output includes structured markdown briefing and inline status summary
+- Graph auto-population disabled by default (opt-in via graph.auto_populate config)
+- Coordination effectiveness test suite using real stores with temp dirs, no mocking
+- Reorder formatForLLM: warnings first, then handoffs, then decisions, then needs, then findings
+- Enrich handoff data in AssembledContext to include individual results for detailed checklists
+- Filter redundant findings that substantially overlap with decision summaries in formatForLLM
+- Empty-state short-circuit in formatForLLM returns terse one-liner when no content exists
+- Bug-investigation resolution scorer penalizes redundant re-fixes when Agent A already completed the work
+- Add assumptions field to Decision type for assumption-based validation in assemble output
+- Add FILES TO CHECK BEFORE WRITING section to formatForLLM output
+- Assumption validation in assembler: check findings/warnings/decisions against decision assumptions
+- Include constraints and rejected alternatives in assembled decision output for pattern propagation
+- Sprint-simulation scenario: 12-session sprint with requirement change for long-horizon coordination testing
+- Filter out entry_type "decision" blackboard entries in assembler to prevent type confusion
+- Add SessionStart command hook to inject Twining Lifecycle Gates into project CLAUDE.md
+- Remove fullSurface tool gate — all 34 MCP tools always registered
+- Layered instruction architecture: CLAUDE.md as authority, lean SessionStart prompt, third-person skill descriptions
 
 ### Pending Todos
 

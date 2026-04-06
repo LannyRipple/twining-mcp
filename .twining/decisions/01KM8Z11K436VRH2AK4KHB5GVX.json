@@ -1,0 +1,33 @@
+{
+  "agent_id": "main",
+  "domain": "testing",
+  "scope": "project",
+  "summary": "Sprint-simulation scenario: 12-session sprint with requirement change for long-horizon coordination testing",
+  "context": "Micro-task scenarios (2-5 agents, 5-15 min) don't test Twining's persistence advantage over long time horizons. Real teams accumulate decisions over weeks with requirement changes mid-sprint.",
+  "rationale": "12 sessions from 3 engineer personas with heterogeneous tasks (features, bugs, refactoring) and a mid-sprint requirement change (session 8: SMS added, invalidating email-only assumption from session 3). This tests decision persistence, assumption validation, cross-feature interference, and context recovery at realistic scale. Scores 5 dimensions including assumptionHandling which directly measures Twining's RECONSIDER mechanism.",
+  "constraints": [],
+  "alternatives": [
+    {
+      "option": "Extend multi-session-build to 10 sessions",
+      "pros": [],
+      "cons": [],
+      "reason_rejected": "Same feature, same task type — doesn't test heterogeneous work or requirement changes"
+    },
+    {
+      "option": "Run multiple micro-scenarios in sequence",
+      "pros": [],
+      "cons": [],
+      "reason_rejected": "Each micro-scenario starts fresh — doesn't test accumulated decision volume or cross-feature interference"
+    }
+  ],
+  "depends_on": [],
+  "confidence": "high",
+  "reversible": true,
+  "affected_files": [],
+  "affected_symbols": [],
+  "commit_hashes": [],
+  "assembled_before": false,
+  "id": "01KM8Z11K436VRH2AK4KHB5GVX",
+  "timestamp": "2026-03-21T19:47:48.973Z",
+  "status": "active"
+}

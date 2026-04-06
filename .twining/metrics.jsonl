@@ -232,3 +232,6 @@
 {"tool_name":"twining_post","timestamp":"2026-03-28T11:09:41.096Z","duration_ms":30,"success":true,"agent_id":"unknown"}
 {"tool_name":"twining_post","timestamp":"2026-03-28T11:09:49.100Z","duration_ms":36,"success":true,"agent_id":"unknown"}
 {"tool_name":"twining_post","timestamp":"2026-03-28T11:10:18.397Z","duration_ms":42,"success":true,"agent_id":"unknown"}
+{"tool_name":"twining_decide","timestamp":"2026-03-28T11:33:12.435Z","duration_ms":79,"success":true,"agent_id":"unknown"}
+{"tool_name":"twining_decide","timestamp":"2026-03-28T11:33:26.089Z","duration_ms":93,"success":true,"agent_id":"unknown"}
+{"tool_name":"twining_post","timestamp":"2026-03-28T11:33:28.335Z","duration_ms":29,"success":true,"agent_id":"unknown"}

@@ -112,10 +112,10 @@
     "properties": {
       "description": "MCP server setup — createServer() wires all engines and registers tool handlers",
       "layer": "server",
-      "scope": "src/engine/graph-auto-populator.ts"
+      "scope": "src/tools/"
     },
     "created_at": "2026-02-17T03:13:31.729Z",
-    "updated_at": "2026-03-19T06:05:31.272Z"
+    "updated_at": "2026-03-28T11:33:12.415Z"
   },
   {
     "id": "01KHMSDJZEQM1FXSMNYBYTST24",
@@ -127,7 +127,7 @@
       "scope": "src/tools/"
     },
     "created_at": "2026-02-17T03:13:36.238Z",
-    "updated_at": "2026-03-19T06:05:17.455Z"
+    "updated_at": "2026-03-28T11:33:12.417Z"
   },
   {
     "id": "01KHMSDM44AFAD0VVEK8T9N3TK",
@@ -136,10 +136,10 @@
     "properties": {
       "description": "MCP tool handlers: twining_decide, twining_why, twining_trace, twining_commits",
       "layer": "tools",
-      "scope": "src/utils/types.ts"
+      "scope": "src/tools/"
     },
     "created_at": "2026-02-17T03:13:37.412Z",
-    "updated_at": "2026-03-21T12:14:01.741Z"
+    "updated_at": "2026-03-28T11:33:12.424Z"
   },
   {
     "id": "01KHMSDMRQ5HSX2W6SBDT3RND2",
@@ -148,10 +148,10 @@
     "properties": {
       "description": "MCP tool handlers: twining_assemble, twining_summarize, twining_what_changed",
       "layer": "tools",
-      "scope": "src/engine/context-assembler.ts"
+      "scope": "src/tools/"
     },
     "created_at": "2026-02-17T03:13:38.071Z",
-    "updated_at": "2026-03-19T06:05:25.084Z"
+    "updated_at": "2026-03-28T11:33:12.418Z"
   },
   {
     "id": "01KHMSDNP6W0G4PM1EF27453CS",
@@ -163,7 +163,7 @@
       "scope": "src/tools/"
     },
     "created_at": "2026-02-17T03:13:39.014Z",
-    "updated_at": "2026-03-19T06:05:17.467Z"
+    "updated_at": "2026-03-28T11:33:12.429Z"
   },
   {
     "id": "01KHMSDPPSS0QE5B5RT17WGBN1",
@@ -175,7 +175,7 @@
       "scope": "src/tools/"
     },
     "created_at": "2026-02-17T03:13:40.057Z",
-    "updated_at": "2026-03-19T06:05:17.469Z"
+    "updated_at": "2026-03-28T11:33:12.430Z"
   },
   {
     "id": "01KHMSDQY0T6VGYV2VXV2E6MRB",
@@ -731,10 +731,10 @@
     "name": "plugin/hooks/hooks.json",
     "type": "file",
     "properties": {
-      "scope": "plugin/hooks/"
+      "scope": "plugin/"
     },
     "created_at": "2026-02-28T01:19:31.504Z",
-    "updated_at": "2026-03-28T11:09:32.468Z"
+    "updated_at": "2026-03-28T11:33:26.069Z"
   },
   {
     "id": "01KJGX8KNHD07T6HE5K3GHZBAK",
@@ -1096,7 +1096,7 @@
       "scope": "src/tools/"
     },
     "created_at": "2026-02-28T18:53:40.990Z",
-    "updated_at": "2026-03-19T06:05:17.464Z"
+    "updated_at": "2026-03-28T11:33:12.420Z"
   },
   {
     "id": "01KJJSJTRA0DB2AJR3E6E76332",
@@ -1113,10 +1113,10 @@
     "name": "plugin/skills/twining-dispatch/SKILL.md",
     "type": "file",
     "properties": {
-      "scope": "src/tools/coordination-tools.ts"
+      "scope": "plugin/"
     },
     "created_at": "2026-02-28T18:53:41.004Z",
-    "updated_at": "2026-02-28T18:53:41.004Z"
+    "updated_at": "2026-03-28T11:33:26.086Z"
   },
   {
     "id": "01KJJSJTRGK3ZA5R8N3WXVT6YS",
@@ -1887,7 +1887,7 @@
       "scope": "plugin/"
     },
     "created_at": "2026-03-10T13:03:56.468Z",
-    "updated_at": "2026-03-10T13:03:56.468Z"
+    "updated_at": "2026-03-28T11:33:26.080Z"
   },
   {
     "id": "01KKBXHM1Q9RFE1BC2Q3W77M9H",
@@ -1897,7 +1897,7 @@
       "scope": "plugin/"
     },
     "created_at": "2026-03-10T13:03:56.471Z",
-    "updated_at": "2026-03-10T13:03:56.471Z"
+    "updated_at": "2026-03-28T11:33:26.072Z"
   },
   {
     "id": "01KKNE77Z4XVAP74EWJX0YW6SE",
@@ -1980,7 +1980,7 @@
       "scope": "src/tools/"
     },
     "created_at": "2026-03-19T06:05:17.471Z",
-    "updated_at": "2026-03-19T06:05:17.471Z"
+    "updated_at": "2026-03-28T11:33:12.428Z"
   },
   {
     "id": "01KM2B5GS2QDF3P8VW1RGXNVW1",
@@ -1990,7 +1990,7 @@
       "scope": "src/tools/"
     },
     "created_at": "2026-03-19T06:05:17.474Z",
-    "updated_at": "2026-03-19T06:05:17.474Z"
+    "updated_at": "2026-03-28T11:33:12.432Z"
   },
   {
     "id": "01KM2B5R6RWNYSWHAM97TF0R3N",
@@ -2019,10 +2019,10 @@
     "name": "plugin/skills/twining-map/SKILL.md",
     "type": "file",
     "properties": {
-      "scope": "src/engine/graph-auto-populator.ts"
+      "scope": "plugin/"
     },
     "created_at": "2026-03-19T06:05:31.280Z",
-    "updated_at": "2026-03-19T06:05:31.280Z"
+    "updated_at": "2026-03-28T11:33:26.083Z"
   },
   {
     "id": "01KM6AYPHWZAJWCS92C52DXBAM",
@@ -2362,9 +2362,91 @@
     "name": "plugin/hooks/ensure-claude-md-gates.sh",
     "type": "file",
     "properties": {
-      "scope": "plugin/hooks/"
+      "scope": "plugin/"
     },
     "created_at": "2026-03-28T11:09:32.466Z",
-    "updated_at": "2026-03-28T11:09:32.466Z"
+    "updated_at": "2026-03-28T11:33:26.070Z"
+  },
+  {
+    "id": "01KMT3GDJYZWYW23H93CTQTM6K",
+    "name": "01KMT3GDH4J7CQDP4XTTCJT05K",
+    "type": "concept",
+    "properties": {
+      "summary": "Remove fullSurface tool gate — all 34 MCP tools always registered",
+      "scope": "src/tools/"
+    },
+    "created_at": "2026-03-28T11:33:12.414Z",
+    "updated_at": "2026-03-28T11:33:12.414Z"
+  },
+  {
+    "id": "01KMT3GDKJX7247QR174CE285B",
+    "name": "c054d81",
+    "type": "commit",
+    "properties": {
+      "decision": "01KMT3GDH4J7CQDP4XTTCJT05K"
+    },
+    "created_at": "2026-03-28T11:33:12.434Z",
+    "updated_at": "2026-03-28T11:33:12.434Z"
+  },
+  {
+    "id": "01KMT3GTXMT8ZWZ5CCTZ3TAVSF",
+    "name": "01KMT3GTVCP5QC22X5PZ9TYF1W",
+    "type": "concept",
+    "properties": {
+      "summary": "Layered instruction architecture: CLAUDE.md as authority, lean SessionStart prompt, third-person skill descriptions",
+      "scope": "plugin/"
+    },
+    "created_at": "2026-03-28T11:33:26.068Z",
+    "updated_at": "2026-03-28T11:33:26.068Z"
+  },
+  {
+    "id": "01KMT3GTXTWEWXJNCH8EGHXPJ4",
+    "name": "plugin/skills/twining-decide/SKILL.md",
+    "type": "file",
+    "properties": {
+      "scope": "plugin/"
+    },
+    "created_at": "2026-03-28T11:33:26.074Z",
+    "updated_at": "2026-03-28T11:33:26.074Z"
+  },
+  {
+    "id": "01KMT3GTXX7E2K4C3AYS9DQFC4",
+    "name": "plugin/skills/twining-verify/SKILL.md",
+    "type": "file",
+    "properties": {
+      "scope": "plugin/"
+    },
+    "created_at": "2026-03-28T11:33:26.077Z",
+    "updated_at": "2026-03-28T11:33:26.077Z"
+  },
+  {
+    "id": "01KMT3GTY26Z707H3NJM3SPPFG",
+    "name": "plugin/skills/twining-coordinate/SKILL.md",
+    "type": "file",
+    "properties": {
+      "scope": "plugin/"
+    },
+    "created_at": "2026-03-28T11:33:26.082Z",
+    "updated_at": "2026-03-28T11:33:26.082Z"
+  },
+  {
+    "id": "01KMT3GTY5F421CXRA20J1PS6N",
+    "name": "plugin/skills/twining-review/SKILL.md",
+    "type": "file",
+    "properties": {
+      "scope": "plugin/"
+    },
+    "created_at": "2026-03-28T11:33:26.085Z",
+    "updated_at": "2026-03-28T11:33:26.085Z"
+  },
+  {
+    "id": "01KMT3GTY8A5CJDSEDAN9G2DW9",
+    "name": "46d232d",
+    "type": "commit",
+    "properties": {
+      "decision": "01KMT3GTVCP5QC22X5PZ9TYF1W"
+    },
+    "created_at": "2026-03-28T11:33:26.088Z",
+    "updated_at": "2026-03-28T11:33:26.088Z"
   }
 ]

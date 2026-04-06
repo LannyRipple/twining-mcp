@@ -97,3 +97,28 @@ This is a TypeScript project. Keep in mind:
 2. Make changes ensuring backward compatibility OR update all references
 3. Use rename_symbol for consistent renaming across codebase
 ```
+
+## Coordination — Twining Lifecycle Gates
+
+IMPORTANT: These gates are BLOCKING REQUIREMENTS for every task involving code exploration, modification, or architectural decisions.
+
+### Gate 1: Context Assembly (BEFORE any work)
+- MUST call `twining_assemble` with task description and narrowest scope BEFORE reading code or making changes
+- MUST call `twining_why` on files you intend to modify
+- NEVER start working without these calls — skipping creates blind decisions that conflict with existing work
+
+### Gate 2: Decision Recording (AFTER choices)
+- MUST call `twining_decide` for any architectural or implementation choice where alternatives exist
+- Include rationale and at least one rejected alternative
+- Post `finding`, `warning`, and `need` entries via `twining_post` for discoveries, gotchas, and follow-up work
+- NEVER use `twining_post` with entry_type `decision` — always use `twining_decide`
+
+### Gate 3: Verification (BEFORE completing)
+- MUST call `twining_verify` on your working scope before declaring done
+- Post a `status` entry summarizing what you accomplished
+- Link commits to decisions via `twining_link_commit`
+
+### Critical Rules
+- Use narrowest scope: `src/auth/` not `project`
+- NEVER skip Gate 1 — #1 cause of wasted work and conflicting decisions
+- NEVER skip Gate 3 — unverified work leaves gaps for the next agent

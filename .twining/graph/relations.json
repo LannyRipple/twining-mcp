@@ -2766,5 +2766,211 @@
       "decision_summary": "Add SessionStart command hook to inject Twining Lifecycle Gates into project CLAUDE.md"
     },
     "created_at": "2026-03-28T11:09:32.469Z"
+  },
+  {
+    "id": "01KMT3GDK0WJFKDR03J5425M4A",
+    "source": "01KHMSDEJH7CQCE97XA0ZAP52A",
+    "target": "01KMT3GDJYZWYW23H93CTQTM6K",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Remove fullSurface tool gate — all 34 MCP tools always registered"
+    },
+    "created_at": "2026-03-28T11:33:12.416Z"
+  },
+  {
+    "id": "01KMT3GDK2KDVJ3HV71XPW2T4V",
+    "source": "01KHMSDJZEQM1FXSMNYBYTST24",
+    "target": "01KMT3GDJYZWYW23H93CTQTM6K",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Remove fullSurface tool gate — all 34 MCP tools always registered"
+    },
+    "created_at": "2026-03-28T11:33:12.418Z"
+  },
+  {
+    "id": "01KMT3GDK3B80F6MTYNQTAHKVG",
+    "source": "01KHMSDMRQ5HSX2W6SBDT3RND2",
+    "target": "01KMT3GDJYZWYW23H93CTQTM6K",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Remove fullSurface tool gate — all 34 MCP tools always registered"
+    },
+    "created_at": "2026-03-28T11:33:12.419Z"
+  },
+  {
+    "id": "01KMT3GDK61PPYDW1X5HV7FNPN",
+    "source": "01KJJSJTQYDBTD49DYMQ2XN7Y6",
+    "target": "01KMT3GDJYZWYW23H93CTQTM6K",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Remove fullSurface tool gate — all 34 MCP tools always registered"
+    },
+    "created_at": "2026-03-28T11:33:12.423Z"
+  },
+  {
+    "id": "01KMT3GDKB8CR81NWYA6JR65R7",
+    "source": "01KHMSDM44AFAD0VVEK8T9N3TK",
+    "target": "01KMT3GDJYZWYW23H93CTQTM6K",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Remove fullSurface tool gate — all 34 MCP tools always registered"
+    },
+    "created_at": "2026-03-28T11:33:12.427Z"
+  },
+  {
+    "id": "01KMT3GDKCFGDM415917FHH4ZQ",
+    "source": "01KM2B5GRZ2ZRK58VDE348WBJC",
+    "target": "01KMT3GDJYZWYW23H93CTQTM6K",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Remove fullSurface tool gate — all 34 MCP tools always registered"
+    },
+    "created_at": "2026-03-28T11:33:12.428Z"
+  },
+  {
+    "id": "01KMT3GDKEYZC6JV090XPBVTGR",
+    "source": "01KHMSDNP6W0G4PM1EF27453CS",
+    "target": "01KMT3GDJYZWYW23H93CTQTM6K",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Remove fullSurface tool gate — all 34 MCP tools always registered"
+    },
+    "created_at": "2026-03-28T11:33:12.430Z"
+  },
+  {
+    "id": "01KMT3GDKFJYED84BK43M5VPPQ",
+    "source": "01KHMSDPPSS0QE5B5RT17WGBN1",
+    "target": "01KMT3GDJYZWYW23H93CTQTM6K",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Remove fullSurface tool gate — all 34 MCP tools always registered"
+    },
+    "created_at": "2026-03-28T11:33:12.431Z"
+  },
+  {
+    "id": "01KMT3GDKH9QKQWC72BFJRRMDA",
+    "source": "01KM2B5GS2QDF3P8VW1RGXNVW1",
+    "target": "01KMT3GDJYZWYW23H93CTQTM6K",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Remove fullSurface tool gate — all 34 MCP tools always registered"
+    },
+    "created_at": "2026-03-28T11:33:12.433Z"
+  },
+  {
+    "id": "01KMT3GDKKJF6046AEY1FPYFWH",
+    "source": "01KMT3GDKJX7247QR174CE285B",
+    "target": "01KMT3GDJYZWYW23H93CTQTM6K",
+    "type": "decided_by",
+    "properties": {},
+    "created_at": "2026-03-28T11:33:12.435Z"
+  },
+  {
+    "id": "01KMT3GTXPHNYSBMWRG8G9BTD1",
+    "source": "01KJGX8KNG4BA8P7PFEXMTW51R",
+    "target": "01KMT3GTXMT8ZWZ5CCTZ3TAVSF",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Layered instruction architecture: CLAUDE.md as authority, lean SessionStart prompt, third-person skill descriptions"
+    },
+    "created_at": "2026-03-28T11:33:26.070Z"
+  },
+  {
+    "id": "01KMT3GTXQ4F62JZ7SBRGHHS99",
+    "source": "01KMT252XJ0BQPNM732439HQZB",
+    "target": "01KMT3GTXMT8ZWZ5CCTZ3TAVSF",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Layered instruction architecture: CLAUDE.md as authority, lean SessionStart prompt, third-person skill descriptions"
+    },
+    "created_at": "2026-03-28T11:33:26.071Z"
+  },
+  {
+    "id": "01KMT3GTXSJ5NVPNNPT18BN8AN",
+    "source": "01KKBXHM1Q9RFE1BC2Q3W77M9H",
+    "target": "01KMT3GTXMT8ZWZ5CCTZ3TAVSF",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Layered instruction architecture: CLAUDE.md as authority, lean SessionStart prompt, third-person skill descriptions"
+    },
+    "created_at": "2026-03-28T11:33:26.073Z"
+  },
+  {
+    "id": "01KMT3GTXV1ZEHXHN84XA7FJB5",
+    "source": "01KMT3GTXTWEWXJNCH8EGHXPJ4",
+    "target": "01KMT3GTXMT8ZWZ5CCTZ3TAVSF",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Layered instruction architecture: CLAUDE.md as authority, lean SessionStart prompt, third-person skill descriptions"
+    },
+    "created_at": "2026-03-28T11:33:26.075Z"
+  },
+  {
+    "id": "01KMT3GTXYVGKRTWSNS64KW4X5",
+    "source": "01KMT3GTXX7E2K4C3AYS9DQFC4",
+    "target": "01KMT3GTXMT8ZWZ5CCTZ3TAVSF",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Layered instruction architecture: CLAUDE.md as authority, lean SessionStart prompt, third-person skill descriptions"
+    },
+    "created_at": "2026-03-28T11:33:26.078Z"
+  },
+  {
+    "id": "01KMT3GTY183FQJDG5CDT09DFW",
+    "source": "01KKBXHM1MRJ60VFD848BGT3R0",
+    "target": "01KMT3GTXMT8ZWZ5CCTZ3TAVSF",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Layered instruction architecture: CLAUDE.md as authority, lean SessionStart prompt, third-person skill descriptions"
+    },
+    "created_at": "2026-03-28T11:33:26.081Z"
+  },
+  {
+    "id": "01KMT3GTY26Z707H3NJM3SPPFH",
+    "source": "01KMT3GTY26Z707H3NJM3SPPFG",
+    "target": "01KMT3GTXMT8ZWZ5CCTZ3TAVSF",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Layered instruction architecture: CLAUDE.md as authority, lean SessionStart prompt, third-person skill descriptions"
+    },
+    "created_at": "2026-03-28T11:33:26.083Z"
+  },
+  {
+    "id": "01KMT3GTY48WWXDDWR87BXYRQ1",
+    "source": "01KM2B5Y8GZ53K75D8ZMX2AXGN",
+    "target": "01KMT3GTXMT8ZWZ5CCTZ3TAVSF",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Layered instruction architecture: CLAUDE.md as authority, lean SessionStart prompt, third-person skill descriptions"
+    },
+    "created_at": "2026-03-28T11:33:26.084Z"
+  },
+  {
+    "id": "01KMT3GTY5F421CXRA20J1PS6P",
+    "source": "01KMT3GTY5F421CXRA20J1PS6N",
+    "target": "01KMT3GTXMT8ZWZ5CCTZ3TAVSF",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Layered instruction architecture: CLAUDE.md as authority, lean SessionStart prompt, third-person skill descriptions"
+    },
+    "created_at": "2026-03-28T11:33:26.085Z"
+  },
+  {
+    "id": "01KMT3GTY7995AG6E6FKT9J89J",
+    "source": "01KJJSJTRCZPX53HCXCX4XDR02",
+    "target": "01KMT3GTXMT8ZWZ5CCTZ3TAVSF",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Layered instruction architecture: CLAUDE.md as authority, lean SessionStart prompt, third-person skill descriptions"
+    },
+    "created_at": "2026-03-28T11:33:26.087Z"
+  },
+  {
+    "id": "01KMT3GTY8A5CJDSEDAN9G2DWA",
+    "source": "01KMT3GTY8A5CJDSEDAN9G2DW9",
+    "target": "01KMT3GTXMT8ZWZ5CCTZ3TAVSF",
+    "type": "decided_by",
+    "properties": {},
+    "created_at": "2026-03-28T11:33:26.088Z"
   }
 ]
