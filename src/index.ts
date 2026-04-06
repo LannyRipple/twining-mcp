@@ -3,10 +3,19 @@
  * Twining MCP Server entry point.
  * Connects via stdio transport — never use console.log (corrupts JSON-RPC).
  */
+import { createRequire } from "node:module";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { createServer } from "./server.js";
 import { startDashboard, setupDashboardShutdown } from "./dashboard/http-server.js";
 import { TelemetryClient } from "./analytics/telemetry-client.js";
+
+// Handle --version / -v before starting the MCP server
+if (process.argv.includes("--version") || process.argv.includes("-v")) {
+  const require = createRequire(import.meta.url);
+  const { version } = require("../package.json") as { version: string };
+  console.log(`twining-mcp ${version}`);
+  process.exit(0);
+}
 
 async function main(): Promise<void> {
   // Parse --project argument, default to cwd
