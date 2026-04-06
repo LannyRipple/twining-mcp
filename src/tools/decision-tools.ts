@@ -12,8 +12,8 @@ export function registerDecisionTools(
   engine: DecisionEngine,
   options: { fullSurface?: boolean } = {},
 ): void {
-  // twining_decide — Record a decision with full rationale
-  server.registerTool(
+  // twining_decide — Record a decision with full rationale (full surface only — use twining_record instead)
+  if (options.fullSurface) server.registerTool(
     "twining_decide",
     {
       description:
@@ -162,8 +162,8 @@ export function registerDecisionTools(
     },
   );
 
-  // twining_reconsider — Flag a decision for reconsideration
-  server.registerTool(
+  // twining_reconsider — Flag a decision for reconsideration (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_reconsider",
     {
       description:
@@ -303,8 +303,8 @@ export function registerDecisionTools(
     },
   );
 
-  // twining_search_decisions — Search decisions across all scopes
-  server.registerTool(
+  // twining_search_decisions — Search decisions across all scopes (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_search_decisions",
     {
       description:
@@ -364,8 +364,8 @@ export function registerDecisionTools(
     },
   );
 
-  // twining_link_commit — Link a git commit hash to an existing decision
-  server.registerTool(
+  // twining_link_commit — Link a git commit hash to an existing decision (full surface only — use commit_hash param on twining_record instead)
+  if (options.fullSurface) server.registerTool(
     "twining_link_commit",
     {
       description:

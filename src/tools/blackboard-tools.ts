@@ -169,8 +169,8 @@ export function registerBlackboardTools(
     },
   );
 
-  // twining_dismiss — Remove specific blackboard entries by ID
-  server.registerTool(
+  // twining_dismiss — Remove specific blackboard entries by ID (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_dismiss",
     {
       description:

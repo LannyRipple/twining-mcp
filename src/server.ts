@@ -204,7 +204,9 @@ export function createServer(projectRoot: string): ServerContext {
   registerBlackboardTools(server, blackboardEngine, { fullSurface });
   registerDecisionTools(server, decisionEngine, { fullSurface });
   registerContextTools(server, contextAssembler, { fullSurface });
-  registerVerifyTools(server, verifyEngine);
+  if (fullSurface) {
+    registerVerifyTools(server, verifyEngine);
+  }
   registerCoordinationTools(server, agentStore, coordinationEngine, config, graphPopulator, { fullSurface });
 
   // Export tools only in full surface mode

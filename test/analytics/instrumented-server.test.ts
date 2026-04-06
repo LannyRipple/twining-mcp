@@ -126,14 +126,14 @@ describe("Instrumented Server", () => {
   it("records metrics for tools without agent_id", async () => {
     const { server } = createServer(tmpDir);
 
-    await callTool(server, "twining_verify", { scope: "project" });
+    await callTool(server, "twining_assemble", { task: "test", scope: "project" });
 
     await new Promise((r) => setTimeout(r, 200));
 
     const metricsPath = path.join(tmpDir, ".twining", "metrics.jsonl");
     const entries = await readJSONL<MetricEntry>(metricsPath);
-    const verifyEntry = entries.find((e) => e.tool_name === "twining_verify");
-    expect(verifyEntry).toBeDefined();
-    expect(verifyEntry!.agent_id).toBe("unknown");
+    const assembleEntry = entries.find((e) => e.tool_name === "twining_assemble");
+    expect(assembleEntry).toBeDefined();
+    expect(assembleEntry!.agent_id).toBe("unknown");
   });
 });

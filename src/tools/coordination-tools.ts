@@ -224,8 +224,8 @@ export function registerCoordinationTools(
     },
   );
 
-  // twining_handoff — Create a handoff between agents
-  server.registerTool(
+  // twining_handoff — Create a handoff between agents (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_handoff",
     {
       description:
