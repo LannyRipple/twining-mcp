@@ -25,17 +25,16 @@ afterEach(() => {
 });
 
 describe("twining_verify", () => {
-  it("returns verify result with all checks", async () => {
+  it("returns verify result with default checks", async () => {
     const res = await callTool(server, "twining_verify", { scope: "project" });
     const parsed = parseToolResponse(res) as VerifyResult;
     expect(parsed.scope).toBe("project");
     expect(parsed.verified_at).toBeTruthy();
     expect(parsed.checks).toBeDefined();
-    expect(parsed.checks.test_coverage).toBeDefined();
+    // Default checks: warnings, assembly, drift (test_coverage and constraints excluded by default)
     expect(parsed.checks.warnings).toBeDefined();
     expect(parsed.checks.assembly).toBeDefined();
     expect(parsed.checks.drift).toBeDefined();
-    expect(parsed.checks.constraints).toBeDefined();
     expect(parsed.summary).toBeTruthy();
   });
 

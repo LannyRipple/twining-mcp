@@ -1,21 +1,21 @@
 ---
 name: twining-verify
-description: Runs pre-completion verification — checks test coverage, unresolved warnings, and decision hygiene. Use before declaring a task complete or handing off work.
+description: Runs pre-completion verification — checks unresolved warnings, decision hygiene, and drift. Recommended for complex tasks; for simple tasks a status post via twining_post is sufficient.
 auto-invocable: true
 ---
 
 # Twining Verify — Pre-Completion Verification
 
-Before telling the user a task is done, handing off to another agent, or ending a session, verify your work against Twining's coordination state.
+For complex tasks (multi-file changes, architectural decisions, long sessions), verify your work against Twining's coordination state. For simple tasks, posting a `status` entry via `twining_post` is sufficient.
 
 > **Note:** `twining_verify` requires `tools.full_surface: true` in config. If not available, post a `status` entry via `twining_post` summarizing what you did.
 
 ## When to Invoke
 
-- Before saying "done", "complete", or presenting final results
-- Before handing off work to another agent
-- When the user asks to wrap up or move on
-- Before creating a pull request or committing significant changes
+- Complex multi-file changes with architectural decisions
+- Before handing off work to another agent on a large task
+- Before creating a pull request with significant changes
+- When you want to check for decision drift or unresolved warnings
 
 ## Workflow
 

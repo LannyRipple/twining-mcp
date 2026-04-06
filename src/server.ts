@@ -181,16 +181,22 @@ export function createServer(projectRoot: string): ServerContext {
     createInstrumentedServer(server, metricsCollector);
   }
 
-  // Register tools — lite mode only registers core tools
+  // Register tools — full_surface=false (default) hides rarely-used tools to reduce noise.
+  // Claude Code defers tool loading via ToolSearch, so hidden tools don't appear in search.
   const toolMode = config.tools?.mode ?? "full";
+  const fullSurface = config.tools?.full_surface ?? false;
 
   // Core tools (always registered in both full and lite modes)
-  registerBlackboardTools(server, blackboardEngine);
-  registerDecisionTools(server, decisionEngine);
-  registerContextTools(server, contextAssembler);
+  registerBlackboardTools(server, blackboardEngine, { fullSurface });
+  registerDecisionTools(server, decisionEngine, { fullSurface });
+  registerContextTools(server, contextAssembler, { fullSurface });
   registerVerifyTools(server, verifyEngine);
-  registerExportTools(server, exporter);
-  registerCoordinationTools(server, agentStore, coordinationEngine, config, graphPopulator);
+  registerCoordinationTools(server, agentStore, coordinationEngine, config, graphPopulator, { fullSurface });
+
+  // Export tools only in full surface mode
+  if (fullSurface) {
+    registerExportTools(server, exporter);
+  }
 
   // Extended tools (full mode only)
   if (toolMode === "full") {

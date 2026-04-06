@@ -91,8 +91,10 @@ describe("Instrumented Server", () => {
   it("extracts agent_id from tool arguments", async () => {
     const { server } = createServer(tmpDir);
 
-    await callTool(server, "twining_recent", {
-      limit: 5,
+    await callTool(server, "twining_post", {
+      entry_type: "finding",
+      summary: "Agent ID test",
+      scope: "test/",
       agent_id: "my-agent-42",
     });
 
@@ -100,9 +102,9 @@ describe("Instrumented Server", () => {
 
     const metricsPath = path.join(tmpDir, ".twining", "metrics.jsonl");
     const entries = await readJSONL<MetricEntry>(metricsPath);
-    const recentEntry = entries.find((e) => e.tool_name === "twining_recent");
-    expect(recentEntry).toBeDefined();
-    expect(recentEntry!.agent_id).toBe("my-agent-42");
+    const postEntry = entries.find((e) => e.tool_name === "twining_post" && e.agent_id === "my-agent-42");
+    expect(postEntry).toBeDefined();
+    expect(postEntry!.agent_id).toBe("my-agent-42");
   });
 
   it("does not change tool behavior", async () => {
@@ -124,14 +126,14 @@ describe("Instrumented Server", () => {
   it("records metrics for tools without agent_id", async () => {
     const { server } = createServer(tmpDir);
 
-    await callTool(server, "twining_recent", { limit: 5 });
+    await callTool(server, "twining_verify", { scope: "project" });
 
     await new Promise((r) => setTimeout(r, 200));
 
     const metricsPath = path.join(tmpDir, ".twining", "metrics.jsonl");
     const entries = await readJSONL<MetricEntry>(metricsPath);
-    const recentEntry = entries.find((e) => e.tool_name === "twining_recent");
-    expect(recentEntry).toBeDefined();
-    expect(recentEntry!.agent_id).toBe("unknown");
+    const verifyEntry = entries.find((e) => e.tool_name === "twining_verify");
+    expect(verifyEntry).toBeDefined();
+    expect(verifyEntry!.agent_id).toBe("unknown");
   });
 });

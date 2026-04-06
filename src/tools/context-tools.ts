@@ -10,13 +10,14 @@ import { toolResult, toolError, TwiningError } from "../utils/errors.js";
 export function registerContextTools(
   server: McpServer,
   contextAssembler: ContextAssembler,
+  options: { fullSurface?: boolean } = {},
 ): void {
   // twining_assemble — Build tailored context for a specific task
   server.registerTool(
     "twining_assemble",
     {
       description:
-        "Build tailored context for a specific task. Returns structured briefing with decisions to respect, warnings, handoff context, and status summary. Call this BEFORE starting any task. Replaces the need for a separate twining_status call.",
+        "Your FIRST call every session. Returns a briefing with decisions to respect, warnings to address, and handoff context from previous agents. Call BEFORE reading code or making changes.",
       inputSchema: {
         task: z.string().describe("Description of what the agent is about to do"),
         scope: z
@@ -41,7 +42,16 @@ export function registerContextTools(
           args.agent_id,
         );
         const formatted = ContextAssembler.formatForLLM(context, status_summary);
-        return toolResult({ ...context, status_summary, formatted_briefing: formatted });
+        // Return only the briefing + metadata — avoids duplicating structured data
+        // that wastes agent context tokens. Use twining_why for detailed lookups.
+        return toolResult({
+          briefing: formatted,
+          scope: context.scope,
+          decisions_count: context.active_decisions.length,
+          warnings_count: context.active_warnings.length,
+          needs_count: context.open_needs.length,
+          token_estimate: context.token_estimate,
+        });
       } catch (e) {
         if (e instanceof TwiningError) {
           return toolError(e.message, e.code);
@@ -54,8 +64,8 @@ export function registerContextTools(
     },
   );
 
-  // twining_summarize — High-level summary of project or scope state
-  server.registerTool(
+  // twining_summarize — High-level summary of project or scope state (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_summarize",
     {
       description:
@@ -83,8 +93,8 @@ export function registerContextTools(
     },
   );
 
-  // twining_what_changed — Report changes since a given point in time
-  server.registerTool(
+  // twining_what_changed — Report changes since a given point in time (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_what_changed",
     {
       description:

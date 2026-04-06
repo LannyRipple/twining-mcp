@@ -90,13 +90,15 @@ describe("VerifyEngine.verify", () => {
     expect(result.summary).toBeTruthy();
   });
 
-  it("returns skip status for drift when git unavailable and constraints when none exist", async () => {
+  it("returns skip status for drift when git unavailable", async () => {
     mockExecFileSync.mockImplementation(() => {
       throw new Error("git not found");
     });
     const result = await verifyEngine.verify({ scope: "project" });
     expect(result.checks.drift?.status).toBe("skip");
-    expect(result.checks.constraints?.status).toBe("skip");
+    // constraints and test_coverage not in default checks
+    expect(result.checks.constraints).toBeUndefined();
+    expect(result.checks.test_coverage).toBeUndefined();
   });
 
   it("runs only requested checks", async () => {
@@ -109,13 +111,14 @@ describe("VerifyEngine.verify", () => {
     expect(result.checks.assembly).toBeUndefined();
   });
 
-  it("auto-posts finding to blackboard", async () => {
+  it("does not auto-post finding when no checks fail", async () => {
     mockExecFileSync.mockImplementation(() => {
       throw new Error("git not found");
     });
     await verifyEngine.verify({ scope: "project" });
     const { entries } = await blackboardStore.read({ entry_types: ["finding"] });
-    expect(entries.some((e) => e.summary.startsWith("Verification:"))).toBe(true);
+    // Auto-post only fires on "fail" status, not "pass" or "skip"
+    expect(entries.some((e) => e.summary.startsWith("Verification:"))).toBe(false);
   });
 });
 

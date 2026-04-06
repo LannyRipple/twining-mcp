@@ -72,7 +72,7 @@ beforeEach(() => {
   );
 
   server = new McpServer({ name: "test", version: "1.0.0" });
-  registerContextTools(server, contextAssembler, true);
+  registerContextTools(server, contextAssembler, { fullSurface: true });
 });
 
 describe("twining_assemble", () => {
@@ -83,16 +83,12 @@ describe("twining_assemble", () => {
     });
 
     const result = parseToolResponse(response) as Record<string, unknown>;
-    expect(result).toHaveProperty("assembled_at");
-    expect(result).toHaveProperty("task", "refactor auth module");
+    expect(result).toHaveProperty("briefing");
     expect(result).toHaveProperty("scope", "src/auth/");
     expect(result).toHaveProperty("token_estimate");
-    expect(result).toHaveProperty("active_decisions");
-    expect(result).toHaveProperty("open_needs");
-    expect(result).toHaveProperty("recent_findings");
-    expect(result).toHaveProperty("active_warnings");
-    expect(result).toHaveProperty("recent_questions");
-    expect(result).toHaveProperty("related_entities");
+    expect(result).toHaveProperty("decisions_count");
+    expect(result).toHaveProperty("warnings_count");
+    expect(result).toHaveProperty("needs_count");
   });
 
   it("should include data from stores", async () => {
@@ -127,12 +123,9 @@ describe("twining_assemble", () => {
     });
 
     const result = parseToolResponse(response) as Record<string, unknown>;
-    expect(
-      (result.active_warnings as unknown[]).length,
-    ).toBeGreaterThanOrEqual(1);
-    expect(
-      (result.active_decisions as unknown[]).length,
-    ).toBeGreaterThanOrEqual(1);
+    expect(result.warnings_count as number).toBeGreaterThanOrEqual(1);
+    expect(result.decisions_count as number).toBeGreaterThanOrEqual(1);
+    expect(typeof result.briefing).toBe("string");
   });
 
   it("should accept max_tokens parameter", async () => {

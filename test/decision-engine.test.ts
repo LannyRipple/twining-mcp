@@ -699,13 +699,13 @@ None.
 });
 
 describe("DecisionEngine conflict detection", () => {
-  it("marks new decision as provisional when same domain+scope has active decision", async () => {
+  it("keeps new decision active when same domain+scope has active decision", async () => {
     // First decision — active
     await decisionEngine.decide(
       validDecisionInput({ summary: "Use JWT for auth" }),
     );
 
-    // Second decision in same domain+scope with different summary — should conflict
+    // Second decision in same domain+scope with different summary — should note overlap
     const result = await decisionEngine.decide(
       validDecisionInput({ summary: "Use sessions for auth" }),
     );
@@ -714,12 +714,12 @@ describe("DecisionEngine conflict detection", () => {
     expect(result.conflicts!.length).toBe(1);
     expect(result.conflicts![0]!.summary).toBe("Use JWT for auth");
 
-    // Verify new decision is provisional
+    // New decision stays active (not provisional) — conflict is informational
     const decision = await decisionStore.get(result.id);
-    expect(decision!.status).toBe("provisional");
+    expect(decision!.status).toBe("active");
   });
 
-  it("posts warning to blackboard on conflict", async () => {
+  it("posts finding (not warning) to blackboard on conflict", async () => {
     await decisionEngine.decide(
       validDecisionInput({ summary: "Use JWT for auth" }),
     );
@@ -728,12 +728,12 @@ describe("DecisionEngine conflict detection", () => {
     );
 
     const { entries } = await blackboardEngine.read({
-      entry_types: ["warning"],
+      entry_types: ["finding"],
     });
-    const conflictWarning = entries.find((e) =>
-      e.summary.includes("Potential conflict"),
+    const conflictFinding = entries.find((e) =>
+      e.summary.includes("Related decisions"),
     );
-    expect(conflictWarning).toBeTruthy();
+    expect(conflictFinding).toBeTruthy();
   });
 
   it("does not conflict with different domain same scope", async () => {
@@ -774,7 +774,30 @@ describe("DecisionEngine conflict detection", () => {
     expect(result.conflicts).toBeUndefined();
   });
 
-  it("detects conflict with prefix-overlapping scope", async () => {
+  it("detects conflict when existing decision is at same-or-narrower scope", async () => {
+    // Decision at specific scope
+    await decisionEngine.decide(
+      validDecisionInput({
+        domain: "architecture",
+        scope: "src/auth/",
+        summary: "Use JWT for auth",
+      }),
+    );
+    // Broader decision at parent scope — should find the narrower conflict
+    const result = await decisionEngine.decide(
+      validDecisionInput({
+        domain: "architecture",
+        scope: "src/",
+        summary: "Use OOP patterns everywhere",
+      }),
+    );
+
+    expect(result.conflicts).toBeTruthy();
+    expect(result.conflicts!.length).toBe(1);
+  });
+
+  it("does not flag broader decisions as conflicts for narrower new decisions", async () => {
+    // Broad decision at src/
     await decisionEngine.decide(
       validDecisionInput({
         domain: "architecture",
@@ -782,17 +805,16 @@ describe("DecisionEngine conflict detection", () => {
         summary: "Use functional patterns",
       }),
     );
-    // More specific scope that overlaps via prefix
+    // Narrower decision at src/auth/ — broad decision should NOT conflict
     const result = await decisionEngine.decide(
       validDecisionInput({
         domain: "architecture",
         scope: "src/auth/",
-        summary: "Use OOP patterns for auth",
+        summary: "Use OOP for auth",
       }),
     );
 
-    expect(result.conflicts).toBeTruthy();
-    expect(result.conflicts!.length).toBe(1);
+    expect(result.conflicts ?? []).toHaveLength(0);
   });
 
   it("does not conflict with same summary (re-creation)", async () => {
@@ -928,13 +950,13 @@ describe("DecisionEngine.searchDecisions", () => {
 
 describe("DecisionEngine.promote", () => {
   it("promotes provisional decisions to active", async () => {
-    // Create two decisions in same domain+scope to trigger conflict → provisional
+    // Create a decision and manually set it to provisional
     const d1 = await decisionEngine.decide(validDecisionInput());
     const d2 = await decisionEngine.decide(
       validDecisionInput({ summary: "Use OAuth for auth" }),
     );
+    await decisionStore.updateStatus(d2.id, "provisional");
 
-    // d2 should be provisional due to conflict
     const before = await decisionStore.get(d2.id);
     expect(before!.status).toBe("provisional");
 
@@ -977,6 +999,7 @@ describe("DecisionEngine.promote", () => {
     const d2 = await decisionEngine.decide(
       validDecisionInput({ summary: "Use OAuth for auth" }),
     );
+    await decisionStore.updateStatus(d2.id, "provisional");
 
     await decisionEngine.promote([d2.id]);
 
@@ -1005,6 +1028,7 @@ describe("DecisionEngine.promote", () => {
     const d2 = await decisionEngine.decide(
       validDecisionInput({ summary: "Use OAuth for auth" }),
     );
+    await decisionStore.updateStatus(d2.id, "provisional");
     await decisionEngine.override(d1.id, "outdated");
 
     const result = await decisionEngine.promote([

@@ -593,7 +593,7 @@ Run verification checks on a scope. Checks test coverage (tested_by relations), 
 #### Rules
 | ID | Level | Rule |
 |----|-------|------|
-| VERIFY-01 | MUST | Run twining_verify before declaring work complete, handing off, or ending a session |
+| VERIFY-01 | SHOULD | Run twining_verify on complex tasks before declaring work complete; always post a status entry via twining_post |
 | VERIFY-02 | SHOULD | Include all relevant checks rather than skipping checks to get a clean result |
 | VERIFY-03 | SHOULD | Address issues found by verification rather than ignoring warnings or failures |
 

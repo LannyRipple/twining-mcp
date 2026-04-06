@@ -21,9 +21,10 @@ export function registerCoordinationTools(
   coordinationEngine: CoordinationEngine,
   config: TwiningConfig,
   graphPopulator?: GraphAutoPopulator | null,
+  options: { fullSurface?: boolean } = {},
 ): void {
-  // twining_agents — List all registered agents with liveness status
-  server.registerTool(
+  // twining_agents — List all registered agents with liveness status (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_agents",
     {
       description:
@@ -77,8 +78,8 @@ export function registerCoordinationTools(
     },
   );
 
-  // twining_register — Register or update an agent in the registry
-  server.registerTool(
+  // twining_register — Register or update an agent in the registry (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_register",
     {
       description:
@@ -130,8 +131,8 @@ export function registerCoordinationTools(
     },
   );
 
-  // twining_discover — Find agents matching required capabilities
-  server.registerTool(
+  // twining_discover — Find agents matching required capabilities (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_discover",
     {
       description:
@@ -167,8 +168,8 @@ export function registerCoordinationTools(
     },
   );
 
-  // twining_delegate — Post a delegation request to the blackboard
-  server.registerTool(
+  // twining_delegate — Post a delegation request to the blackboard (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_delegate",
     {
       description:
@@ -228,7 +229,7 @@ export function registerCoordinationTools(
     "twining_handoff",
     {
       description:
-        "Create a handoff record from one agent to another, capturing work results and auto-assembling context snapshot. Posts a status entry to the blackboard.",
+        "Hand off work to another agent with structured results and context. The next agent will see your handoff in their assemble briefing.",
       inputSchema: {
         source_agent: z
           .string()
@@ -310,8 +311,8 @@ export function registerCoordinationTools(
     },
   );
 
-  // twining_acknowledge — Acknowledge receipt of a handoff
-  server.registerTool(
+  // twining_acknowledge — Acknowledge receipt of a handoff (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_acknowledge",
     {
       description:

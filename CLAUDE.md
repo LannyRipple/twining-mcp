@@ -113,12 +113,12 @@ IMPORTANT: These gates are BLOCKING REQUIREMENTS for every task involving code e
 - Post `finding`, `warning`, and `need` entries via `twining_post` for discoveries, gotchas, and follow-up work
 - NEVER use `twining_post` with entry_type `decision` — always use `twining_decide`
 
-### Gate 3: Verification (BEFORE completing)
-- MUST call `twining_verify` on your working scope before declaring done
-- Post a `status` entry summarizing what you accomplished
+### Gate 3: Status & Handoff (BEFORE completing)
+- MUST post a `status` entry summarizing what you accomplished via `twining_post`
 - Link commits to decisions via `twining_link_commit`
+- SHOULD call `twining_verify` on complex tasks to check decision hygiene
 
 ### Critical Rules
 - Use narrowest scope: `src/auth/` not `project`
 - NEVER skip Gate 1 — #1 cause of wasted work and conflicting decisions
-- NEVER skip Gate 3 — unverified work leaves gaps for the next agent
+- NEVER skip Gate 3 — undocumented work leaves gaps for the next agent

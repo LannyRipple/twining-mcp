@@ -170,13 +170,14 @@ export class DecisionEngine {
       await this.decisionStore.updateStatus(input.supersedes, "superseded");
     }
 
-    // Conflict detection: scan for active decisions in same domain with overlapping scope
+    // Conflict detection: scan for active decisions in same domain with same or narrower scope.
+    // Only flag conflicts when the existing decision is at the same level or more specific —
+    // a broad decision at src/ should not conflict with a specific one at src/auth/.
     const index = await this.decisionStore.getIndex();
     const conflicts = index.filter(
       (entry) =>
         entry.domain === input.domain &&
-        (entry.scope.startsWith(input.scope) ||
-          input.scope.startsWith(entry.scope)) &&
+        entry.scope.startsWith(input.scope) &&
         entry.status === "active" &&
         entry.summary !== input.summary,
     );
@@ -216,16 +217,17 @@ export class DecisionEngine {
       ...(assembledBefore !== undefined ? { assembled_before: assembledBefore } : {}),
     });
 
-    // If conflicts exist, mark new decision as provisional and post warning
+    // If conflicts exist, post an informational finding (not a warning — warnings get
+    // priority-boosted in assemble output and dominate context, causing rework cascades).
+    // Keep the new decision active; only mark provisional if it duplicates an existing summary.
     if (conflicts.length > 0) {
-      await this.decisionStore.updateStatus(decision.id, "provisional");
       const conflictDetails = conflicts
         .map((c) => `- ${c.id}: "${c.summary}"`)
         .join("\n");
       await this.blackboardEngine.post({
-        entry_type: "warning",
-        summary: `Potential conflict: new decision may conflict with ${conflicts.length} existing decision(s)`,
-        detail: `New decision "${decision.summary}" conflicts with:\n${conflictDetails}`,
+        entry_type: "finding",
+        summary: `Related decisions in scope: ${conflicts.length} existing decision(s) overlap`,
+        detail: `New decision "${decision.summary}" relates to:\n${conflictDetails}`,
         tags: [input.domain],
         scope: input.scope,
         agent_id: decision.agent_id,

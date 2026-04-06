@@ -52,15 +52,15 @@ describe("Scenario: conflict detection on same domain+scope", () => {
     expect(parsed.conflicts!.length).toBeGreaterThanOrEqual(1);
     expect(parsed.conflicts![0]!.summary).toBe("Use JWT for auth");
 
-    // Warning should be on blackboard
+    // Finding (not warning) should be on blackboard
     const readRes = await callTool(server, "twining_read", {
-      entry_types: ["warning"],
+      entry_types: ["finding"],
     });
     const entries = parseToolResponse(readRes) as {
       entries: Array<{ summary: string }>;
     };
     expect(
-      entries.entries.some((e) => e.summary.includes("conflict")),
+      entries.entries.some((e) => e.summary.includes("Related decisions")),
     ).toBe(true);
   });
 });

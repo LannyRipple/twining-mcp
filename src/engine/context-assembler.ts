@@ -191,7 +191,9 @@ export class ContextAssembler {
 
     for (const [id, decision] of mergedDecisionMap) {
       const recency = this.recencyScore(decision.timestamp, now);
-      const relevance = decisionRelevance.get(id) ?? 0.5;
+      const baseRelevance = decisionRelevance.get(id) ?? 0.5;
+      const proximity = ContextAssembler.scopeProximity(scope, decision.scope);
+      const relevance = baseRelevance * proximity;
       const confidence = this.confidenceScore(decision.confidence);
       const warningBoost = 0;
       const reachability = reachabilityScores.get(id) ?? 0;
@@ -598,23 +600,24 @@ export class ContextAssembler {
       }
     }
 
-    // 3. Decisions — prescriptive with constraints and rejected alternatives
+    // 3. Decisions — tiered display: top 3 CRITICAL (full), next 2 CONTEXT (summary), rest omitted
     if (ctx.active_decisions.length > 0) {
       sections.push("\n### DECISIONS TO RESPECT");
-      for (let i = 0; i < ctx.active_decisions.length; i++) {
+      const CRITICAL_COUNT = 3;
+      const CONTEXT_COUNT = 2;
+      const total = ctx.active_decisions.length;
+
+      for (let i = 0; i < Math.min(total, CRITICAL_COUNT); i++) {
         const d = ctx.active_decisions[i]!;
         const files = d.affected_files?.length > 0 ? `\n   Files: ${d.affected_files.join(", ")}` : "";
         sections.push(`${i + 1}. **${d.summary}** (${d.confidence})${files}`);
         sections.push(`   Why: ${d.rationale}`);
-        // Constraints — concrete rules the agent MUST follow
         if (d.constraints && d.constraints.length > 0) {
           sections.push(`   MUST: ${d.constraints.join("; ")}`);
         }
-        // Rejected alternatives — what NOT to do and why
         if (d.rejected_alternatives && d.rejected_alternatives.length > 0) {
           sections.push(`   DO NOT: ${d.rejected_alternatives.join("; ")}`);
         }
-        // Assumptions with validation status
         if (d.assumptions && d.assumptions.length > 0) {
           if (d.assumptions_status === "challenged" && d.challenged_assumptions?.length) {
             sections.push(`   ASSUMPTIONS CHALLENGED: ${d.challenged_assumptions.join("; ")}`);
@@ -624,6 +627,18 @@ export class ContextAssembler {
             sections.push(`   ^ Assumptions hold. Follow this decision exactly.`);
           }
         }
+      }
+
+      // Context tier — summary only
+      for (let i = CRITICAL_COUNT; i < Math.min(total, CRITICAL_COUNT + CONTEXT_COUNT); i++) {
+        const d = ctx.active_decisions[i]!;
+        sections.push(`${i + 1}. **${d.summary}** (${d.confidence}) — ${d.rationale.slice(0, 120)}`);
+      }
+
+      // Omitted count
+      const omitted = total - CRITICAL_COUNT - CONTEXT_COUNT;
+      if (omitted > 0) {
+        sections.push(`\n(+${omitted} more decisions in scope — call twining_why for details)`);
       }
     } else {
       sections.push("\nNo active decisions for this scope.");
@@ -707,6 +722,17 @@ export class ContextAssembler {
     if (quickRef.length > 1) {
       sections.push(quickRef.join("\n"));
     }
+
+    // YOUR NEXT STEP — explicit first action directive to reduce orientation time
+    const nextStep =
+      ctx.active_warnings.length > 0
+        ? "Address the warnings above before proceeding."
+        : ctx.recent_handoffs && ctx.recent_handoffs.length > 0
+          ? "Continue from the handoff above — start with the unchecked items."
+          : ctx.open_needs.length > 0
+            ? "Pick up the first remaining work item."
+            : "No prior context constraints — proceed with your task.";
+    sections.push(`\n### YOUR NEXT STEP\n${nextStep}`);
 
     return sections.join("\n");
   }
@@ -1045,5 +1071,29 @@ export class ContextAssembler {
       default:
         return 0.5;
     }
+  }
+
+  /**
+   * Compute scope proximity: how close is a decision's scope to the task scope.
+   * Exact match or child scope = 1.0, parent (1 level) = 0.7, grandparent+ = 0.4.
+   */
+  static scopeProximity(taskScope: string, decisionScope: string): number {
+    // Exact match or decision is a child of the task scope
+    if (decisionScope.startsWith(taskScope) || taskScope.startsWith(decisionScope) && taskScope === decisionScope) {
+      return 1.0;
+    }
+    // Task scope is within decision scope (decision is broader)
+    if (taskScope.startsWith(decisionScope)) {
+      const remainder = taskScope.slice(decisionScope.length);
+      const depth = remainder.split("/").filter(Boolean).length;
+      if (depth <= 1) return 0.7;
+      return 0.4;
+    }
+    // Decision scope is within task scope (decision is more specific)
+    if (decisionScope.startsWith(taskScope)) {
+      return 1.0;
+    }
+    // Different branches — low relevance
+    return 0.4;
   }
 }

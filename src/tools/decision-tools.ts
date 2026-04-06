@@ -10,13 +10,14 @@ import { toolResult, toolError, TwiningError } from "../utils/errors.js";
 export function registerDecisionTools(
   server: McpServer,
   engine: DecisionEngine,
+  options: { fullSurface?: boolean } = {},
 ): void {
   // twining_decide — Record a decision with full rationale
   server.registerTool(
     "twining_decide",
     {
       description:
-        "Record a decision with full rationale, alternatives considered, and traceability. Creates a decision record and cross-posts to the blackboard.",
+        "Record an architectural or implementation choice with rationale and rejected alternatives. Other agents will see this in their assemble briefing.",
       inputSchema: {
         domain: z
           .string()
@@ -111,7 +112,7 @@ export function registerDecisionTools(
     "twining_why",
     {
       description:
-        'Retrieve all decisions affecting a given scope or file. Shows the decision chain with rationale, confidence, and alternatives count. Essential for understanding "why was it done this way?"',
+        "Before modifying a file, check what decisions constrain it. Shows rationale and alternatives so you don't contradict prior choices.",
       inputSchema: {
         scope: z
           .string()
@@ -131,8 +132,8 @@ export function registerDecisionTools(
     },
   );
 
-  // twining_trace — Trace a decision's dependency chain
-  server.registerTool(
+  // twining_trace — Trace a decision's dependency chain (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_trace",
     {
       description:
@@ -198,8 +199,8 @@ export function registerDecisionTools(
     },
   );
 
-  // twining_override — Override a decision with a reason
-  server.registerTool(
+  // twining_override — Override a decision with a reason (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_override",
     {
       description:
@@ -238,8 +239,8 @@ export function registerDecisionTools(
     },
   );
 
-  // twining_promote — Promote provisional decisions to active
-  server.registerTool(
+  // twining_promote — Promote provisional decisions to active (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_promote",
     {
       description:
@@ -274,8 +275,8 @@ export function registerDecisionTools(
     },
   );
 
-  // twining_commits — Query decisions by commit hash
-  server.registerTool(
+  // twining_commits — Query decisions by commit hash (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_commits",
     {
       description:
@@ -307,7 +308,7 @@ export function registerDecisionTools(
     "twining_search_decisions",
     {
       description:
-        "Search decisions across all scopes by keyword or semantic similarity. Returns ranked results without requiring a specific scope. Supports filtering by domain, status, and confidence level.",
+        "Search for decisions across all scopes by keyword or topic. Use when you need to find a specific past decision without knowing its exact scope.",
       inputSchema: {
         query: z
           .string()

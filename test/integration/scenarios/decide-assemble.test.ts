@@ -54,13 +54,12 @@ describe("Scenario: decide then assemble with scope filtering", () => {
       scope: "src/auth/",
     });
     const parsed = parseToolResponse(res) as {
-      active_decisions: Array<{ summary: string }>;
+      briefing: string;
+      decisions_count: number;
     };
-    const summaries = parsed.active_decisions.map((d) => d.summary);
-    // Should include auth decisions (scope-matched)
-    expect(summaries).toContain("Auth uses JWT");
-    expect(summaries).toContain("Auth tests use mocks");
-    // Semantic search may also include the DB decision, but the auth ones must be present
-    expect(parsed.active_decisions.length).toBeGreaterThanOrEqual(2);
+    // Should include auth decisions in briefing
+    expect(parsed.briefing).toContain("Auth uses JWT");
+    expect(parsed.briefing).toContain("Auth tests use mocks");
+    expect(parsed.decisions_count).toBeGreaterThanOrEqual(2);
   });
 });

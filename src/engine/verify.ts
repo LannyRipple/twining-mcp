@@ -26,6 +26,9 @@ const ALL_CHECKS = [
 ] as const;
 type CheckName = (typeof ALL_CHECKS)[number];
 
+/** Default checks when none specified — excludes test_coverage (requires graph) and constraints (stub). */
+const DEFAULT_CHECKS: CheckName[] = ["warnings", "assembly", "drift"];
+
 export class VerifyEngine {
   private readonly decisionStore: DecisionStore;
   private readonly blackboardStore: BlackboardStore;
@@ -65,7 +68,7 @@ export class VerifyEngine {
         ? (input.checks.filter((c) =>
             ALL_CHECKS.includes(c as CheckName),
           ) as CheckName[])
-        : [...ALL_CHECKS],
+        : [...DEFAULT_CHECKS],
     );
 
     const result: VerifyResult = {
@@ -110,18 +113,23 @@ export class VerifyEngine {
     }
     result.summary = parts.join(", ");
 
-    // Auto-post finding
-    try {
-      await this.blackboardEngine.post({
-        entry_type: "finding",
-        summary: `Verification: ${result.summary}`,
-        detail: JSON.stringify(result.checks, null, 2),
-        tags: ["verify"],
-        scope: input.scope,
-        agent_id: input.agent_id ?? "verify-engine",
-      });
-    } catch {
-      // Non-fatal — verification result is still returned
+    // Auto-post finding only when actionable failures exist (reduces blackboard noise)
+    const hasFailure = Object.values(result.checks).some(
+      (check) => check && check.status === "fail",
+    );
+    if (hasFailure) {
+      try {
+        await this.blackboardEngine.post({
+          entry_type: "finding",
+          summary: `Verification: ${result.summary}`,
+          detail: JSON.stringify(result.checks, null, 2),
+          tags: ["verify"],
+          scope: input.scope,
+          agent_id: input.agent_id ?? "verify-engine",
+        });
+      } catch {
+        // Non-fatal — verification result is still returned
+      }
     }
 
     return result;

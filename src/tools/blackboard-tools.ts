@@ -11,13 +11,14 @@ import { toolResult, toolError, TwiningError } from "../utils/errors.js";
 export function registerBlackboardTools(
   server: McpServer,
   engine: BlackboardEngine,
+  options: { fullSurface?: boolean } = {},
 ): void {
   // twining_post — Post an entry to the shared blackboard
   server.registerTool(
     "twining_post",
     {
       description:
-        "Post an entry to the shared blackboard. Use this to share findings, needs, warnings, status updates, and other coordination messages with other agents. Does NOT accept entry_type 'decision' — use twining_decide instead.",
+        "Share a finding, warning, need, or status update with other agents. Post a 'status' entry before ending each session. Does NOT accept entry_type 'decision' — use twining_decide instead.",
       inputSchema: {
         entry_type: z.enum(ENTRY_TYPES).describe("Type of blackboard entry"),
         summary: z
@@ -59,8 +60,8 @@ export function registerBlackboardTools(
     },
   );
 
-  // twining_read — Read blackboard entries with optional filters
-  server.registerTool(
+  // twining_read — Read blackboard entries with optional filters (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_read",
     {
       description:
@@ -104,8 +105,8 @@ export function registerBlackboardTools(
     },
   );
 
-  // twining_query — Semantic search across blackboard entries
-  server.registerTool(
+  // twining_query — Semantic search across blackboard entries (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_query",
     {
       description:
@@ -138,8 +139,8 @@ export function registerBlackboardTools(
     },
   );
 
-  // twining_recent — Quick access to latest entries
-  server.registerTool(
+  // twining_recent — Quick access to latest entries (full surface only)
+  if (options.fullSurface) server.registerTool(
     "twining_recent",
     {
       description:

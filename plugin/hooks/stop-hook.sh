@@ -27,17 +27,15 @@ if [[ -n "$TRANSCRIPT_PATH" ]] && [[ -f "$TRANSCRIPT_PATH" ]]; then
   LAST_TWINING=$(grep -n 'twining_decide\|twining_post\|twining_verify\|twining_handoff' "$TRANSCRIPT_PATH" 2>/dev/null | tail -1 | cut -d: -f1) || LAST_TWINING=0
   LAST_TWINING=${LAST_TWINING:-0}
 
-  # Block if code changes exist after the last Twining recording
+  # Warn (not block) if code changes exist after the last Twining recording
   if [[ "$LAST_EDIT" -gt 0 ]] && [[ "$LAST_EDIT" -gt "$LAST_TWINING" ]]; then
-    DECISION="block"
-    REASON="Code changes detected after last Twining recording. Before ending, please: 1) Record any architectural or implementation decisions with twining_decide. 2) Post findings or status with twining_post. 3) Run twining_verify to check completeness."
+    REASON="Code changes detected after last Twining recording. Consider: 1) Record decisions with twining_decide. 2) Post status with twining_post."
   fi
 fi
 
-# Output JSON using printf — no jq dependency
-# Values are safe (no user input, no special chars needing escaping)
-if [[ "$DECISION" = "block" ]]; then
-  printf '{"decision":"block","reason":"%s","systemMessage":"Twining housekeeping required — code changes detected without decision recording"}\n' "$REASON"
+# Always approve — use systemMessage to nudge, never block
+if [[ "$REASON" != "Session complete" ]]; then
+  printf '{"decision":"approve","reason":"Session complete","systemMessage":"%s"}\n' "$REASON"
 else
   printf '{"decision":"approve","reason":"Session complete"}\n'
 fi

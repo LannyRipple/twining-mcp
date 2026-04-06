@@ -30,13 +30,12 @@ describe("twining_assemble", () => {
       scope: "project",
     });
     const parsed = parseToolResponse(res) as Record<string, unknown>;
-    expect(parsed).toHaveProperty("assembled_at");
-    expect(parsed).toHaveProperty("task");
+    expect(parsed).toHaveProperty("briefing");
     expect(parsed).toHaveProperty("scope");
     expect(parsed).toHaveProperty("token_estimate");
-    expect(parsed).toHaveProperty("active_decisions");
-    expect(parsed).toHaveProperty("open_needs");
-    expect(parsed).toHaveProperty("active_warnings");
+    expect(parsed).toHaveProperty("decisions_count");
+    expect(parsed).toHaveProperty("warnings_count");
+    expect(parsed).toHaveProperty("needs_count");
   });
 
   it("accepts optional agent_id parameter", async () => {
@@ -46,7 +45,7 @@ describe("twining_assemble", () => {
       agent_id: "test-agent",
     });
     const parsed = parseToolResponse(res) as Record<string, unknown>;
-    expect(parsed).toHaveProperty("assembled_at");
+    expect(parsed).toHaveProperty("briefing");
   });
 });
 

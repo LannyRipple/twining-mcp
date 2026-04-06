@@ -8,7 +8,7 @@
         "timeout": 5
       }, {
         "type": "prompt",
-        "prompt": "Twining MCP tools are available for persistent project coordination. CLAUDE.md contains the authoritative \"Twining Lifecycle Gates\" section — follow those three gates (assemble, decide, verify) for every task. Start with `twining_assemble` before reading code or making changes."
+        "prompt": "Twining MCP tools are available. CLAUDE.md contains the \"Twining Lifecycle Gates\" — follow them. Your FIRST tool call MUST be `twining_assemble` with your task and scope. Do not read files or make changes until assemble returns."
       }]
     }],
     "SubagentStop": [{

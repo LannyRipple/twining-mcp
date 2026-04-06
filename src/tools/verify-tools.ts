@@ -14,7 +14,7 @@ export function registerVerifyTools(
     "twining_verify",
     {
       description:
-        "Run verification checks on a scope. Checks test coverage (tested_by relations), warnings acknowledgment, assembly-before-decision tracking, drift detection (P2 stub), and constraints (P2 stub). Auto-posts a finding with the summary.",
+        "Check decision hygiene on a scope: unresolved warnings, assembly-before-decision tracking, and drift detection. Recommended for complex tasks before handoff.",
       inputSchema: {
         scope: z.string().describe("Scope to verify (e.g., \"src/auth/\" or \"project\")"),
         checks: z

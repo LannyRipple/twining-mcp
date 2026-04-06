@@ -88,7 +88,7 @@ beforeEach(() => {
   );
 
   server = new McpServer({ name: "test-server", version: "1.0.0" });
-  registerCoordinationTools(server, agentStore, coordinationEngine, TEST_CONFIG);
+  registerCoordinationTools(server, agentStore, coordinationEngine, TEST_CONFIG, null, { fullSurface: true });
 });
 
 afterEach(() => {
@@ -271,6 +271,8 @@ describe("twining_agents tool", () => {
       brokenStore,
       brokenEngine,
       TEST_CONFIG,
+      null,
+      { fullSurface: true },
     );
 
     const registeredTools = (
@@ -407,6 +409,8 @@ describe("twining_register tool", () => {
       brokenStore,
       brokenEngine,
       TEST_CONFIG,
+      null,
+      { fullSurface: true },
     );
 
     const registeredTools = (
