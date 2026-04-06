@@ -113,6 +113,9 @@ IMPORTANT: These gates are BLOCKING REQUIREMENTS for every task involving code e
 - Write decisions as natural sentences: "Chose X over Y — reason"
 - For findings/warnings during work, use `twining_post` directly
 
+### Housekeeping
+- Run `twining_housekeeping({})` at the start of long sessions to check for stale state — preview is safe, execute only if needed
+
 ### Critical Rules
 - Use narrowest scope: `src/auth/` not `project`
 - NEVER skip Gate 1 — #1 cause of wasted work and conflicting decisions

@@ -37,6 +37,8 @@ import { AgentStore } from "./storage/agent-store.js";
 import { HandoffStore } from "./storage/handoff-store.js";
 import { CoordinationEngine } from "./engine/coordination.js";
 import { registerCoordinationTools } from "./tools/coordination-tools.js";
+import { HousekeepingEngine } from "./engine/housekeeping.js";
+import { registerHousekeepingTools } from "./tools/housekeeping-tools.js";
 import { MetricsCollector } from "./analytics/metrics-collector.js";
 import { createInstrumentedServer } from "./analytics/instrumented-server.js";
 import { TWINING_INSTRUCTIONS } from "./instructions.js";
@@ -150,6 +152,15 @@ export function createServer(projectRoot: string): ServerContext {
     contextAssembler.hasRecentAssembly(agentId),
   );
 
+  // Create housekeeping engine
+  const housekeepingEngine = new HousekeepingEngine(
+    twiningDir,
+    blackboardStore,
+    decisionStore,
+    archiver,
+    graphEngine,
+  );
+
   // Create exporter
   const exporter = new Exporter(blackboardStore, decisionStore, graphStore);
 
@@ -189,6 +200,7 @@ export function createServer(projectRoot: string): ServerContext {
 
   // Core tools (always registered in both full and lite modes)
   registerRecordTools(server, blackboardEngine, decisionEngine, projectRoot);
+  registerHousekeepingTools(server, housekeepingEngine);
   registerBlackboardTools(server, blackboardEngine, { fullSurface });
   registerDecisionTools(server, decisionEngine, { fullSurface });
   registerContextTools(server, contextAssembler, { fullSurface });

@@ -1,0 +1,223 @@
+/**
+ * Housekeeping engine — periodic maintenance for Twining stores.
+ * Orchestrates archival, deduplication, stale decision surfacing,
+ * dangling warning detection, graph pruning, and metrics rotation.
+ *
+ * Dry-run by default — preview before executing.
+ */
+import fs from "node:fs";
+import path from "node:path";
+import type { BlackboardStore } from "../storage/blackboard-store.js";
+import type { DecisionStore } from "../storage/decision-store.js";
+import type { Archiver } from "./archiver.js";
+import type { GraphEngine } from "./graph.js";
+import type { BlackboardEntry } from "../utils/types.js";
+
+/** Default: flag provisionals older than 7 days. */
+const STALE_PROVISIONAL_DAYS = 7;
+
+/** Default: keep metrics for 30 days. */
+const METRICS_RETENTION_DAYS = 30;
+
+export interface StaleProvisional {
+  id: string;
+  summary: string;
+  scope: string;
+  age_days: number;
+}
+
+export interface DanglingWarning {
+  id: string;
+  summary: string;
+  scope: string;
+  age_days: number;
+}
+
+export interface HousekeepingResult {
+  archived: { count: number; file: string };
+  deduplicated: { removed: number };
+  stale_provisionals: { count: number; items: StaleProvisional[] };
+  promoted_provisionals: { count: number; ids: string[] };
+  dangling_warnings: { count: number; items: DanglingWarning[] };
+  graph_pruned: { removed: number };
+  metrics_rotated: { removed: number };
+  dry_run: boolean;
+  summary: string;
+}
+
+export class HousekeepingEngine {
+  constructor(
+    private readonly twiningDir: string,
+    private readonly blackboardStore: BlackboardStore,
+    private readonly decisionStore: DecisionStore,
+    private readonly archiver: Archiver,
+    private readonly graphEngine: GraphEngine | null,
+  ) {}
+
+  async run(options?: {
+    stale_days?: number;
+    metrics_retention_days?: number;
+    execute?: boolean;
+    promote_provisionals?: boolean;
+  }): Promise<HousekeepingResult> {
+    const staleDays = options?.stale_days ?? STALE_PROVISIONAL_DAYS;
+    const metricsRetentionDays = options?.metrics_retention_days ?? METRICS_RETENTION_DAYS;
+    const execute = options?.execute ?? false;
+    const promoteProvisionals = options?.promote_provisionals ?? false;
+
+    const result: HousekeepingResult = {
+      archived: { count: 0, file: "" },
+      deduplicated: { removed: 0 },
+      stale_provisionals: { count: 0, items: [] },
+      promoted_provisionals: { count: 0, ids: [] },
+      dangling_warnings: { count: 0, items: [] },
+      graph_pruned: { removed: 0 },
+      metrics_rotated: { removed: 0 },
+      dry_run: !execute,
+      summary: "",
+    };
+
+    const now = Date.now();
+
+    // 1. Archive old blackboard entries
+    if (execute) {
+      try {
+        const archiveResult = await this.archiver.archive({ summarize: false });
+        result.archived.count = archiveResult.archived_count;
+        result.archived.file = archiveResult.archive_file;
+      } catch {
+        // Non-fatal
+      }
+    }
+
+    // 2. Deduplicate blackboard entries (same entry_type + summary + scope → keep newest)
+    try {
+      const { entries } = await this.blackboardStore.read();
+      const seen = new Map<string, BlackboardEntry>();
+      const duplicateIds: string[] = [];
+
+      // Walk newest-first so we keep the latest
+      const sorted = [...entries].sort(
+        (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+      );
+      for (const entry of sorted) {
+        const key = `${entry.entry_type}|${entry.summary}|${entry.scope}`;
+        if (seen.has(key)) {
+          duplicateIds.push(entry.id);
+        } else {
+          seen.set(key, entry);
+        }
+      }
+
+      if (duplicateIds.length > 0 && execute) {
+        await this.blackboardStore.dismiss(duplicateIds);
+      }
+      result.deduplicated.removed = duplicateIds.length;
+
+      // 6. Surface dangling warnings (never auto-removed, just reported)
+      const warnings = entries.filter((e) => e.entry_type === "warning");
+      result.dangling_warnings.items = warnings.map((w) => ({
+        id: w.id,
+        summary: w.summary,
+        scope: w.scope,
+        age_days: Math.floor((now - new Date(w.timestamp).getTime()) / (24 * 60 * 60 * 1000)),
+      }));
+      result.dangling_warnings.items.sort((a, b) => b.age_days - a.age_days);
+      result.dangling_warnings.count = result.dangling_warnings.items.length;
+    } catch {
+      // Non-fatal
+    }
+
+    // 3. Surface stale provisional decisions (report always, promote only if opted in)
+    try {
+      const cutoff = new Date(
+        now - staleDays * 24 * 60 * 60 * 1000,
+      ).toISOString();
+      const index = await this.decisionStore.getIndex();
+      const staleProvisionals = index.filter(
+        (e) => e.status === "provisional" && e.timestamp < cutoff,
+      );
+
+      result.stale_provisionals.items = staleProvisionals.map((e) => ({
+        id: e.id,
+        summary: e.summary,
+        scope: e.scope,
+        age_days: Math.floor((now - new Date(e.timestamp).getTime()) / (24 * 60 * 60 * 1000)),
+      }));
+      result.stale_provisionals.items.sort((a, b) => b.age_days - a.age_days);
+      result.stale_provisionals.count = staleProvisionals.length;
+
+      // Only promote if explicitly requested
+      if (promoteProvisionals && execute && staleProvisionals.length > 0) {
+        for (const entry of staleProvisionals) {
+          await this.decisionStore.updateStatus(entry.id, "active");
+        }
+        result.promoted_provisionals.count = staleProvisionals.length;
+        result.promoted_provisionals.ids = staleProvisionals.map((e) => e.id);
+      }
+    } catch {
+      // Non-fatal
+    }
+
+    // 4. Prune orphaned graph entities
+    if (this.graphEngine) {
+      try {
+        const pruneResult = await this.graphEngine.prune(undefined, !execute);
+        result.graph_pruned.removed = execute ? pruneResult.total_removed : pruneResult.total_orphans_found;
+      } catch {
+        // Non-fatal
+      }
+    }
+
+    // 5. Rotate metrics — remove entries older than retention period
+    try {
+      const metricsPath = path.join(this.twiningDir, "metrics.jsonl");
+      if (fs.existsSync(metricsPath)) {
+        const cutoff = new Date(
+          now - metricsRetentionDays * 24 * 60 * 60 * 1000,
+        ).toISOString();
+        const content = fs.readFileSync(metricsPath, "utf-8");
+        const lines = content.split("\n").filter((l) => l.trim());
+        const kept: string[] = [];
+        let removed = 0;
+
+        for (const line of lines) {
+          try {
+            const entry = JSON.parse(line) as { timestamp?: string };
+            if (entry.timestamp && entry.timestamp < cutoff) {
+              removed++;
+            } else {
+              kept.push(line);
+            }
+          } catch {
+            kept.push(line); // Keep unparseable lines
+          }
+        }
+
+        if (removed > 0 && execute) {
+          fs.writeFileSync(metricsPath, kept.join("\n") + (kept.length > 0 ? "\n" : ""));
+        }
+        result.metrics_rotated.removed = removed;
+      }
+    } catch {
+      // Non-fatal
+    }
+
+    // Build summary
+    const prefix = execute ? "" : "[preview] ";
+    const verb = execute ? "" : "would ";
+    const parts: string[] = [];
+    if (result.archived.count > 0) parts.push(`${verb}archive ${result.archived.count} entries`);
+    if (result.deduplicated.removed > 0) parts.push(`${verb}remove ${result.deduplicated.removed} duplicates`);
+    if (result.stale_provisionals.count > 0) parts.push(`${result.stale_provisionals.count} stale provisionals need review`);
+    if (result.dangling_warnings.count > 0) parts.push(`${result.dangling_warnings.count} unresolved warnings`);
+    if (result.promoted_provisionals.count > 0) parts.push(`promoted ${result.promoted_provisionals.count} provisionals`);
+    if (result.graph_pruned.removed > 0) parts.push(`${verb}prune ${result.graph_pruned.removed} orphaned entities`);
+    if (result.metrics_rotated.removed > 0) parts.push(`${verb}rotate ${result.metrics_rotated.removed} old metrics`);
+    result.summary = parts.length > 0
+      ? prefix + parts.join(", ")
+      : "Nothing to clean up";
+
+    return result;
+  }
+}
