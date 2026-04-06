@@ -2,6 +2,26 @@
 
 All notable changes to Twining MCP are documented here.
 
+## [1.17.0] - 2026-04-06
+
+### Added
+- `twining_record` tool — unified recording that accepts natural language summary, decisions, findings, assumptions, constraints, and affected files in one call. Decisions are parsed into structured records automatically ("Chose X over Y — reason" extracts rationale and rejected alternatives). Scope auto-inferred from git diff when omitted.
+- `twining_housekeeping` tool — periodic store maintenance: archives old entries, removes duplicates, surfaces stale provisionals and dangling warnings, prunes orphaned graph entities, rotates old metrics. Dry-run by default.
+- `PreToolUse` hook on `git commit` — blocks commits until `twining_record` is called, enforcing decision capture at the natural checkpoint
+- Natural language decision parser (`record-parser.ts`) — extracts summary, rationale, rejected alternatives, and domain from freeform sentences
+
+### Changed
+- Lifecycle simplified from 3 gates to 2: Gate 1 (assemble) + Gate 2 (record). Gate 2 replaces the old decide+post+verify ceremony with a single `twining_record` call.
+- Stop hook rewritten — blocks session exit when code changes lack recording, asks for one action: "call twining_record"
+- MCP server instructions condensed — 2 gates, 4 core tools listed instead of full tool group taxonomy
+
+### Plugin v1.8.0
+- SessionStart prompt updated: "Two gates: assemble FIRST, record LAST"
+- PreToolUse hook added for git commit enforcement
+- Stop hook blocks with single-action message instead of 3-step checklist
+- CLAUDE.md gates: Gate 2 is now "Record (BEFORE committing or ending)"
+- Housekeeping recommendation added for long sessions
+
 ## [1.16.0] - 2026-04-05
 
 ### Added
