@@ -2,6 +2,33 @@
 
 All notable changes to Twining MCP are documented here.
 
+## [1.16.0] - 2026-04-05
+
+### Added
+- `--version` / `-v` CLI flag — prints version and exits before starting MCP server
+- Decision tiering in assemble output — top 3 CRITICAL (full detail), next 2 CONTEXT (summary), rest omitted with count
+- Scope-distance weighting in assemble scoring — exact/child scope = 1.0, parent = 0.7, grandparent+ = 0.4
+- YOUR NEXT STEP directive at end of assemble briefing — explicit first-action guidance
+- `full_surface` config wired to tool registration — 15 rarely-used tools hidden by default, 17 remain
+
+### Changed
+- Gate 3 changed from mandatory `twining_verify` to mandatory `twining_post` status entry
+- Default verify checks reduced from 5 to 3 (excludes test_coverage and constraints)
+- Verify auto-post finding only fires on failures, not on pass/skip
+- Stop hook changed from blocking to approve-with-systemMessage reminder
+- Conflict detection tightened to same-or-narrower scope only (broad decisions no longer trigger false conflicts)
+- Conflict response softened from warning to finding; new decisions stay active instead of provisional
+- Assemble tool returns briefing + metadata only (no duplicate raw JSON)
+- Auto-orient instruction strengthened to imperative first-call requirement
+- Improved tool descriptions for ToolSearch discoverability
+
+### Plugin v1.7.0
+- CLAUDE.md gates updated: Gate 3 is now "Status & Handoff"
+- BEHAVIORS.md: VERIFY-01 changed from MUST to SHOULD
+- Stop hook: approve-with-reminder instead of blocking
+- SessionStart prompt: imperative assemble-first instruction
+- Verify skill: marked as recommended for complex tasks, not required
+
 ## [1.8.1] - 2026-02-28
 
 ### Fixed
