@@ -4,7 +4,24 @@ Full reference for all Twining MCP tools. See `CLAUDE.md` for mandatory workflow
 
 ---
 
-## Tool Quick Reference
+## Core Tools (always registered)
+
+| Tool | Gate | Purpose |
+|------|------|---------|
+| `twining_assemble` | Gate 1 | Build tailored context — decisions, warnings, handoffs, within a token budget |
+| `twining_record` | Gate 2 | Record what you did and choices made — natural language parsed into structured decisions |
+| `twining_post` | During work | Share findings, warnings, needs, or status updates |
+| `twining_why` | Gate 1 | Check what decisions constrain a file before modifying it |
+| `twining_housekeeping` | Maintenance | Archive, deduplicate, surface stale state (dry-run by default) |
+| `twining_dismiss` | During work | Remove resolved or false-positive entries |
+| `twining_decide` | During work | Record a structured decision directly (also called internally by `twining_record`) |
+| `twining_search_decisions` | During work | Search decisions by keyword or semantic similarity |
+| `twining_reconsider` | During work | Flag a decision for reconsideration |
+| `twining_link_commit` | After commit | Link a git commit to a decision |
+| `twining_verify` | Optional | Check decision hygiene on complex tasks |
+| `twining_handoff` | Session end | Hand off work with structured results |
+
+## Extended Tools (with `full_surface: true`)
 
 ### Blackboard (shared communication)
 | Tool | Purpose |

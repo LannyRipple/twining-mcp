@@ -35,21 +35,26 @@ Twining is an MCP server that gives your AI agents persistent project memory. De
 /plugin install twining@twining-marketplace
 ```
 
-**Record a decision with rationale:**
+**Record what you did — in natural language:**
 ```
-> Use twining_decide to record: chose PostgreSQL over MongoDB for ACID compliance
+twining_record({
+  summary: "Added Redis caching to UserService",
+  decisions: ["Chose Redis over Memcached — need persistence across restarts"],
+  assumptions: ["Read-heavy workload (10:1 ratio)"],
+  scope: "src/services/"
+})
 ```
-Twining captures the decision, rationale, alternatives considered, confidence level, and affected files — as a structured record, not chat history.
+Twining parses your decisions into structured records — extracting rationale, rejected alternatives, and domain automatically. One tool call, no forms.
 
 **Start a new session. Get caught up instantly:**
 ```
-> Use twining_assemble for the database module
+twining_assemble({ task: "optimize the caching layer", scope: "src/services/" })
 ```
 Twining scores every decision, warning, and finding by relevance to your task, then fills a token budget in priority order. You get exactly the context you need — no firehose, no re-explaining.
 
 **Ask why things are the way they are:**
 ```
-> Use twining_why src/auth/middleware.ts
+twining_why({ scope: "src/auth/middleware.ts" })
 ```
 Returns the full decision chain for any file: what was decided, when, why, what alternatives were rejected, and which commit implemented it.
 
@@ -80,7 +85,7 @@ Agents self-select into work by reading the blackboard. No central bottleneck. N
 /plugin install twining@twining-marketplace
 ```
 
-Includes the MCP server, 8 skills, lifecycle hooks, coordinator subagent, and commands. Skills teach Claude when and how to use Twining — everything works automatically.
+Includes the MCP server, skills, lifecycle hooks, and pre-commit enforcement. Two gates: `twining_assemble` before working, `twining_record` before committing — hooks enforce both automatically.
 
 ### Team Auto-Install
 
@@ -157,69 +162,38 @@ A web dashboard starts automatically at `http://localhost:24282` — browse deci
 
 ## What's Inside
 
-### Persistent Decisions
+### Core Tools (always available)
+
+These are the tools agents use in every session:
 
 | Tool | What It Does |
 |------|-------------|
-| `twining_decide` | Record a decision with rationale, alternatives, confidence, and traceability |
-| `twining_why` | Get the full decision chain for any file or scope |
-| `twining_trace` | Trace a decision's dependency chain upstream and downstream |
-| `twining_reconsider` | Flag a decision for reconsideration with impact analysis |
-| `twining_override` | Override a decision, optionally creating a replacement |
-| `twining_promote` | Promote provisional decisions to active after validation |
-| `twining_search_decisions` | Search decisions by keyword or semantic similarity |
-| `twining_link_commit` | Link a git commit to a decision |
-| `twining_commits` | Find decisions by git commit |
+| `twining_assemble` | **Gate 1:** Build tailored context for a task — decisions, warnings, handoffs, within a token budget |
+| `twining_record` | **Gate 2:** Record what you did and any choices made — natural language in, structured decisions out |
+| `twining_post` | Share findings, warnings, needs, or status during work |
+| `twining_why` | Check what decisions constrain a file before modifying it |
+| `twining_housekeeping` | Periodic maintenance — archive, deduplicate, surface stale decisions (dry-run by default) |
 
-### Shared Blackboard
+`twining_record` accepts natural language decisions like `"Chose Redis over Memcached — need persistence"` and automatically parses them into structured records with rationale, rejected alternatives, and inferred domain. It also accepts assumptions, constraints, affected files, and dependency chains — everything the decision store needs for high-fidelity context assembly.
 
-| Tool | What It Does |
-|------|-------------|
-| `twining_post` | Share a finding, warning, need, or question with all agents |
-| `twining_read` | Read entries filtered by type, scope, or agent |
-| `twining_query` | Semantic search across all entries |
-| `twining_recent` | Get the latest entries |
-| `twining_dismiss` | Remove resolved or false-positive entries by ID |
+### Extended Tools (available with `full_surface: true`)
 
-### Context Assembly
+For advanced workflows — deep decision management, graph exploration, multi-agent coordination:
 
-| Tool | What It Does |
-|------|-------------|
-| `twining_assemble` | Build tailored context for a task within a token budget |
-| `twining_summarize` | High-level summary of project state |
-| `twining_what_changed` | What changed since a given point in time |
+| Category | Tools |
+|----------|-------|
+| **Decisions** | `twining_decide`, `twining_search_decisions`, `twining_reconsider`, `twining_link_commit`, `twining_trace`, `twining_override`, `twining_promote`, `twining_commits` |
+| **Blackboard** | `twining_read`, `twining_query`, `twining_recent`, `twining_dismiss` |
+| **Context** | `twining_summarize`, `twining_what_changed` |
+| **Graph** | `twining_add_entity`, `twining_add_relation`, `twining_neighbors`, `twining_graph_query`, `twining_prune_graph` |
+| **Coordination** | `twining_register`, `twining_agents`, `twining_discover`, `twining_delegate`, `twining_handoff`, `twining_acknowledge` |
+| **Lifecycle** | `twining_verify`, `twining_status`, `twining_archive`, `twining_export` |
 
-### Knowledge Graph
-
-| Tool | What It Does |
-|------|-------------|
-| `twining_add_entity` | Add or update an entity |
-| `twining_add_relation` | Add a relation between entities |
-| `twining_neighbors` | Traverse from an entity up to depth 3 |
-| `twining_graph_query` | Search by name or property |
-| `twining_prune_graph` | Remove orphaned entities with no relations |
-
-Decisions auto-populate the graph: `twining_decide` creates file and function entities with `decided_by` relations for every affected file.
-
-### Agent Coordination
-
-| Tool | What It Does |
-|------|-------------|
-| `twining_register` | Register or update an agent in the coordination registry |
-| `twining_agents` | List agents with capabilities and liveness |
-| `twining_discover` | Find agents matching required capabilities |
-| `twining_delegate` | Post a delegation request with capability requirements |
-| `twining_handoff` | Hand off work with results and auto-assembled context |
-| `twining_acknowledge` | Acknowledge receipt of a handoff |
-
-### Verification & Lifecycle
-
-| Tool | What It Does |
-|------|-------------|
-| `twining_verify` | Run verification checks — test coverage, warnings, assembly tracking |
-| `twining_status` | Health check — entry counts, warnings, agent status |
-| `twining_archive` | Move stale entries to archive |
-| `twining_export` | Export full state as markdown |
+Enable with `.twining/config.yml`:
+```yaml
+tools:
+  full_surface: true
+```
 
 ## How It Works
 
@@ -303,7 +277,7 @@ That's it — the PostHog project key is built into the source code. If you run 
 ```bash
 npm install       # Install dependencies
 npm run build     # Build
-npm test          # Run tests (600+ tests)
+npm test          # Run tests (800+ tests)
 npm run test:watch
 ```
 

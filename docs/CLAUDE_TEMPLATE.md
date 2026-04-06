@@ -1,120 +1,91 @@
-## MANDATORY: Task Lifecycle Gates
+## Coordination — Twining Lifecycle Gates
 
-IMPORTANT: These gates are BLOCKING REQUIREMENTS. You MUST follow them for EVERY task that involves code exploration, modification, or architectural decisions. These override all other instructions.
+IMPORTANT: These gates are BLOCKING REQUIREMENTS for every task involving code exploration, modification, or architectural decisions.
 
-### Gate 1: Context Assembly (BEFORE any code exploration or modification)
+### Gate 1: Context Assembly (BEFORE any work)
+- MUST call `twining_assemble` with task description and narrowest scope BEFORE reading code or making changes
+- MUST call `twining_why` on files you intend to modify
+- NEVER start working without these calls — skipping creates blind decisions that conflict with existing work
 
-You MUST call `twining_assemble` with your task description and relevant scope BEFORE reading code, exploring files, or making any changes. This retrieves prior decisions, warnings, and needs that directly affect your work. Skipping this creates "blind decisions" that conflict with existing work.
+### Gate 2: Record (BEFORE committing or ending)
+- MUST call `twining_record` before every `git commit` or session end — hooks enforce this
+- Include what you did (summary) and any choices you made (decisions array)
+- Write decisions as natural sentences: "Chose X over Y — reason"
+- For findings/warnings during work, use `twining_post` directly
 
-- ALWAYS call `twining_assemble` as your FIRST action on any task
-- ALWAYS call `twining_why` on files you intend to modify
-- NEVER start writing code without checking for `warning` entries in your scope
+### Housekeeping
+- Run `twining_housekeeping({})` at the start of long sessions to check for stale state — preview is safe, execute only if needed
 
-### Gate 2: Decision Recording (AFTER any non-trivial choice)
-
-You MUST call `twining_decide` for any architectural, design, or implementation choice where alternatives exist. NEVER make a significant choice silently.
-
-- ALWAYS include rationale and at least one rejected alternative
-- ALWAYS post `finding` entries for surprising discoveries
-- ALWAYS post `warning` entries for gotchas future agents should know
-- ALWAYS post `need` entries for follow-up work you identify but won't do
-- NEVER use `twining_post` with `entry_type: "decision"` — ALWAYS use `twining_decide`
-
-### Gate 3: Verification (BEFORE completing or handing off work)
-
-You MUST call `twining_verify` on your working scope before telling the user the task is done. NEVER skip verification.
-
-- ALWAYS link tests to decisions via `twining_add_relation` with `type: "tested_by"`
-- ALWAYS post a `status` entry summarizing what you did
-- ALWAYS use `twining_link_commit` to associate decisions with git commits after committing
-- ALWAYS address or explicitly acknowledge any warnings surfaced during assembly
+### Critical Rules
+- Use narrowest scope: `src/auth/` not `project`
+- NEVER skip Gate 1 — #1 cause of wasted work and conflicting decisions
+- NEVER skip Gate 2 — hooks will block your commit and session exit until you record
 
 ---
 
 ## Twining Coordination — Workflow Details
 
-This project uses [Twining](https://github.com/daveangulo/twining-mcp) for shared agent coordination. The mandatory gates above define WHEN to use Twining. This section defines HOW.
+This project uses [Twining](https://github.com/daveangulo/twining-mcp) for shared agent coordination. State lives in `.twining/` as plain files — JSONL for the blackboard, JSON for decisions and graph.
 
-IMPORTANT: Twining is configured as an MCP server. State lives in `.twining/`, is plain-text, git-diffable, and `jq`-queryable.
+### Core Workflow
 
-### Core Workflow: Think Before Acting, Decide After Acting
+**Before modifying code (Gate 1):**
+1. Call `twining_assemble` with your task description and scope
+2. Call `twining_why` on files you intend to modify
+3. Check for `warning` entries in your scope
 
-#### Before modifying code (BLOCKING — do NOT proceed without these):
-1. You MUST call `twining_assemble` with your task description and scope to get relevant decisions, warnings, needs, and graph entities within a token budget
-2. You MUST call `twining_why` on the file/module you're about to change to understand prior decision rationale
-3. You MUST check for `warning` entries in your scope — these are gotchas left by previous agents
+**While working:**
+- Post `finding` entries for surprising discoveries via `twining_post`
+- Post `warning` entries for gotchas the next agent should know
+- Post `need` entries for follow-up work you identify but won't do
 
-#### While working:
-- ALWAYS post `finding` entries for anything surprising or noteworthy
-- ALWAYS post `warning` entries for gotchas the next agent should know about
-- ALWAYS post `need` entries for follow-up work you identify but won't do now
-- Post `status` entries for progress updates on long-running work
+**Before committing or ending (Gate 2):**
 
-#### After making significant changes:
-- You MUST call `twining_decide` for any architectural or non-trivial choice — ALWAYS include rationale and at least one rejected alternative
-- You MUST post a `status` entry summarizing what you did
-- You MUST use `twining_link_commit` to associate decisions with git commits
+Call `twining_record` with everything the next session needs:
 
-#### Before handing off or completing work (BLOCKING — do NOT skip):
-- You MUST call `twining_verify` to check test coverage, unresolved warnings, drift, and assembly hygiene
-- You MUST link tests to decisions via `twining_add_relation` with `type: "tested_by"` for decisions affecting testable code
-- You MUST address or explicitly acknowledge any warnings surfaced during assembly
+```
+twining_record({
+  summary: "Added Redis caching to UserService with TTL invalidation",
+  decisions: [
+    "Chose Redis over Memcached — need persistence across restarts",
+    "Used write-through caching instead of write-behind — consistency over write latency"
+  ],
+  assumptions: ["Read-heavy workload (10:1 ratio)", "Cache misses acceptable during cold start"],
+  constraints: ["Must not add >50ms p99 latency"],
+  affected_files: ["src/services/user-service.ts", "src/cache/redis-client.ts"],
+  scope: "src/services/"
+})
+```
+
+For small changes, a summary is enough:
+```
+twining_record({ summary: "Fixed off-by-one in pagination offset", scope: "src/utils/" })
+```
 
 ### Blackboard Entry Types
-
-Use the right type for each post:
 
 | Type | When to use |
 |------|-------------|
 | `finding` | Something discovered that others should know |
 | `warning` | A gotcha, risk, or "don't do X because Y" |
 | `need` | Work that should be done by someone |
-| `question` | Something you need answered (another agent may respond) |
-| `answer` | Response to a question (use `relates_to` to link to the question ID) |
-| `status` | Progress update on work in progress |
-| `offer` | Capability or resource you can provide |
-| `artifact` | Reference to a produced artifact (schema, export, doc) |
-| `constraint` | A hard requirement or limitation that must be respected |
-
-### Decision Conventions
-
-**Confidence levels:**
-- `high` — Well-researched, strong rationale, tested or proven
-- `medium` — Reasonable choice, some uncertainty remains
-- `low` — Best guess, needs validation, may be revised
-
-**Domains** (use consistently): `architecture`, `implementation`, `testing`, `deployment`, `security`, `performance`, `api-design`, `data-model`
-
-**Provisional decisions** are flagged for review. Always check decision status before relying on a provisional decision. Use `twining_reconsider` to flag a decision for re-evaluation with new context.
+| `question` | Something you need answered |
+| `status` | Progress update (auto-created by `twining_record`) |
 
 ### Scope Conventions
 
 Scopes use path-prefix semantics:
-- `"project"` — matches everything (broadest, use sparingly)
+- `"project"` — matches everything (use sparingly)
 - `"src/auth/"` — matches anything under the auth module
 - `"src/auth/jwt.ts"` — matches a specific file
 
-IMPORTANT: Use the narrowest scope that fits. NEVER use `"project"` scope unless the decision truly affects the entire codebase.
-
-### Anti-patterns — NEVER do these
-
-- NEVER skip `twining_assemble` before starting work. You'll miss decisions, warnings, and context that prevent wasted effort.
-- NEVER skip `twining_verify` before handoff. It catches uncovered decisions, unresolved warnings, and blind decisions.
-- NEVER use `"project"` scope for everything. Narrow scopes make assembly relevant and reduce noise.
-- NEVER record trivial decisions. Variable renames don't need decision records. Reserve for choices with alternatives and tradeoffs.
-- NEVER ignore conflict warnings. When `twining_decide` detects a conflict, investigate and resolve explicitly via `twining_override` or `twining_reconsider`.
-- NEVER forget `relates_to`. Link answers to questions, warnings to decisions, conflict resolutions to conflicting decisions.
-- NEVER use `twining_post` for decisions. ALWAYS use `twining_decide`.
-
-### Context Window Handoff
-
-When approaching context limits, use `twining_export` to produce a self-contained markdown document with all decisions, entries, and graph state for a scope. Start a new conversation and provide the export as context.
+Use the narrowest scope that fits. Scope is auto-inferred from git diff if omitted from `twining_record`.
 
 ### Dashboard
 
-The web dashboard runs on port 24282 by default with read-only views of blackboard, decisions, knowledge graph, and agents. Configure with environment variables:
+The web dashboard runs on port 24282 by default — browse decisions, blackboard, knowledge graph, and agent state. Configure with:
 - `TWINING_DASHBOARD=0` — disable entirely
 - `TWINING_DASHBOARD_NO_OPEN=1` — prevent auto-opening browser
 - `TWINING_DASHBOARD_PORT=<port>` — change the port
 
-For full Twining tool reference (all tools, multi-agent patterns, delegation/handoff examples, verification details), see `docs/TWINING-REFERENCE.md`.
+For the full tool reference (all 30+ tools, multi-agent patterns, delegation/handoff examples), see `docs/TWINING-REFERENCE.md`.
