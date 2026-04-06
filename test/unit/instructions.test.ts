@@ -20,24 +20,12 @@ describe("TWINING_INSTRUCTIONS", () => {
     expect(TWINING_INSTRUCTIONS).toContain("Gate 2");
   });
 
-  it("contains Gate 3 section", () => {
-    expect(TWINING_INSTRUCTIONS).toContain("Gate 3");
-  });
-
-  it("contains Tool Groups section", () => {
-    expect(TWINING_INSTRUCTIONS).toContain("Tool Groups");
-  });
-
   it("mentions twining_assemble", () => {
     expect(TWINING_INSTRUCTIONS).toContain("twining_assemble");
   });
 
-  it("mentions twining_decide", () => {
-    expect(TWINING_INSTRUCTIONS).toContain("twining_decide");
-  });
-
-  it("mentions twining_verify", () => {
-    expect(TWINING_INSTRUCTIONS).toContain("twining_verify");
+  it("mentions twining_record", () => {
+    expect(TWINING_INSTRUCTIONS).toContain("twining_record");
   });
 });
 

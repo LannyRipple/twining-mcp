@@ -38,21 +38,16 @@ IMPORTANT: These gates are BLOCKING REQUIREMENTS for every task involving code e
 - MUST call `twining_why` on files you intend to modify
 - NEVER start working without these calls — skipping creates blind decisions that conflict with existing work
 
-### Gate 2: Decision Recording (AFTER choices)
-- MUST call `twining_decide` for any architectural or implementation choice where alternatives exist
-- Include rationale and at least one rejected alternative
-- Post `finding`, `warning`, and `need` entries via `twining_post` for discoveries, gotchas, and follow-up work
-- NEVER use `twining_post` with entry_type `decision` — always use `twining_decide`
-
-### Gate 3: Status & Handoff (BEFORE completing)
-- MUST post a `status` entry summarizing what you accomplished via `twining_post`
-- Link commits to decisions via `twining_link_commit`
-- SHOULD call `twining_verify` on complex tasks to check decision hygiene
+### Gate 2: Record (BEFORE committing or ending)
+- MUST call `twining_record` before every `git commit` or session end — hooks enforce this
+- Include what you did (summary) and any choices you made (decisions array)
+- Write decisions as natural sentences: "Chose X over Y — reason"
+- For findings/warnings during work, use `twining_post` directly
 
 ### Critical Rules
 - Use narrowest scope: `src/auth/` not `project`
 - NEVER skip Gate 1 — #1 cause of wasted work and conflicting decisions
-- NEVER skip Gate 3 — undocumented work leaves gaps for the next agent
+- NEVER skip Gate 2 — hooks will block your commit and session exit until you record
 GATES
 
 exit 0

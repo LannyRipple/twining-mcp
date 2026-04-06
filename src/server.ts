@@ -27,6 +27,7 @@ import { SearchEngine } from "./embeddings/search.js";
 import { registerBlackboardTools } from "./tools/blackboard-tools.js";
 import { registerDecisionTools } from "./tools/decision-tools.js";
 import { registerContextTools } from "./tools/context-tools.js";
+import { registerRecordTools } from "./tools/record-tools.js";
 import { registerLifecycleTools } from "./tools/lifecycle-tools.js";
 import { registerGraphTools } from "./tools/graph-tools.js";
 import { registerVerifyTools } from "./tools/verify-tools.js";
@@ -187,6 +188,7 @@ export function createServer(projectRoot: string): ServerContext {
   const fullSurface = config.tools?.full_surface ?? false;
 
   // Core tools (always registered in both full and lite modes)
+  registerRecordTools(server, blackboardEngine, decisionEngine, projectRoot);
   registerBlackboardTools(server, blackboardEngine, { fullSurface });
   registerDecisionTools(server, decisionEngine, { fullSurface });
   registerContextTools(server, contextAssembler, { fullSurface });

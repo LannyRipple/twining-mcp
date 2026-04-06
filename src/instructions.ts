@@ -8,30 +8,21 @@ export const TWINING_INSTRUCTIONS = `# Twining — Agent Coordination
 
 Twining provides persistent project memory: decisions survive context resets, new sessions start informed, and multi-agent work stays coordinated. State lives in \`.twining/\` as plain files.
 
-## 3 Mandatory Gates
+## 2 Mandatory Gates
 
 ### Gate 1: Context Assembly (BEFORE working)
 Your FIRST tool call MUST be \`twining_assemble\` with your task description and scope. Do not read files or make changes until assemble returns. Also call \`twining_why\` on files you plan to modify.
 
-### Gate 2: Decision Recording (AFTER choices)
-Call \`twining_decide\` for any architectural or implementation choice where alternatives exist. Include rationale and at least one rejected alternative. Post \`finding\`, \`warning\`, and \`need\` entries via \`twining_post\` for discoveries, gotchas, and follow-up work.
-
-### Gate 3: Status & Handoff (BEFORE completing)
-Post a \`status\` entry via \`twining_post\` summarizing what you did. Link commits via \`twining_link_commit\`. On complex tasks, call \`twining_verify\` to check decision hygiene.
+### Gate 2: Record (BEFORE committing or ending)
+Call \`twining_record\` with a summary and any decisions before every \`git commit\` or session end. Write decisions as natural sentences: "Chose X over Y — reason". The server handles routing to the decision store and blackboard.
 
 ## Key Conventions
 - **Scopes** use path-prefix semantics: \`"src/auth/"\` not \`"project"\` — use the narrowest scope that fits
-- **Confidence**: \`high\` (proven), \`medium\` (reasonable), \`low\` (needs validation)
-- **Domains**: architecture, implementation, testing, deployment, security, performance, api-design, data-model
-- Never use \`twining_post\` with entry_type "decision" — always use \`twining_decide\`
-- Never skip \`twining_assemble\` before work or \`twining_post\` status before handoff
+- Never skip \`twining_assemble\` before work or \`twining_record\` before committing
 
-## Tool Groups
-- **Blackboard**: twining_post, twining_read, twining_query, twining_recent, twining_dismiss
-- **Decisions**: twining_decide, twining_why, twining_trace, twining_reconsider, twining_override, twining_promote, twining_search_decisions, twining_link_commit, twining_commits
-- **Context**: twining_assemble, twining_summarize, twining_what_changed
-- **Graph**: twining_add_entity, twining_add_relation, twining_neighbors, twining_graph_query, twining_prune_graph
-- **Verification**: twining_verify
-- **Lifecycle**: twining_status, twining_archive, twining_export
-- **Coordination**: twining_agents, twining_register, twining_discover, twining_delegate, twining_handoff, twining_acknowledge
+## Core Tools
+- **twining_assemble** — orient before working (Gate 1)
+- **twining_record** — record what you did before committing/ending (Gate 2)
+- **twining_post** — share findings, warnings, or needs during work
+- **twining_why** — check what decisions constrain a file before modifying it
 `;
