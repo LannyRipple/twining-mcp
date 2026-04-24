@@ -1,0 +1,44 @@
+{
+  "agent_id": "main",
+  "domain": "deployment",
+  "scope": "src/engine/record-parser.ts",
+  "summary": "Prefer explicit Rationale:/Why:/Reason:/Because: markers over heuristic split separators in record-parser",
+  "context": "Fixed twining_record NL parser truncation + alternatives undercount; added structured decision schema variant and hardened decisions_created response. 19 new tests, 835 total passing (was 816).",
+  "rationale": "prior behavior misfired on mid-sentence 'as'/'since'/'because', causing summary and rationale to bleed. Alternative rejected: removing heuristic separators entirely (would break 'Chose X",
+  "constraints": [],
+  "alternatives": [
+    {
+      "option": "heuristic split separators in record-parser",
+      "pros": [],
+      "cons": [],
+      "reason_rejected": "Not chosen"
+    }
+  ],
+  "depends_on": [],
+  "confidence": "medium",
+  "reversible": true,
+  "affected_files": [
+    "src/engine/record-parser.ts",
+    "src/engine/decisions.ts",
+    "src/tools/record-tools.ts",
+    "test/unit/record-parser.test.ts",
+    "test/unit/record-tools.test.ts"
+  ],
+  "affected_symbols": [
+    "parseDecision",
+    "splitSummaryAndRationale",
+    "extractRejectedAlternatives",
+    "DecisionEngine.decide",
+    "buildFromNaturalLanguage",
+    "buildFromStructured"
+  ],
+  "assumptions": [
+    "MCP clients tolerate z.union schemas in Zod for the decisions array — Claude Code and MCP SDK both accept discriminated unions at the tool-input layer.",
+    "Callers who send structured decision objects prefer exact round-trip over inference; they will provide their own domain / confidence when they care."
+  ],
+  "commit_hashes": [],
+  "assembled_before": true,
+  "id": "01KQ0VBWP8703Z0T675AZ1KHYS",
+  "timestamp": "2026-04-24T22:57:00.104Z",
+  "status": "active"
+}

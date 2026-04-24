@@ -115,7 +115,7 @@
       "scope": "src/tools/"
     },
     "created_at": "2026-02-17T03:13:31.729Z",
-    "updated_at": "2026-03-28T11:33:12.415Z"
+    "updated_at": "2026-04-24T17:50:20.722Z"
   },
   {
     "id": "01KHMSDJZEQM1FXSMNYBYTST24",
@@ -127,7 +127,7 @@
       "scope": "src/tools/"
     },
     "created_at": "2026-02-17T03:13:36.238Z",
-    "updated_at": "2026-03-28T11:33:12.417Z"
+    "updated_at": "2026-04-24T17:40:31.628Z"
   },
   {
     "id": "01KHMSDM44AFAD0VVEK8T9N3TK",
@@ -139,7 +139,7 @@
       "scope": "src/tools/"
     },
     "created_at": "2026-02-17T03:13:37.412Z",
-    "updated_at": "2026-03-28T11:33:12.424Z"
+    "updated_at": "2026-04-24T17:40:31.629Z"
   },
   {
     "id": "01KHMSDMRQ5HSX2W6SBDT3RND2",
@@ -558,10 +558,10 @@
     "name": "src/config.ts",
     "type": "file",
     "properties": {
-      "scope": "src/engine/graph-auto-populator.ts"
+      "scope": "src/tools/"
     },
     "created_at": "2026-02-26T14:22:40.813Z",
-    "updated_at": "2026-03-19T06:05:31.275Z"
+    "updated_at": "2026-04-24T17:50:20.725Z"
   },
   {
     "id": "01KJD595NE5JW9DEJ3VGCB4MMD",
@@ -1096,7 +1096,7 @@
       "scope": "src/tools/"
     },
     "created_at": "2026-02-28T18:53:40.990Z",
-    "updated_at": "2026-03-28T11:33:12.420Z"
+    "updated_at": "2026-04-24T17:40:31.631Z"
   },
   {
     "id": "01KJJSJTRA0DB2AJR3E6E76332",
@@ -1925,10 +1925,10 @@
     "name": "src/engine/decisions.ts",
     "type": "file",
     "properties": {
-      "scope": "src/utils/types.ts"
+      "scope": "src/engine/record-parser.ts"
     },
     "created_at": "2026-03-14T05:48:32.106Z",
-    "updated_at": "2026-03-21T12:14:01.735Z"
+    "updated_at": "2026-04-24T22:57:00.355Z"
   },
   {
     "id": "01KKNE77ZVVMYK85M8D45XSR9D",
@@ -1939,16 +1939,6 @@
     },
     "created_at": "2026-03-14T05:48:32.123Z",
     "updated_at": "2026-03-14T05:48:32.123Z"
-  },
-  {
-    "id": "01KKNE77ZZBK3F06PS84GJXNVN",
-    "name": "DecisionEngine",
-    "type": "function",
-    "properties": {
-      "scope": "src/engine/"
-    },
-    "created_at": "2026-03-14T05:48:32.127Z",
-    "updated_at": "2026-03-14T05:48:32.127Z"
   },
   {
     "id": "01KKNE7FD9ST5B9VAYEDCR08QN",
@@ -2163,7 +2153,7 @@
       "scope": "test/coordination/"
     },
     "created_at": "2026-03-20T19:18:31.801Z",
-    "updated_at": "2026-03-20T20:56:30.067Z"
+    "updated_at": "2026-04-24T17:40:50.184Z"
   },
   {
     "id": "01KM6CER8K0H7DW3NTKT2AW73Q",
@@ -2315,17 +2305,6 @@
     "updated_at": "2026-03-21T19:28:24.438Z"
   },
   {
-    "id": "01KM8Z12XGX4B3HQ5WVW4D0A4W",
-    "name": "01KM8Z11K436VRH2AK4KHB5GVX",
-    "type": "concept",
-    "properties": {
-      "summary": "Sprint-simulation scenario: 12-session sprint with requirement change for long-horizon coordination testing",
-      "scope": "project"
-    },
-    "created_at": "2026-03-21T19:47:50.320Z",
-    "updated_at": "2026-03-21T19:47:50.320Z"
-  },
-  {
     "id": "01KMT24SSP6H18CX49WWPM0XXG",
     "name": "01KMT24SQ0EGJSH8Z9A6DDEXB4",
     "type": "concept",
@@ -2448,5 +2427,192 @@
     },
     "created_at": "2026-03-28T11:33:26.088Z",
     "updated_at": "2026-03-28T11:33:26.088Z"
+  },
+  {
+    "id": "01KQ098D88KDM5G3CJKTTXQP0E",
+    "name": "01KQ098D6RHXSBRHK40GFY70PB",
+    "type": "concept",
+    "properties": {
+      "summary": "Default tool surface is 5 core tools (assemble, record, post, why, housekeeping); all other tools remain gated behind full_surface: true in config",
+      "scope": "src/tools/"
+    },
+    "created_at": "2026-04-24T17:40:31.624Z",
+    "updated_at": "2026-04-24T17:40:31.624Z"
+  },
+  {
+    "id": "01KQ098D8J2M9Z104D7ATYR1RX",
+    "name": "dc2d7ac",
+    "type": "commit",
+    "properties": {
+      "decision": "01KQ09TCGSFY75732ZAEN7WHZF"
+    },
+    "created_at": "2026-04-24T17:40:31.634Z",
+    "updated_at": "2026-04-24T17:50:20.728Z"
+  },
+  {
+    "id": "01KQ098ZC7B67PR5TGS6FESGYE",
+    "name": "01KQ098ZB0E70K71QJVA3NWQ55",
+    "type": "concept",
+    "properties": {
+      "summary": "Bug-investigation benchmark uses assertion-based tests rather than numeric scoring",
+      "scope": "test/coordination/"
+    },
+    "created_at": "2026-04-24T17:40:50.183Z",
+    "updated_at": "2026-04-24T17:40:50.183Z"
+  },
+  {
+    "id": "01KQ09TCHHH7C1HNTJ80JMGCD0",
+    "name": "01KQ09TCGSFY75732ZAEN7WHZF",
+    "type": "concept",
+    "properties": {
+      "summary": "Default tool surface is 5 core tools gated behind full_surface flag",
+      "scope": "src/tools/"
+    },
+    "created_at": "2026-04-24T17:50:20.721Z",
+    "updated_at": "2026-04-24T17:50:20.721Z"
+  },
+  {
+    "id": "01KQ0VBWQ4H8KWYG0WGZDS97J3",
+    "name": "01KQ0VBWP8703Z0T675AZ1KHYS",
+    "type": "concept",
+    "properties": {
+      "summary": "Prefer explicit Rationale:/Why:/Reason:/Because: markers over heuristic split separators in record-parser",
+      "scope": "src/engine/record-parser.ts"
+    },
+    "created_at": "2026-04-24T22:57:00.132Z",
+    "updated_at": "2026-04-24T22:57:00.132Z"
+  },
+  {
+    "id": "01KQ0VBWQ4H8KWYG0WGZDS97J4",
+    "name": "src/engine/record-parser.ts",
+    "type": "file",
+    "properties": {
+      "scope": "src/engine/record-parser.ts"
+    },
+    "created_at": "2026-04-24T22:57:00.132Z",
+    "updated_at": "2026-04-24T22:57:00.354Z"
+  },
+  {
+    "id": "01KQ0VBWQ83J4NGF3K4XWAMT14",
+    "name": "src/tools/record-tools.ts",
+    "type": "file",
+    "properties": {
+      "scope": "src/engine/record-parser.ts"
+    },
+    "created_at": "2026-04-24T22:57:00.136Z",
+    "updated_at": "2026-04-24T22:57:00.357Z"
+  },
+  {
+    "id": "01KQ0VBWQAKWPFTYMPNE3X364C",
+    "name": "test/unit/record-parser.test.ts",
+    "type": "file",
+    "properties": {
+      "scope": "src/engine/record-parser.ts"
+    },
+    "created_at": "2026-04-24T22:57:00.138Z",
+    "updated_at": "2026-04-24T22:57:00.358Z"
+  },
+  {
+    "id": "01KQ0VBWQBVKVR2CBRB1T8SD77",
+    "name": "test/unit/record-tools.test.ts",
+    "type": "file",
+    "properties": {
+      "scope": "src/engine/record-parser.ts"
+    },
+    "created_at": "2026-04-24T22:57:00.139Z",
+    "updated_at": "2026-04-24T22:57:00.360Z"
+  },
+  {
+    "id": "01KQ0VBWQD6CN2Z785D73HC6RS",
+    "name": "parseDecision",
+    "type": "function",
+    "properties": {
+      "scope": "src/engine/record-parser.ts"
+    },
+    "created_at": "2026-04-24T22:57:00.141Z",
+    "updated_at": "2026-04-24T22:57:00.362Z"
+  },
+  {
+    "id": "01KQ0VBWQERFYS3GW0RCJAWT19",
+    "name": "splitSummaryAndRationale",
+    "type": "function",
+    "properties": {
+      "scope": "src/engine/record-parser.ts"
+    },
+    "created_at": "2026-04-24T22:57:00.142Z",
+    "updated_at": "2026-04-24T22:57:00.364Z"
+  },
+  {
+    "id": "01KQ0VBWQGSEH4BCPCE10SZ6BV",
+    "name": "extractRejectedAlternatives",
+    "type": "function",
+    "properties": {
+      "scope": "src/engine/record-parser.ts"
+    },
+    "created_at": "2026-04-24T22:57:00.144Z",
+    "updated_at": "2026-04-24T22:57:00.365Z"
+  },
+  {
+    "id": "01KQ0VBWQJVCVSHHVMX2006WZX",
+    "name": "DecisionEngine.decide",
+    "type": "function",
+    "properties": {
+      "scope": "src/engine/record-parser.ts"
+    },
+    "created_at": "2026-04-24T22:57:00.146Z",
+    "updated_at": "2026-04-24T22:57:00.367Z"
+  },
+  {
+    "id": "01KQ0VBWQKT7P1ZPACAZWFY6CB",
+    "name": "buildFromNaturalLanguage",
+    "type": "function",
+    "properties": {
+      "scope": "src/engine/record-parser.ts"
+    },
+    "created_at": "2026-04-24T22:57:00.147Z",
+    "updated_at": "2026-04-24T22:57:00.369Z"
+  },
+  {
+    "id": "01KQ0VBWQNGNC4X1A0DX73D3XD",
+    "name": "buildFromStructured",
+    "type": "function",
+    "properties": {
+      "scope": "src/engine/record-parser.ts"
+    },
+    "created_at": "2026-04-24T22:57:00.149Z",
+    "updated_at": "2026-04-24T22:57:00.370Z"
+  },
+  {
+    "id": "01KQ0VBWRM2TG11S605ERXED8H",
+    "name": "01KQ0VBWQPD1ND8SKA7TR2X04X",
+    "type": "concept",
+    "properties": {
+      "summary": "Replaced split(regex, 2) with single-split-on-first-match that preserves the full remainder",
+      "scope": "src/engine/record-parser.ts"
+    },
+    "created_at": "2026-04-24T22:57:00.180Z",
+    "updated_at": "2026-04-24T22:57:00.180Z"
+  },
+  {
+    "id": "01KQ0VBWVWWA71WGKVKCTSEA5P",
+    "name": "01KQ0VBWT08012C3H6PYHFNC0A",
+    "type": "concept",
+    "properties": {
+      "summary": "Sliced decision cross-post summary to 200 chars and wrapped in try/catch inside DecisionEngine.decide",
+      "scope": "src/engine/record-parser.ts"
+    },
+    "created_at": "2026-04-24T22:57:00.284Z",
+    "updated_at": "2026-04-24T22:57:00.284Z"
+  },
+  {
+    "id": "01KQ0VBWY1BW5HCFF0RJ6TN81R",
+    "name": "01KQ0VBWWEXR62BG3MYGE79FB7",
+    "type": "concept",
+    "properties": {
+      "summary": "Surfaced per-decision persistence errors in the twining_record response",
+      "scope": "src/engine/record-parser.ts"
+    },
+    "created_at": "2026-04-24T22:57:00.353Z",
+    "updated_at": "2026-04-24T22:57:00.353Z"
   }
 ]

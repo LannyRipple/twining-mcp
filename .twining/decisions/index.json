@@ -1039,7 +1039,7 @@
     "scope": "plugin/",
     "summary": "Enforce mandatory agent registration and handoff in plugin v1.1.5",
     "confidence": "high",
-    "status": "provisional",
+    "status": "active",
     "affected_files": [
       "plugin/BEHAVIORS.md",
       "plugin/hooks/hooks.json",
@@ -1057,7 +1057,7 @@
     "scope": "src/engine/",
     "summary": "Auto-populate knowledge graph from tool calls via GraphAutoPopulator",
     "confidence": "high",
-    "status": "provisional",
+    "status": "active",
     "affected_files": [
       "src/engine/graph-auto-populator.ts",
       "src/engine/decisions.ts",
@@ -1096,7 +1096,7 @@
     "scope": "src/tools/",
     "summary": "Reduce default tool surface from 32 to 16 via full_surface config flag",
     "confidence": "high",
-    "status": "provisional",
+    "status": "superseded",
     "affected_files": [
       "src/config.ts",
       "src/server.ts",
@@ -1122,7 +1122,7 @@
     "scope": "src/engine/context-assembler.ts",
     "summary": "Assemble output includes structured markdown briefing and inline status summary",
     "confidence": "high",
-    "status": "provisional",
+    "status": "active",
     "affected_files": [
       "src/engine/context-assembler.ts",
       "src/tools/context-tools.ts"
@@ -1184,7 +1184,7 @@
     "scope": "src/engine/context-assembler.ts",
     "summary": "Reorder formatForLLM: warnings first, then handoffs, then decisions, then needs, then findings",
     "confidence": "high",
-    "status": "provisional",
+    "status": "active",
     "affected_files": [
       "src/engine/context-assembler.ts"
     ],
@@ -1200,7 +1200,7 @@
     "scope": "src/engine/context-assembler.ts",
     "summary": "Enrich handoff data in AssembledContext to include individual results for detailed checklists",
     "confidence": "high",
-    "status": "provisional",
+    "status": "active",
     "affected_files": [
       "src/engine/context-assembler.ts",
       "src/utils/types.ts"
@@ -1218,7 +1218,7 @@
     "scope": "src/engine/context-assembler.ts",
     "summary": "Filter redundant findings that substantially overlap with decision summaries in formatForLLM",
     "confidence": "medium",
-    "status": "provisional",
+    "status": "active",
     "affected_files": [
       "src/engine/context-assembler.ts"
     ],
@@ -1234,7 +1234,7 @@
     "scope": "src/engine/context-assembler.ts",
     "summary": "Empty-state short-circuit in formatForLLM returns terse one-liner when no content exists",
     "confidence": "high",
-    "status": "provisional",
+    "status": "active",
     "affected_files": [
       "src/engine/context-assembler.ts"
     ],
@@ -1250,7 +1250,7 @@
     "scope": "test/coordination/",
     "summary": "Bug-investigation resolution scorer penalizes redundant re-fixes when Agent A already completed the work",
     "confidence": "high",
-    "status": "provisional",
+    "status": "superseded",
     "affected_files": [
       "test/coordination/benchmark-scenarios.test.ts"
     ],
@@ -1286,7 +1286,7 @@
     "scope": "src/engine/context-assembler.ts",
     "summary": "Add FILES TO CHECK BEFORE WRITING section to formatForLLM output",
     "confidence": "high",
-    "status": "provisional",
+    "status": "active",
     "affected_files": [
       "src/engine/context-assembler.ts"
     ],
@@ -1302,7 +1302,7 @@
     "scope": "src/engine/context-assembler.ts",
     "summary": "Assumption validation in assembler: check findings/warnings/decisions against decision assumptions",
     "confidence": "medium",
-    "status": "provisional",
+    "status": "active",
     "affected_files": [
       "src/engine/context-assembler.ts",
       "src/utils/types.ts"
@@ -1321,7 +1321,7 @@
     "scope": "src/engine/context-assembler.ts",
     "summary": "Include constraints and rejected alternatives in assembled decision output for pattern propagation",
     "confidence": "high",
-    "status": "provisional",
+    "status": "active",
     "affected_files": [
       "src/engine/context-assembler.ts",
       "src/utils/types.ts"
@@ -1352,7 +1352,7 @@
     "scope": "src/engine/context-assembler.ts",
     "summary": "Filter out entry_type \"decision\" blackboard entries in assembler to prevent type confusion",
     "confidence": "high",
-    "status": "provisional",
+    "status": "active",
     "affected_files": [
       "src/engine/context-assembler.ts"
     ],
@@ -1368,7 +1368,7 @@
     "scope": "plugin/hooks/",
     "summary": "Add SessionStart command hook to inject Twining Lifecycle Gates into project CLAUDE.md",
     "confidence": "high",
-    "status": "provisional",
+    "status": "active",
     "affected_files": [
       "plugin/hooks/ensure-claude-md-gates.sh",
       "plugin/hooks/hooks.json"
@@ -1383,7 +1383,7 @@
     "scope": "src/tools/",
     "summary": "Remove fullSurface tool gate — all 34 MCP tools always registered",
     "confidence": "high",
-    "status": "provisional",
+    "status": "superseded",
     "affected_files": [
       "src/server.ts",
       "src/tools/blackboard-tools.ts",
@@ -1407,7 +1407,7 @@
     "scope": "plugin/",
     "summary": "Layered instruction architecture: CLAUDE.md as authority, lean SessionStart prompt, third-person skill descriptions",
     "confidence": "high",
-    "status": "provisional",
+    "status": "active",
     "affected_files": [
       "plugin/hooks/hooks.json",
       "plugin/hooks/ensure-claude-md-gates.sh",
@@ -1424,5 +1424,220 @@
     "commit_hashes": [
       "46d232d"
     ]
+  },
+  {
+    "id": "01KQ098D6RHXSBRHK40GFY70PB",
+    "timestamp": "2026-04-24T17:40:31.576Z",
+    "domain": "implementation",
+    "scope": "src/tools/",
+    "summary": "Default tool surface is 5 core tools (assemble, record, post, why, housekeeping); all other tools remain gated behind full_surface: true in config",
+    "confidence": "medium",
+    "status": "active",
+    "affected_files": [
+      "src/server.ts",
+      "src/config.ts",
+      "src/tools/blackboard-tools.ts",
+      "src/tools/decision-tools.ts",
+      "src/tools/coordination-tools.ts"
+    ],
+    "affected_symbols": [],
+    "commit_hashes": [
+      "dc2d7ac"
+    ]
+  },
+  {
+    "id": "01KQ098JXJJ98T9851Q37PMYB1",
+    "timestamp": "2026-04-24T17:40:37.426Z",
+    "domain": "testing",
+    "scope": "test/coordination/",
+    "summary": "Coordination benchmark uses assertion-based tests (pagination appears in assembly, affected_files correct, >=3 actionable signals) rather than numeric scoring (50 pts verify vs 20 pts redundant re-fix)",
+    "confidence": "medium",
+    "status": "active",
+    "affected_files": [
+      "test/coordination/benchmark-scenarios.test.ts"
+    ],
+    "affected_symbols": [],
+    "commit_hashes": []
+  },
+  {
+    "id": "01KQ098ZB0E70K71QJVA3NWQ55",
+    "timestamp": "2026-04-24T17:40:50.145Z",
+    "domain": "testing",
+    "scope": "test/coordination/",
+    "summary": "Bug-investigation benchmark uses assertion-based tests rather than numeric scoring",
+    "confidence": "medium",
+    "status": "active",
+    "affected_files": [
+      "test/coordination/benchmark-scenarios.test.ts"
+    ],
+    "affected_symbols": [],
+    "commit_hashes": []
+  },
+  {
+    "id": "01KQ09TCGSFY75732ZAEN7WHZF",
+    "timestamp": "2026-04-24T17:50:20.697Z",
+    "domain": "deployment",
+    "scope": "src/tools/",
+    "summary": "Default tool surface is 5 core tools gated behind full_surface flag",
+    "confidence": "medium",
+    "status": "active",
+    "affected_files": [
+      "src/server.ts",
+      "src/config.ts"
+    ],
+    "affected_symbols": [],
+    "commit_hashes": [
+      "dc2d7ac"
+    ]
+  },
+  {
+    "id": "01KQ0VBWP8703Z0T675AZ1KHYS",
+    "timestamp": "2026-04-24T22:57:00.104Z",
+    "domain": "deployment",
+    "scope": "src/engine/record-parser.ts",
+    "summary": "Prefer explicit Rationale:/Why:/Reason:/Because: markers over heuristic split separators in record-parser",
+    "confidence": "medium",
+    "status": "active",
+    "affected_files": [
+      "src/engine/record-parser.ts",
+      "src/engine/decisions.ts",
+      "src/tools/record-tools.ts",
+      "test/unit/record-parser.test.ts",
+      "test/unit/record-tools.test.ts"
+    ],
+    "affected_symbols": [
+      "parseDecision",
+      "splitSummaryAndRationale",
+      "extractRejectedAlternatives",
+      "DecisionEngine.decide",
+      "buildFromNaturalLanguage",
+      "buildFromStructured"
+    ],
+    "commit_hashes": []
+  },
+  {
+    "id": "01KQ0VBWQPD1ND8SKA7TR2X04X",
+    "timestamp": "2026-04-24T22:57:00.150Z",
+    "domain": "deployment",
+    "scope": "src/engine/record-parser.ts",
+    "summary": "Replaced split(regex, 2) with single-split-on-first-match that preserves the full remainder",
+    "confidence": "medium",
+    "status": "active",
+    "affected_files": [
+      "src/engine/record-parser.ts",
+      "src/engine/decisions.ts",
+      "src/tools/record-tools.ts",
+      "test/unit/record-parser.test.ts",
+      "test/unit/record-tools.test.ts"
+    ],
+    "affected_symbols": [
+      "parseDecision",
+      "splitSummaryAndRationale",
+      "extractRejectedAlternatives",
+      "DecisionEngine.decide",
+      "buildFromNaturalLanguage",
+      "buildFromStructured"
+    ],
+    "commit_hashes": []
+  },
+  {
+    "id": "01KQ0VBWS51Z5B7B0FNFY3RDEN",
+    "timestamp": "2026-04-24T22:57:00.197Z",
+    "domain": "deployment",
+    "scope": "src/engine/record-parser.ts",
+    "summary": "Added a structured union variant to twining_record's decisions field: each item is either a string (NL path) or an object { summary, rationale?, alternatives?, assumptions?, constraints?, confidence?, context?, domain? }. When structured, the parser is bypassed entirely, guaranteeing exact round-trip. Alternative rejected: separate twining_record_structured tool (doubles the tool surface, splits documentation). Alternative rejected: always-parse NL (cannot handle long multi-paragraph rationales reliably).",
+    "confidence": "medium",
+    "status": "active",
+    "affected_files": [
+      "src/engine/record-parser.ts",
+      "src/engine/decisions.ts",
+      "src/tools/record-tools.ts",
+      "test/unit/record-parser.test.ts",
+      "test/unit/record-tools.test.ts"
+    ],
+    "affected_symbols": [
+      "parseDecision",
+      "splitSummaryAndRationale",
+      "extractRejectedAlternatives",
+      "DecisionEngine.decide",
+      "buildFromNaturalLanguage",
+      "buildFromStructured"
+    ],
+    "commit_hashes": []
+  },
+  {
+    "id": "01KQ0VBWT08012C3H6PYHFNC0A",
+    "timestamp": "2026-04-24T22:57:00.224Z",
+    "domain": "deployment",
+    "scope": "src/engine/record-parser.ts",
+    "summary": "Sliced decision cross-post summary to 200 chars and wrapped in try/catch inside DecisionEngine.decide",
+    "confidence": "medium",
+    "status": "active",
+    "affected_files": [
+      "src/engine/record-parser.ts",
+      "src/engine/decisions.ts",
+      "src/tools/record-tools.ts",
+      "test/unit/record-parser.test.ts",
+      "test/unit/record-tools.test.ts"
+    ],
+    "affected_symbols": [
+      "parseDecision",
+      "splitSummaryAndRationale",
+      "extractRejectedAlternatives",
+      "DecisionEngine.decide",
+      "buildFromNaturalLanguage",
+      "buildFromStructured"
+    ],
+    "commit_hashes": []
+  },
+  {
+    "id": "01KQ0VBWWEXR62BG3MYGE79FB7",
+    "timestamp": "2026-04-24T22:57:00.302Z",
+    "domain": "deployment",
+    "scope": "src/engine/record-parser.ts",
+    "summary": "Surfaced per-decision persistence errors in the twining_record response",
+    "confidence": "medium",
+    "status": "active",
+    "affected_files": [
+      "src/engine/record-parser.ts",
+      "src/engine/decisions.ts",
+      "src/tools/record-tools.ts",
+      "test/unit/record-parser.test.ts",
+      "test/unit/record-tools.test.ts"
+    ],
+    "affected_symbols": [
+      "parseDecision",
+      "splitSummaryAndRationale",
+      "extractRejectedAlternatives",
+      "DecisionEngine.decide",
+      "buildFromNaturalLanguage",
+      "buildFromStructured"
+    ],
+    "commit_hashes": []
+  },
+  {
+    "id": "01KQ0VBWYKNP65S6HR21J0X296",
+    "timestamp": "2026-04-24T22:57:00.371Z",
+    "domain": "architecture",
+    "scope": "src/engine/record-parser.ts",
+    "summary": "Added matchAll with /g flag for rejection-pattern extraction and two new pattern classes: (a) labelled rejections ('Alternative rejected: X.' / 'Rejected: X.') and (b) numbered-list items ('(1) X, (2) Y, (3) Z, (4) W') scoped to contexts that contain 'rejected' or 'alternatives'. Deduplication by lowercased content prevents 'over Y' + 'instead of Y' from double-counting the same option.",
+    "confidence": "medium",
+    "status": "active",
+    "affected_files": [
+      "src/engine/record-parser.ts",
+      "src/engine/decisions.ts",
+      "src/tools/record-tools.ts",
+      "test/unit/record-parser.test.ts",
+      "test/unit/record-tools.test.ts"
+    ],
+    "affected_symbols": [
+      "parseDecision",
+      "splitSummaryAndRationale",
+      "extractRejectedAlternatives",
+      "DecisionEngine.decide",
+      "buildFromNaturalLanguage",
+      "buildFromStructured"
+    ],
+    "commit_hashes": []
   }
 ]

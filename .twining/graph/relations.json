@@ -2972,5 +2972,565 @@
     "type": "decided_by",
     "properties": {},
     "created_at": "2026-03-28T11:33:26.088Z"
+  },
+  {
+    "id": "01KQ098D894XCE97JV6HQBP60Z",
+    "source": "01KHMSDEJH7CQCE97XA0ZAP52A",
+    "target": "01KQ098D88KDM5G3CJKTTXQP0E",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Default tool surface is 5 core tools (assemble, record, post, why, housekeeping); all other tools remain gated behind full_surface: true in config"
+    },
+    "created_at": "2026-04-24T17:40:31.625Z"
+  },
+  {
+    "id": "01KQ098D8B62QGF1DHJ5PPFD9F",
+    "source": "01KJD595ND5YACA06PBGYTRRXA",
+    "target": "01KQ098D88KDM5G3CJKTTXQP0E",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Default tool surface is 5 core tools (assemble, record, post, why, housekeeping); all other tools remain gated behind full_surface: true in config"
+    },
+    "created_at": "2026-04-24T17:40:31.627Z"
+  },
+  {
+    "id": "01KQ098D8DGXBAQHZPDGCA9WVC",
+    "source": "01KHMSDJZEQM1FXSMNYBYTST24",
+    "target": "01KQ098D88KDM5G3CJKTTXQP0E",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Default tool surface is 5 core tools (assemble, record, post, why, housekeeping); all other tools remain gated behind full_surface: true in config"
+    },
+    "created_at": "2026-04-24T17:40:31.629Z"
+  },
+  {
+    "id": "01KQ098D8E3KFTDBERWYK1CVM9",
+    "source": "01KHMSDM44AFAD0VVEK8T9N3TK",
+    "target": "01KQ098D88KDM5G3CJKTTXQP0E",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Default tool surface is 5 core tools (assemble, record, post, why, housekeeping); all other tools remain gated behind full_surface: true in config"
+    },
+    "created_at": "2026-04-24T17:40:31.631Z"
+  },
+  {
+    "id": "01KQ098D8G409FSTYS8PTKPC30",
+    "source": "01KJJSJTQYDBTD49DYMQ2XN7Y6",
+    "target": "01KQ098D88KDM5G3CJKTTXQP0E",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Default tool surface is 5 core tools (assemble, record, post, why, housekeeping); all other tools remain gated behind full_surface: true in config"
+    },
+    "created_at": "2026-04-24T17:40:31.632Z"
+  },
+  {
+    "id": "01KQ098D8HDVSCPJ1SX306X3H0",
+    "source": "01KQ098D88KDM5G3CJKTTXQP0E",
+    "target": "01KMT3GDJYZWYW23H93CTQTM6K",
+    "type": "supersedes",
+    "properties": {},
+    "created_at": "2026-04-24T17:40:31.633Z"
+  },
+  {
+    "id": "01KQ098D8KYAVGEC978K5QBFVK",
+    "source": "01KQ098D8J2M9Z104D7ATYR1RX",
+    "target": "01KQ098D88KDM5G3CJKTTXQP0E",
+    "type": "decided_by",
+    "properties": {},
+    "created_at": "2026-04-24T17:40:31.635Z"
+  },
+  {
+    "id": "01KQ098ZCAEW0EJJ4G62Q5ZB2G",
+    "source": "01KM6AYPKS6FQK95YZNXZ85MR7",
+    "target": "01KQ098ZC7B67PR5TGS6FESGYE",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Bug-investigation benchmark uses assertion-based tests rather than numeric scoring"
+    },
+    "created_at": "2026-04-24T17:40:50.186Z"
+  },
+  {
+    "id": "01KQ098ZCBBRWWN73A5HBXD4A1",
+    "source": "01KQ098ZC7B67PR5TGS6FESGYE",
+    "target": "01KM6GJ33DEJAW62KW1KYDHDWD",
+    "type": "supersedes",
+    "properties": {},
+    "created_at": "2026-04-24T17:40:50.187Z"
+  },
+  {
+    "id": "01KQ09TCHMK19FNB44WV5XA8PD",
+    "source": "01KHMSDEJH7CQCE97XA0ZAP52A",
+    "target": "01KQ09TCHHH7C1HNTJ80JMGCD0",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Default tool surface is 5 core tools gated behind full_surface flag"
+    },
+    "created_at": "2026-04-24T17:50:20.724Z"
+  },
+  {
+    "id": "01KQ09TCHPJGYZQW3XPQZ74BBH",
+    "source": "01KJD595ND5YACA06PBGYTRRXA",
+    "target": "01KQ09TCHHH7C1HNTJ80JMGCD0",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Default tool surface is 5 core tools gated behind full_surface flag"
+    },
+    "created_at": "2026-04-24T17:50:20.726Z"
+  },
+  {
+    "id": "01KQ09TCHQBY839FC9K9R5HY0F",
+    "source": "01KQ09TCHHH7C1HNTJ80JMGCD0",
+    "target": "01KM2B5GR35WW0739SKS7WHAZB",
+    "type": "supersedes",
+    "properties": {},
+    "created_at": "2026-04-24T17:50:20.727Z"
+  },
+  {
+    "id": "01KQ09TCHS860XN2E9N19M5M6C",
+    "source": "01KQ098D8J2M9Z104D7ATYR1RX",
+    "target": "01KQ09TCHHH7C1HNTJ80JMGCD0",
+    "type": "decided_by",
+    "properties": {},
+    "created_at": "2026-04-24T17:50:20.729Z"
+  },
+  {
+    "id": "01KQ0VBWQ5XMJJM0G041HWPFFP",
+    "source": "01KQ0VBWQ4H8KWYG0WGZDS97J4",
+    "target": "01KQ0VBWQ4H8KWYG0WGZDS97J3",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Prefer explicit Rationale:/Why:/Reason:/Because: markers over heuristic split separators in record-parser"
+    },
+    "created_at": "2026-04-24T22:57:00.133Z"
+  },
+  {
+    "id": "01KQ0VBWQ7PEX5MGGTHY3BTTZG",
+    "source": "01KKNE77ZAW1943XPGMREM997R",
+    "target": "01KQ0VBWQ4H8KWYG0WGZDS97J3",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Prefer explicit Rationale:/Why:/Reason:/Because: markers over heuristic split separators in record-parser"
+    },
+    "created_at": "2026-04-24T22:57:00.135Z"
+  },
+  {
+    "id": "01KQ0VBWQ96PK1HY4A81M8T5Z2",
+    "source": "01KQ0VBWQ83J4NGF3K4XWAMT14",
+    "target": "01KQ0VBWQ4H8KWYG0WGZDS97J3",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Prefer explicit Rationale:/Why:/Reason:/Because: markers over heuristic split separators in record-parser"
+    },
+    "created_at": "2026-04-24T22:57:00.137Z"
+  },
+  {
+    "id": "01KQ0VBWQBVKVR2CBRB1T8SD76",
+    "source": "01KQ0VBWQAKWPFTYMPNE3X364C",
+    "target": "01KQ0VBWQ4H8KWYG0WGZDS97J3",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Prefer explicit Rationale:/Why:/Reason:/Because: markers over heuristic split separators in record-parser"
+    },
+    "created_at": "2026-04-24T22:57:00.139Z"
+  },
+  {
+    "id": "01KQ0VBWQCNAFD4ZAJRR73RNCB",
+    "source": "01KQ0VBWQBVKVR2CBRB1T8SD77",
+    "target": "01KQ0VBWQ4H8KWYG0WGZDS97J3",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Prefer explicit Rationale:/Why:/Reason:/Because: markers over heuristic split separators in record-parser"
+    },
+    "created_at": "2026-04-24T22:57:00.140Z"
+  },
+  {
+    "id": "01KQ0VBWQERFYS3GW0RCJAWT18",
+    "source": "01KQ0VBWQD6CN2Z785D73HC6RS",
+    "target": "01KQ0VBWQ4H8KWYG0WGZDS97J3",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Prefer explicit Rationale:/Why:/Reason:/Because: markers over heuristic split separators in record-parser"
+    },
+    "created_at": "2026-04-24T22:57:00.142Z"
+  },
+  {
+    "id": "01KQ0VBWQFGYCP3E9KZTWTCBV2",
+    "source": "01KQ0VBWQERFYS3GW0RCJAWT19",
+    "target": "01KQ0VBWQ4H8KWYG0WGZDS97J3",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Prefer explicit Rationale:/Why:/Reason:/Because: markers over heuristic split separators in record-parser"
+    },
+    "created_at": "2026-04-24T22:57:00.143Z"
+  },
+  {
+    "id": "01KQ0VBWQH1ZDGSB3P7N9V1JEF",
+    "source": "01KQ0VBWQGSEH4BCPCE10SZ6BV",
+    "target": "01KQ0VBWQ4H8KWYG0WGZDS97J3",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Prefer explicit Rationale:/Why:/Reason:/Because: markers over heuristic split separators in record-parser"
+    },
+    "created_at": "2026-04-24T22:57:00.145Z"
+  },
+  {
+    "id": "01KQ0VBWQJVCVSHHVMX2006WZY",
+    "source": "01KQ0VBWQJVCVSHHVMX2006WZX",
+    "target": "01KQ0VBWQ4H8KWYG0WGZDS97J3",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Prefer explicit Rationale:/Why:/Reason:/Because: markers over heuristic split separators in record-parser"
+    },
+    "created_at": "2026-04-24T22:57:00.146Z"
+  },
+  {
+    "id": "01KQ0VBWQMRY1PWFCN1PT5RY81",
+    "source": "01KQ0VBWQKT7P1ZPACAZWFY6CB",
+    "target": "01KQ0VBWQ4H8KWYG0WGZDS97J3",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Prefer explicit Rationale:/Why:/Reason:/Because: markers over heuristic split separators in record-parser"
+    },
+    "created_at": "2026-04-24T22:57:00.148Z"
+  },
+  {
+    "id": "01KQ0VBWQPD1ND8SKA7TR2X04W",
+    "source": "01KQ0VBWQNGNC4X1A0DX73D3XD",
+    "target": "01KQ0VBWQ4H8KWYG0WGZDS97J3",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Prefer explicit Rationale:/Why:/Reason:/Because: markers over heuristic split separators in record-parser"
+    },
+    "created_at": "2026-04-24T22:57:00.150Z"
+  },
+  {
+    "id": "01KQ0VBWRNGV38M8F4BZ57QQZ8",
+    "source": "01KQ0VBWQ4H8KWYG0WGZDS97J4",
+    "target": "01KQ0VBWRM2TG11S605ERXED8H",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Replaced split(regex, 2) with single-split-on-first-match that preserves the full remainder"
+    },
+    "created_at": "2026-04-24T22:57:00.181Z"
+  },
+  {
+    "id": "01KQ0VBWRQ5VS1WGCX68Y6QKXE",
+    "source": "01KKNE77ZAW1943XPGMREM997R",
+    "target": "01KQ0VBWRM2TG11S605ERXED8H",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Replaced split(regex, 2) with single-split-on-first-match that preserves the full remainder"
+    },
+    "created_at": "2026-04-24T22:57:00.183Z"
+  },
+  {
+    "id": "01KQ0VBWRR0HHBJKGXB9CTPXS4",
+    "source": "01KQ0VBWQ83J4NGF3K4XWAMT14",
+    "target": "01KQ0VBWRM2TG11S605ERXED8H",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Replaced split(regex, 2) with single-split-on-first-match that preserves the full remainder"
+    },
+    "created_at": "2026-04-24T22:57:00.184Z"
+  },
+  {
+    "id": "01KQ0VBWRT1RM1AD1PZNKTGXRC",
+    "source": "01KQ0VBWQAKWPFTYMPNE3X364C",
+    "target": "01KQ0VBWRM2TG11S605ERXED8H",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Replaced split(regex, 2) with single-split-on-first-match that preserves the full remainder"
+    },
+    "created_at": "2026-04-24T22:57:00.186Z"
+  },
+  {
+    "id": "01KQ0VBWRWH22TC2GKV04GQ2JH",
+    "source": "01KQ0VBWQBVKVR2CBRB1T8SD77",
+    "target": "01KQ0VBWRM2TG11S605ERXED8H",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Replaced split(regex, 2) with single-split-on-first-match that preserves the full remainder"
+    },
+    "created_at": "2026-04-24T22:57:00.188Z"
+  },
+  {
+    "id": "01KQ0VBWRXP3J5PSM6XXTYJMJ7",
+    "source": "01KQ0VBWQD6CN2Z785D73HC6RS",
+    "target": "01KQ0VBWRM2TG11S605ERXED8H",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Replaced split(regex, 2) with single-split-on-first-match that preserves the full remainder"
+    },
+    "created_at": "2026-04-24T22:57:00.189Z"
+  },
+  {
+    "id": "01KQ0VBWRZRYQQM3Z9CJ6FQHC7",
+    "source": "01KQ0VBWQERFYS3GW0RCJAWT19",
+    "target": "01KQ0VBWRM2TG11S605ERXED8H",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Replaced split(regex, 2) with single-split-on-first-match that preserves the full remainder"
+    },
+    "created_at": "2026-04-24T22:57:00.191Z"
+  },
+  {
+    "id": "01KQ0VBWS0SA8HR2MX4C0S0ZD8",
+    "source": "01KQ0VBWQGSEH4BCPCE10SZ6BV",
+    "target": "01KQ0VBWRM2TG11S605ERXED8H",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Replaced split(regex, 2) with single-split-on-first-match that preserves the full remainder"
+    },
+    "created_at": "2026-04-24T22:57:00.192Z"
+  },
+  {
+    "id": "01KQ0VBWS219KVP0PWP1XTH3XQ",
+    "source": "01KQ0VBWQJVCVSHHVMX2006WZX",
+    "target": "01KQ0VBWRM2TG11S605ERXED8H",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Replaced split(regex, 2) with single-split-on-first-match that preserves the full remainder"
+    },
+    "created_at": "2026-04-24T22:57:00.194Z"
+  },
+  {
+    "id": "01KQ0VBWS3PY359AZD1K8ZQ120",
+    "source": "01KQ0VBWQKT7P1ZPACAZWFY6CB",
+    "target": "01KQ0VBWRM2TG11S605ERXED8H",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Replaced split(regex, 2) with single-split-on-first-match that preserves the full remainder"
+    },
+    "created_at": "2026-04-24T22:57:00.195Z"
+  },
+  {
+    "id": "01KQ0VBWS51Z5B7B0FNFY3RDEM",
+    "source": "01KQ0VBWQNGNC4X1A0DX73D3XD",
+    "target": "01KQ0VBWRM2TG11S605ERXED8H",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Replaced split(regex, 2) with single-split-on-first-match that preserves the full remainder"
+    },
+    "created_at": "2026-04-24T22:57:00.197Z"
+  },
+  {
+    "id": "01KQ0VBWVY1V499FGSW88CQGZD",
+    "source": "01KQ0VBWQ4H8KWYG0WGZDS97J4",
+    "target": "01KQ0VBWVWWA71WGKVKCTSEA5P",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Sliced decision cross-post summary to 200 chars and wrapped in try/catch inside DecisionEngine.decide"
+    },
+    "created_at": "2026-04-24T22:57:00.286Z"
+  },
+  {
+    "id": "01KQ0VBWVZYD1VA5EKGSX3GK6Z",
+    "source": "01KKNE77ZAW1943XPGMREM997R",
+    "target": "01KQ0VBWVWWA71WGKVKCTSEA5P",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Sliced decision cross-post summary to 200 chars and wrapped in try/catch inside DecisionEngine.decide"
+    },
+    "created_at": "2026-04-24T22:57:00.287Z"
+  },
+  {
+    "id": "01KQ0VBWW1MWF6BXN7JNM1JVEF",
+    "source": "01KQ0VBWQ83J4NGF3K4XWAMT14",
+    "target": "01KQ0VBWVWWA71WGKVKCTSEA5P",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Sliced decision cross-post summary to 200 chars and wrapped in try/catch inside DecisionEngine.decide"
+    },
+    "created_at": "2026-04-24T22:57:00.289Z"
+  },
+  {
+    "id": "01KQ0VBWW3JWA66QN93Q8HND3J",
+    "source": "01KQ0VBWQAKWPFTYMPNE3X364C",
+    "target": "01KQ0VBWVWWA71WGKVKCTSEA5P",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Sliced decision cross-post summary to 200 chars and wrapped in try/catch inside DecisionEngine.decide"
+    },
+    "created_at": "2026-04-24T22:57:00.291Z"
+  },
+  {
+    "id": "01KQ0VBWW4XHDKRE577TWG185R",
+    "source": "01KQ0VBWQBVKVR2CBRB1T8SD77",
+    "target": "01KQ0VBWVWWA71WGKVKCTSEA5P",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Sliced decision cross-post summary to 200 chars and wrapped in try/catch inside DecisionEngine.decide"
+    },
+    "created_at": "2026-04-24T22:57:00.292Z"
+  },
+  {
+    "id": "01KQ0VBWW6HDBHQASKFM65WZ48",
+    "source": "01KQ0VBWQD6CN2Z785D73HC6RS",
+    "target": "01KQ0VBWVWWA71WGKVKCTSEA5P",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Sliced decision cross-post summary to 200 chars and wrapped in try/catch inside DecisionEngine.decide"
+    },
+    "created_at": "2026-04-24T22:57:00.294Z"
+  },
+  {
+    "id": "01KQ0VBWW7CY30R9P7A8QZANFG",
+    "source": "01KQ0VBWQERFYS3GW0RCJAWT19",
+    "target": "01KQ0VBWVWWA71WGKVKCTSEA5P",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Sliced decision cross-post summary to 200 chars and wrapped in try/catch inside DecisionEngine.decide"
+    },
+    "created_at": "2026-04-24T22:57:00.295Z"
+  },
+  {
+    "id": "01KQ0VBWW988A3FJY012KQZ2S8",
+    "source": "01KQ0VBWQGSEH4BCPCE10SZ6BV",
+    "target": "01KQ0VBWVWWA71WGKVKCTSEA5P",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Sliced decision cross-post summary to 200 chars and wrapped in try/catch inside DecisionEngine.decide"
+    },
+    "created_at": "2026-04-24T22:57:00.297Z"
+  },
+  {
+    "id": "01KQ0VBWWAXGS1MA0EHWCDJ6T6",
+    "source": "01KQ0VBWQJVCVSHHVMX2006WZX",
+    "target": "01KQ0VBWVWWA71WGKVKCTSEA5P",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Sliced decision cross-post summary to 200 chars and wrapped in try/catch inside DecisionEngine.decide"
+    },
+    "created_at": "2026-04-24T22:57:00.298Z"
+  },
+  {
+    "id": "01KQ0VBWWC9XZBZBS9RA1C1F3X",
+    "source": "01KQ0VBWQKT7P1ZPACAZWFY6CB",
+    "target": "01KQ0VBWVWWA71WGKVKCTSEA5P",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Sliced decision cross-post summary to 200 chars and wrapped in try/catch inside DecisionEngine.decide"
+    },
+    "created_at": "2026-04-24T22:57:00.300Z"
+  },
+  {
+    "id": "01KQ0VBWWDTEJD3QP9TQ15XQQR",
+    "source": "01KQ0VBWQNGNC4X1A0DX73D3XD",
+    "target": "01KQ0VBWVWWA71WGKVKCTSEA5P",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Sliced decision cross-post summary to 200 chars and wrapped in try/catch inside DecisionEngine.decide"
+    },
+    "created_at": "2026-04-24T22:57:00.301Z"
+  },
+  {
+    "id": "01KQ0VBWY2HMYEED2T9ZWA4MQ8",
+    "source": "01KQ0VBWQ4H8KWYG0WGZDS97J4",
+    "target": "01KQ0VBWY1BW5HCFF0RJ6TN81R",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Surfaced per-decision persistence errors in the twining_record response"
+    },
+    "created_at": "2026-04-24T22:57:00.354Z"
+  },
+  {
+    "id": "01KQ0VBWY4B90C938P2NFH5FAP",
+    "source": "01KKNE77ZAW1943XPGMREM997R",
+    "target": "01KQ0VBWY1BW5HCFF0RJ6TN81R",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Surfaced per-decision persistence errors in the twining_record response"
+    },
+    "created_at": "2026-04-24T22:57:00.356Z"
+  },
+  {
+    "id": "01KQ0VBWY6NN1R8W9S8GDM3AR4",
+    "source": "01KQ0VBWQ83J4NGF3K4XWAMT14",
+    "target": "01KQ0VBWY1BW5HCFF0RJ6TN81R",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Surfaced per-decision persistence errors in the twining_record response"
+    },
+    "created_at": "2026-04-24T22:57:00.358Z"
+  },
+  {
+    "id": "01KQ0VBWY8Q36X131GYMQGGF52",
+    "source": "01KQ0VBWQAKWPFTYMPNE3X364C",
+    "target": "01KQ0VBWY1BW5HCFF0RJ6TN81R",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Surfaced per-decision persistence errors in the twining_record response"
+    },
+    "created_at": "2026-04-24T22:57:00.360Z"
+  },
+  {
+    "id": "01KQ0VBWY92ME3VR3QX7K3N6XR",
+    "source": "01KQ0VBWQBVKVR2CBRB1T8SD77",
+    "target": "01KQ0VBWY1BW5HCFF0RJ6TN81R",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Surfaced per-decision persistence errors in the twining_record response"
+    },
+    "created_at": "2026-04-24T22:57:00.361Z"
+  },
+  {
+    "id": "01KQ0VBWYBDRXBQXYQ4N9BZMZ2",
+    "source": "01KQ0VBWQD6CN2Z785D73HC6RS",
+    "target": "01KQ0VBWY1BW5HCFF0RJ6TN81R",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Surfaced per-decision persistence errors in the twining_record response"
+    },
+    "created_at": "2026-04-24T22:57:00.363Z"
+  },
+  {
+    "id": "01KQ0VBWYCD99HRXX95PPF9F4S",
+    "source": "01KQ0VBWQERFYS3GW0RCJAWT19",
+    "target": "01KQ0VBWY1BW5HCFF0RJ6TN81R",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Surfaced per-decision persistence errors in the twining_record response"
+    },
+    "created_at": "2026-04-24T22:57:00.364Z"
+  },
+  {
+    "id": "01KQ0VBWYEGE4FFEK6SDAY9ZM0",
+    "source": "01KQ0VBWQGSEH4BCPCE10SZ6BV",
+    "target": "01KQ0VBWY1BW5HCFF0RJ6TN81R",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Surfaced per-decision persistence errors in the twining_record response"
+    },
+    "created_at": "2026-04-24T22:57:00.366Z"
+  },
+  {
+    "id": "01KQ0VBWYG0S80J43JQS8M0BWN",
+    "source": "01KQ0VBWQJVCVSHHVMX2006WZX",
+    "target": "01KQ0VBWY1BW5HCFF0RJ6TN81R",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Surfaced per-decision persistence errors in the twining_record response"
+    },
+    "created_at": "2026-04-24T22:57:00.368Z"
+  },
+  {
+    "id": "01KQ0VBWYHP38QA880Z5009JDT",
+    "source": "01KQ0VBWQKT7P1ZPACAZWFY6CB",
+    "target": "01KQ0VBWY1BW5HCFF0RJ6TN81R",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Surfaced per-decision persistence errors in the twining_record response"
+    },
+    "created_at": "2026-04-24T22:57:00.369Z"
+  },
+  {
+    "id": "01KQ0VBWYKNP65S6HR21J0X295",
+    "source": "01KQ0VBWQNGNC4X1A0DX73D3XD",
+    "target": "01KQ0VBWY1BW5HCFF0RJ6TN81R",
+    "type": "decided_by",
+    "properties": {
+      "decision_summary": "Surfaced per-decision persistence errors in the twining_record response"
+    },
+    "created_at": "2026-04-24T22:57:00.371Z"
   }
 ]
