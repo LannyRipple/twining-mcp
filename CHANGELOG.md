@@ -2,6 +2,21 @@
 
 All notable changes to Twining MCP are documented here.
 
+## [1.18.0] - 2026-04-24
+
+### Fixed
+- `twining_record` rationale truncation — content past the second split separator in a natural-language decision string was being silently dropped by `text.split(regex, 2)`. Parser now preserves the full remainder as rationale. There was never a per-field character cap on decision summary or rationale; the behavior was always a parser artifact.
+- `twining_record` rejected-alternatives undercount — `REJECTION_PATTERNS` used `text.match()` without the `/g` flag, so only one match per pattern was captured. Multiple explicit rejections in a single decision are now all detected via `matchAll` plus new patterns for numbered lists (`(1) ... (2) ... (3) ...`) and labelled phrasings (`Alternative rejected: X` / `Rejected: X`).
+- `twining_record` silent failure when `decisions_created: []` but the decision file was on disk. Root cause: `DecisionEngine.decide` cross-posted the unbounded decision summary to the blackboard, which enforces a 200-char limit and threw after the decision JSON was already written. Summary is now sliced for the cross-post and the call is wrapped in try/catch so post-write failures no longer propagate.
+
+### Added
+- Structured-object variant on `twining_record.decisions` — each item can now be either a natural-language string (existing behavior) or a structured object: `{ summary, rationale?, context?, domain?, alternatives?: [{ option, reason_rejected, pros?, cons? }], assumptions?, constraints?, confidence? }`. Structured objects bypass the NL parser entirely for exact round-trip — recommended for long multi-paragraph rationales or when you need ≥2 explicit rejected alternatives preserved verbatim.
+- Explicit rationale markers in the NL parser — `Rationale:`, `Why:`, `Reason:`, `Because:` now win over heuristic split words like "as" / "since" / "because", avoiding mid-sentence misfires on long decisions.
+- `decision_errors` field in the `twining_record` response — per-decision persistence errors are now surfaced instead of being silently swallowed.
+
+### Plugin v1.8.0 (no change)
+No plugin-side changes required. The plugin consumes `twining-mcp` via `npx -y twining-mcp --project .` without a version pin, so plugin users pick up the fix on the next resolve after `1.18.0` is published to npm.
+
 ## [1.17.0] - 2026-04-06
 
 ### Added
