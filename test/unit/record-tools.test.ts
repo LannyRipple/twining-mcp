@@ -1,0 +1,351 @@
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import fs from "node:fs";
+import path from "node:path";
+import os from "node:os";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { BlackboardStore } from "../../src/storage/blackboard-store.js";
+import { DecisionStore } from "../../src/storage/decision-store.js";
+import { BlackboardEngine } from "../../src/engine/blackboard.js";
+import { DecisionEngine } from "../../src/engine/decisions.js";
+import { registerRecordTools } from "../../src/tools/record-tools.js";
+
+let tmpDir: string;
+let server: McpServer;
+let bbEngine: BlackboardEngine;
+let dcsnEngine: DecisionEngine;
+let bbStore: BlackboardStore;
+let dcsnStore: DecisionStore;
+
+async function callTool(
+  name: string,
+  args: Record<string, unknown> = {},
+): Promise<{ content: Array<{ type: string; text: string }> }> {
+  const registered = (
+    server as unknown as {
+      _registeredTools: Record<
+        string,
+        { handler: (args: Record<string, unknown>, extra: unknown) => Promise<unknown> }
+      >;
+    }
+  )._registeredTools;
+  const tool = registered[name];
+  if (!tool) throw new Error(`Tool ${name} not found`);
+  return (await tool.handler(args, {} as unknown)) as {
+    content: Array<{ type: string; text: string }>;
+  };
+}
+
+function parseToolResponse(response: {
+  content: Array<{ type: string; text: string }>;
+}): unknown {
+  return JSON.parse(response.content[0]!.text);
+}
+
+beforeEach(() => {
+  tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "twining-record-tools-test-"));
+  fs.writeFileSync(path.join(tmpDir, "blackboard.jsonl"), "");
+  fs.mkdirSync(path.join(tmpDir, "decisions"), { recursive: true });
+  fs.writeFileSync(
+    path.join(tmpDir, "decisions", "index.json"),
+    JSON.stringify([]),
+  );
+
+  bbStore = new BlackboardStore(tmpDir);
+  dcsnStore = new DecisionStore(tmpDir);
+  bbEngine = new BlackboardEngine(bbStore);
+  dcsnEngine = new DecisionEngine(dcsnStore, bbEngine);
+
+  server = new McpServer({ name: "test-server", version: "1.0.0" });
+  registerRecordTools(server, bbEngine, dcsnEngine, tmpDir);
+});
+
+afterEach(() => {
+  fs.rmSync(tmpDir, { recursive: true, force: true });
+});
+
+function loadDecisionFile(id: string): Record<string, unknown> {
+  const filePath = path.join(tmpDir, "decisions", `${id}.json`);
+  return JSON.parse(fs.readFileSync(filePath, "utf-8"));
+}
+
+describe("twining_record — structured fields (bug fix)", () => {
+  it("accepts structured alternatives directly and bypasses the NL parser", async () => {
+    const alternatives = [
+      {
+        option: "Exploration-efficiency ROI as primary wedge",
+        reason_rejected:
+          "Demoted to Phase 1 supporting result; used as a context-reconstitution proxy, not the headline claim.",
+      },
+      {
+        option: "Shared-markdown-hurts-in-conflict/recovery as headline",
+        reason_rejected:
+          "Absorbed into the broader macro-loop scorecard as one finding among several.",
+      },
+      {
+        option: "Minimal coordination budget / lite-matches-full as headline",
+        reason_rejected:
+          "Weakened by current sprint-sim data at n=16 (d=2.12 full vs 1.19 lite); not strong enough to anchor on.",
+      },
+      {
+        option: "Agent Teams as primary condition",
+        reason_rejected:
+          "Wrong layer — Agent Teams is intra-loop parallelism, not sprint-over-sprint coordination.",
+      },
+    ];
+
+    const resp = (await callTool("twining_record", {
+      summary: "Session recorded macro-loop decision",
+      scope: "research/direction",
+      decisions: [
+        {
+          summary: "Benchmark scope is the macro loop",
+          rationale:
+            "No existing benchmark measures sustained-codebase coordination across sprints and releases.",
+          alternatives,
+        },
+      ],
+    })) as { content: Array<{ type: string; text: string }> };
+
+    const body = parseToolResponse(resp) as {
+      decisions_created: Array<{ id: string; summary: string }>;
+    };
+
+    expect(body.decisions_created.length).toBe(1);
+    const stored = loadDecisionFile(body.decisions_created[0]!.id);
+    expect(stored.summary).toBe("Benchmark scope is the macro loop");
+    expect(stored.alternatives).toEqual(
+      alternatives.map((a) => ({
+        option: a.option,
+        pros: [],
+        cons: [],
+        reason_rejected: a.reason_rejected,
+      })),
+    );
+  });
+
+  it("preserves a 1500-char rationale via the structured path with no truncation", async () => {
+    const longRationale = "Z".repeat(1500);
+    const resp = await callTool("twining_record", {
+      summary: "Recording long rationale",
+      scope: "test/long/",
+      decisions: [
+        {
+          summary: "Chose a long-winded approach",
+          rationale: longRationale,
+        },
+      ],
+    });
+    const body = parseToolResponse(resp) as {
+      decisions_created: Array<{ id: string }>;
+    };
+    expect(body.decisions_created.length).toBe(1);
+    const stored = loadDecisionFile(body.decisions_created[0]!.id);
+    expect((stored.rationale as string).length).toBe(1500);
+    expect(stored.rationale).toBe(longRationale);
+  });
+
+  it("persists structured assumptions and constraints per-decision", async () => {
+    const resp = await callTool("twining_record", {
+      summary: "Session recorded",
+      scope: "src/x/",
+      decisions: [
+        {
+          summary: "Chose the thing",
+          rationale: "It is the correct thing.",
+          assumptions: ["data is relational", "no strict ordering"],
+          constraints: ["node >=18", "no new deps"],
+        },
+      ],
+    });
+    const body = parseToolResponse(resp) as {
+      decisions_created: Array<{ id: string }>;
+    };
+    const stored = loadDecisionFile(body.decisions_created[0]!.id);
+    expect(stored.assumptions).toEqual([
+      "data is relational",
+      "no strict ordering",
+    ]);
+    expect(stored.constraints).toEqual(["node >=18", "no new deps"]);
+  });
+
+  it("accepts both NL strings and structured objects in a mixed decisions array", async () => {
+    const resp = await callTool("twining_record", {
+      summary: "Mixed decisions session",
+      scope: "src/mix/",
+      decisions: [
+        "Chose Redis over Memcached — need persistence",
+        {
+          summary: "Structured choice",
+          rationale: "because structured",
+          alternatives: [{ option: "alt1", reason_rejected: "because alt1" }],
+        },
+      ],
+    });
+    const body = parseToolResponse(resp) as {
+      decisions_created: Array<{ id: string; summary: string }>;
+    };
+    expect(body.decisions_created.length).toBe(2);
+    const nl = loadDecisionFile(body.decisions_created[0]!.id);
+    const structured = loadDecisionFile(body.decisions_created[1]!.id);
+    expect(nl.summary).toBe("Chose Redis over Memcached");
+    expect(structured.summary).toBe("Structured choice");
+    expect(
+      (structured.alternatives as Array<{ option: string }>)[0]!.option,
+    ).toBe("alt1");
+  });
+});
+
+describe("twining_record — decisions_created response accuracy (bug fix)", () => {
+  it("reports decisions_created for an NL decision whose parsed summary exceeds the 200-char blackboard limit", async () => {
+    // Long summary (>200 chars). Before the fix, this caused decide() to throw
+    // after the file was written (cross-post rejected by blackboard) and the
+    // response returned decisions_created: [].
+    const longSummary =
+      "Benchmark scope is the macro loop: multi-sprint, multi-release coordination for sustained software engineering. " +
+      "No existing benchmark measures sustained-codebase coordination across sprints and releases. " +
+      "This is a long summary well beyond two hundred characters.";
+    expect(longSummary.length).toBeGreaterThan(200);
+
+    const resp = await callTool("twining_record", {
+      summary: "Recording a long NL decision",
+      scope: "research/long/",
+      decisions: [longSummary],
+    });
+
+    const body = parseToolResponse(resp) as {
+      decisions_created: Array<{ id: string }>;
+    };
+    expect(body.decisions_created.length).toBe(1);
+
+    // Decision file must actually be on disk with full summary preserved.
+    const stored = loadDecisionFile(body.decisions_created[0]!.id);
+    expect(typeof stored.summary).toBe("string");
+    expect((stored.summary as string).length).toBeGreaterThan(200);
+  });
+
+  it("reports decisions_created for a structured decision whose summary exceeds the 200-char blackboard limit", async () => {
+    const longSummary = "A".repeat(500);
+    const resp = await callTool("twining_record", {
+      summary: "Recording a structured long-summary decision",
+      scope: "research/long/",
+      decisions: [
+        {
+          summary: longSummary,
+          rationale: "Because reasons.",
+        },
+      ],
+    });
+    const body = parseToolResponse(resp) as {
+      decisions_created: Array<{ id: string }>;
+    };
+    expect(body.decisions_created.length).toBe(1);
+    const stored = loadDecisionFile(body.decisions_created[0]!.id);
+    expect((stored.summary as string).length).toBe(500);
+  });
+});
+
+describe("twining_record — regression (structured path)", () => {
+  it("end-to-end: structured path with multi-sentence rationale + 4 rejected alternatives round-trips exactly", async () => {
+    const rationale =
+      "No existing benchmark measures sustained-codebase coordination across sprints and releases. " +
+      "LongMemEval and LoCoMo measure long-conversation retrieval; tau-bench and CooperBench measure tool-use and task completion; REP measures non-coding coordination. " +
+      "Memory-framework comparisons report retrieval scores on conversational data, not task outcomes on sustained codebases. " +
+      "Agent Teams (Anthropic, Feb 2026) operates inside the inner loop and is reframed as orthogonal to substrate choice.";
+
+    const alternatives = [
+      {
+        option: "Exploration-efficiency ROI as primary wedge",
+        reason_rejected:
+          "Demoted to Phase 1 supporting result; used as a context-reconstitution proxy, not the headline claim.",
+      },
+      {
+        option: "Shared-markdown-hurts-in-conflict/recovery as headline",
+        reason_rejected:
+          "Absorbed into the broader macro-loop scorecard as one finding among several.",
+      },
+      {
+        option: "Minimal coordination budget / lite-matches-full as headline",
+        reason_rejected:
+          "Weakened by current sprint-sim data at n=16 (d=2.12 full vs 1.19 lite); not strong enough to anchor on.",
+      },
+      {
+        option: "Agent Teams as primary condition",
+        reason_rejected:
+          "Wrong layer — Agent Teams is intra-loop parallelism, not sprint-over-sprint coordination.",
+      },
+    ];
+
+    const resp = await callTool("twining_record", {
+      summary: "Structured regression check",
+      scope: "research/direction/",
+      decisions: [
+        {
+          summary:
+            "Benchmark scope is the macro loop: multi-sprint, multi-release coordination for sustained software engineering",
+          rationale,
+          alternatives,
+          confidence: "high",
+        },
+      ],
+    });
+
+    const body = parseToolResponse(resp) as {
+      decisions_created: Array<{ id: string }>;
+    };
+    expect(body.decisions_created.length).toBe(1);
+
+    const stored = loadDecisionFile(body.decisions_created[0]!.id) as {
+      summary: string;
+      rationale: string;
+      confidence: string;
+      alternatives: Array<{ option: string; reason_rejected: string }>;
+    };
+    expect(stored.summary).toContain("Benchmark scope is the macro loop");
+    expect(stored.rationale).toBe(rationale);
+    expect(stored.confidence).toBe("high");
+    expect(stored.alternatives.length).toBe(4);
+    stored.alternatives.forEach((alt, i) => {
+      expect(alt.option).toBe(alternatives[i]!.option);
+      expect(alt.reason_rejected).toBe(alternatives[i]!.reason_rejected);
+    });
+  });
+});
+
+describe("twining_record — regression (existing NL path)", () => {
+  it("end-to-end: NL path with multi-sentence rationale + 4 numbered rejected alternatives round-trips", async () => {
+    const nlDecision =
+      "Benchmark scope is the macro loop — multi-sprint, multi-release coordination across a sustained codebase. " +
+      "Rationale: no existing benchmark measures this category. " +
+      "Rejected alternatives: (1) Exploration-efficiency ROI as primary wedge, " +
+      "(2) Shared-markdown-hurts-in-conflict as headline, " +
+      "(3) Minimal coordination budget / lite-matches-full as headline, " +
+      "(4) Agent Teams as primary condition.";
+
+    const resp = await callTool("twining_record", {
+      summary: "NL regression check",
+      scope: "research/direction/",
+      decisions: [nlDecision],
+    });
+
+    const body = parseToolResponse(resp) as {
+      decisions_created: Array<{ id: string }>;
+    };
+    expect(body.decisions_created.length).toBe(1);
+
+    const stored = loadDecisionFile(body.decisions_created[0]!.id) as {
+      summary: string;
+      rationale: string;
+      alternatives: Array<{ option: string }>;
+    };
+    // The "Rationale:" marker wins over fallback separators, so summary is
+    // everything before it (em-dash and following clause included) and the
+    // rationale starts after it and preserves the full tail including the
+    // numbered alternatives list.
+    expect(stored.summary).toContain("Benchmark scope is the macro loop");
+    expect(stored.summary).toContain("multi-release coordination");
+    expect(stored.rationale).toContain("no existing benchmark");
+    expect(stored.alternatives.length).toBe(4);
+    expect(stored.alternatives[0]!.option).toContain("Exploration-efficiency ROI");
+    expect(stored.alternatives[3]!.option).toContain("Agent Teams");
+  });
+});

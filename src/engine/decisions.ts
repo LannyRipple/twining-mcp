@@ -234,16 +234,25 @@ export class DecisionEngine {
       });
     }
 
-    // Cross-post to blackboard (internal — bypasses decision rejection)
-    await this.blackboardEngine.post({
-      entry_type: "decision",
-      summary: decision.summary,
-      detail: decision.rationale,
-      tags: [decision.domain],
-      scope: decision.scope,
-      agent_id: decision.agent_id,
-      _internal: true,
-    });
+    // Cross-post to blackboard (internal — bypasses decision rejection).
+    // Blackboard enforces a 200-char summary limit; decision summaries are
+    // unbounded, so slice for the cross-post and keep the full text in detail.
+    try {
+      await this.blackboardEngine.post({
+        entry_type: "decision",
+        summary: decision.summary.slice(0, 200),
+        detail: decision.rationale,
+        tags: [decision.domain],
+        scope: decision.scope,
+        agent_id: decision.agent_id,
+        _internal: true,
+      });
+    } catch (error) {
+      console.error(
+        "[twining] Decision cross-post failed (non-fatal):",
+        error,
+      );
+    }
 
     // Generate embedding (Phase 2) — never let embedding failure prevent the decide
     if (this.embedder && this.indexManager) {

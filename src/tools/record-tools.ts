@@ -42,6 +42,75 @@ function inferScopeFromGit(projectRoot: string): string | null {
   }
 }
 
+interface DecideInput {
+  domain: string;
+  summary: string;
+  context: string;
+  rationale: string;
+  alternatives: Array<{
+    option: string;
+    pros?: string[];
+    cons?: string[];
+    reason_rejected: string;
+  }>;
+  assumptions?: string[];
+  constraints?: string[];
+  confidence: "high" | "medium" | "low";
+}
+
+function buildFromNaturalLanguage(
+  text: string,
+  sessionSummary: string,
+): DecideInput {
+  const parsed = parseDecision(text);
+  return {
+    domain: parsed.domain,
+    summary: parsed.summary,
+    context: sessionSummary,
+    rationale: parsed.rationale,
+    alternatives: parsed.rejected_alternatives.map((alt) => ({
+      option: alt,
+      reason_rejected: "Not chosen",
+    })),
+    confidence: "medium",
+  };
+}
+
+interface StructuredDecision {
+  summary: string;
+  rationale?: string;
+  context?: string;
+  domain?: string;
+  alternatives?: Array<{
+    option: string;
+    pros?: string[];
+    cons?: string[];
+    reason_rejected: string;
+  }>;
+  assumptions?: string[];
+  constraints?: string[];
+  confidence?: "high" | "medium" | "low";
+}
+
+function buildFromStructured(
+  item: StructuredDecision,
+  sessionSummary: string,
+): DecideInput {
+  // Fill in defaults. Rationale defaults to the summary so decide() validation
+  // passes; domain defaults to "implementation" when caller doesn't specify.
+  const result: DecideInput = {
+    domain: item.domain ?? "implementation",
+    summary: item.summary,
+    context: item.context ?? sessionSummary,
+    rationale: item.rationale ?? item.summary,
+    alternatives: item.alternatives ?? [],
+    confidence: item.confidence ?? "medium",
+  };
+  if (item.assumptions !== undefined) result.assumptions = item.assumptions;
+  if (item.constraints !== undefined) result.constraints = item.constraints;
+  return result;
+}
+
 /**
  * Parse a finding string, detecting "warning:" or "need:" prefixes for entry_type.
  * Default entry_type is "finding".
@@ -75,10 +144,65 @@ export function registerRecordTools(
           .string()
           .describe("What you did this session — one or two sentences"),
         decisions: z
-          .array(z.string())
+          .array(
+            z.union([
+              z.string(),
+              z.object({
+                summary: z.string().describe("One-line decision statement"),
+                rationale: z
+                  .string()
+                  .optional()
+                  .describe(
+                    "Reasoning for the choice. Skips the NL parser when provided.",
+                  ),
+                context: z
+                  .string()
+                  .optional()
+                  .describe(
+                    "Situation that prompted this decision (falls back to the session summary)",
+                  ),
+                domain: z
+                  .string()
+                  .optional()
+                  .describe(
+                    'Decision domain (e.g., "architecture", "implementation"). Inferred from content when omitted.',
+                  ),
+                alternatives: z
+                  .array(
+                    z.object({
+                      option: z.string(),
+                      pros: z.array(z.string()).optional(),
+                      cons: z.array(z.string()).optional(),
+                      reason_rejected: z.string(),
+                    }),
+                  )
+                  .optional()
+                  .describe("Alternatives that were considered and rejected"),
+                assumptions: z
+                  .array(z.string())
+                  .optional()
+                  .describe(
+                    "Assumptions this decision depends on (overrides the session-level assumptions for this decision)",
+                  ),
+                constraints: z
+                  .array(z.string())
+                  .optional()
+                  .describe(
+                    "What limited the options (overrides the session-level constraints for this decision)",
+                  ),
+                confidence: z
+                  .enum(["high", "medium", "low"])
+                  .optional()
+                  .describe('Confidence level (default: "medium")'),
+              }),
+            ]),
+          )
           .optional()
           .describe(
-            'Choices you made, as natural sentences. E.g. ["Chose X over Y — reason", "Used pattern Z because..."]',
+            'Choices you made. Each item is either a natural-language sentence ' +
+              '("Chose X over Y — reason") or a structured object ' +
+              '({ summary, rationale, alternatives: [{ option, reason_rejected }] }) ' +
+              'when the content is too long or too structured for the NL parser to split cleanly.',
           ),
         findings: z
           .array(z.string())
@@ -163,27 +287,24 @@ export function registerRecordTools(
           agent_id: agentId,
         });
 
-        // 2. Create decision records from natural language
+        // 2. Create decision records — each item is either NL (string) or structured object.
+        const decisionErrors: string[] = [];
         if (args.decisions?.length) {
-          for (const text of args.decisions) {
-            const parsed = parseDecision(text);
+          for (const item of args.decisions) {
+            const input =
+              typeof item === "string"
+                ? buildFromNaturalLanguage(item, args.summary)
+                : buildFromStructured(item, args.summary);
+
             try {
               const decision = await decisionEngine.decide({
-                domain: parsed.domain,
+                ...input,
                 scope,
-                summary: parsed.summary,
-                context: args.summary,
-                rationale: parsed.rationale,
-                alternatives: parsed.rejected_alternatives.map((alt) => ({
-                  option: alt,
-                  reason_rejected: "Not chosen",
-                })),
-                assumptions: args.assumptions,
-                constraints: args.constraints,
+                assumptions: input.assumptions ?? args.assumptions,
+                constraints: input.constraints ?? args.constraints,
                 depends_on: args.depends_on,
                 supersedes: args.supersedes,
                 reversible: args.reversible,
-                confidence: "medium",
                 affected_files: args.affected_files ?? [],
                 affected_symbols: args.affected_symbols ?? [],
                 commit_hash: args.commit_hash,
@@ -191,10 +312,14 @@ export function registerRecordTools(
               });
               createdDecisions.push({
                 id: decision.id,
-                summary: parsed.summary,
+                summary: input.summary,
               });
-            } catch {
-              // Decision creation failure is non-fatal — status post is the minimum
+            } catch (error) {
+              const message =
+                error instanceof Error ? error.message : String(error);
+              decisionErrors.push(
+                `"${input.summary.slice(0, 80)}${input.summary.length > 80 ? "…" : ""}": ${message}`,
+              );
             }
           }
         }
@@ -226,14 +351,18 @@ export function registerRecordTools(
         const parts: string[] = ["Recorded status"];
         if (createdDecisions.length > 0) parts.push(`${createdDecisions.length} decision(s)`);
         if (createdFindings.length > 0) parts.push(`${createdFindings.length} finding(s)`);
+        if (decisionErrors.length > 0)
+          parts.push(`${decisionErrors.length} decision error(s)`);
 
-        return toolResult({
+        const response: Record<string, unknown> = {
           status_entry_id: statusEntry.id,
           decisions_created: createdDecisions,
           findings_created: createdFindings,
           scope,
           message: parts.join(" + "),
-        });
+        };
+        if (decisionErrors.length > 0) response.decision_errors = decisionErrors;
+        return toolResult(response);
       } catch (e) {
         if (e instanceof TwiningError) {
           return toolError(e.message, e.code);
