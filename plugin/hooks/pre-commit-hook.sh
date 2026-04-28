@@ -44,8 +44,11 @@ LAST_COMMIT=${LAST_COMMIT:-0}
 LAST_TWINING=$(grep -n 'twining_record\|twining_decide\|twining_post' "$TRANSCRIPT_PATH" 2>/dev/null | tail -1 | cut -d: -f1) || LAST_TWINING=0
 LAST_TWINING=${LAST_TWINING:-0}
 
-# Allow if Twining recording happened after the last commit (or no prior commits)
-if [[ "$LAST_TWINING" -gt "$LAST_COMMIT" ]]; then
+# Allow if Twining recording happened at or after the last commit (or no prior commits).
+# Use >= rather than > to handle the case where twining_record and git commit are called
+# in the same assistant turn — Claude Code writes both tool calls to the transcript before
+# the PreToolUse hook fires, so their line numbers can be equal.
+if [[ "$LAST_TWINING" -ge "$LAST_COMMIT" ]]; then
   exit 0
 fi
 
